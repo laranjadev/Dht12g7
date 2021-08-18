@@ -1,0 +1,376 @@
+[
+    {
+        "title": "lab",
+        "path": "#",
+        "menu": [
+            {
+                "content": [
+                    {
+                        "title": "a",
+                        "path": "/lab/a"
+                    },
+                    {
+                        "title": "b",
+                        "path": "/lab/b"
+                    },
+                    {
+                        "title": "c",
+                        "path": "/lab/c"
+                    },
+                    {
+                        "title": "d",
+                        "path": "/lab/d"
+                    },
+                    {
+                        "title": "e",
+                        "path": "/lab/e"
+                    },
+                    {
+                        "title": "f",
+                        "path": "/lab/f"
+                    },
+                    {
+                        "title": "g",
+                        "path": "/lab/g"
+                    },
+                    {
+                        "title": "h",
+                        "path": "/lab/h"
+                    },
+                    {
+                        "title": "i",
+                        "path": "/lab/i"
+                    },
+                    {
+                        "title": "j",
+                        "path": "/lab/j"
+                    },
+                    {
+                        "title": "k",
+                        "path": "/lab/k"
+                    },
+                    {
+                        "title": "l",
+                        "path": "/lab/l"
+                    },
+                    {
+                        "title": "m",
+                        "path": "/lab/m"
+                    },
+                    {
+                        "title": "n",
+                        "path": "/lab/n"
+                    },
+                    {
+                        "title": "o",
+                        "path": "/lab/o"
+                    },
+                    {
+                        "title": "p",
+                        "path": "/lab/p"
+                    },
+                    {
+                        "title": "q",
+                        "path": "/lab/q"
+                    },
+                    {
+                        "title": "r",
+                        "path": "/lab/r"
+                    },
+                    {
+                        "title": "s",
+                        "path": "/lab/s"
+                    },
+                    {
+                        "title": "t",
+                        "path": "/lab/t"
+                    },
+                    {
+                        "title": "u",
+                        "path": "/lab/u"
+                    },
+                    {
+                        "title": "v",
+                        "path": "/lab/v"
+                    },
+                    {
+                        "title": "w",
+                        "path": "/lab/w"
+                    },
+                    {
+                        "title": "x",
+                        "path": "/lab/x"
+                    },
+                    {
+                        "title": "y",
+                        "path": "/lab/y"
+                    },
+                    {
+                        "title": "z",
+                        "path": "/lab/z"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "apis",
+        "path": "#",
+        "menu": [
+            {
+                "title": "admin",
+                "content": [
+                    {
+                        "title": "admin",
+                        "path": "/api/admin"
+                    }
+                ]
+            },
+            {
+                "title": "category",
+                "content": [
+                    {
+                        "title": "event",
+                        "path": "/api/category/event"
+                    },
+                    {
+                        "title": "product",
+                        "path": "/api/category/product"
+                    },
+                    {
+                        "title": "service",
+                        "path": "/api/category/service"
+                    }
+                ]
+            },
+            {
+                "title": "item",
+                "content": [
+                    {
+                        "title": "event",
+                        "path": "/api/event"
+                    },
+                    {
+                        "title": "product",
+                        "path": "/api/product"
+                    },
+                    {
+                        "title": "service",
+                        "path": "/api/service"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "json",
+        "path": "#",
+        "menu": [
+            {
+                "title": "admin",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/json/admin/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/json/admin/create"
+                    }
+                ]
+            },
+            {
+                "title": "client",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/json/client/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/json/client/create"
+                    }
+                ]
+            },
+            {
+                "title": "recipes",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/json/recipe/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/json/recipe/create"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "institutional",
+        "path": "#",
+        "menu": [
+            {
+                "title": "institutional",
+                "content": [
+                    {
+                        "title": "accordion",
+                        "path": "/accordion"
+                    },
+                    {
+                        "title": "maps",
+                        "path": "/maps"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "admins, clients and users",
+        "path": "#",
+        "menu": [
+            {
+                "title": "admins",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/public/admin/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/public/admin/create"
+                    },
+                    {
+                        "title": "login",
+                        "path": "/public/admin/login"
+                    }
+                ]
+            },
+            {
+                "title": "clients",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/public/client/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/public/client/create"
+                    },
+                    {
+                        "title": "login",
+                        "path": "/public/client/login"
+                    }
+                ]
+            },
+            {
+                "title": "users",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/public/user/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/public/user/create"
+                    },
+                    {
+                        "title": "login",
+                        "path": "/public/user/login"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "items",
+        "path": "#",
+        "menu": [
+            {
+                "title": "products",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/item/product/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/item/product/create"
+                    }
+                ]
+            },
+            {
+                "title": "services",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/item/service/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/item/service/create"
+                    }
+                ]
+            },
+            {
+                "title": "events",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/item/event/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/item/event/create"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "categories",
+        "path": "#",
+        "menu": [
+            {
+                "title": "products",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/category/product/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/category/product/create"
+                    }
+                ]
+            },
+            {
+                "title": "services",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/category/service/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/category/service/create"
+                    }
+                ]
+            },
+            {
+                "title": "events",
+                "content": [
+                    {
+                        "title": "list",
+                        "path": "/category/event/all"
+                    },
+                    {
+                        "title": "new registration",
+                        "path": "/category/event/create"
+                    }
+                ]
+            }
+        ]
+    }
+]

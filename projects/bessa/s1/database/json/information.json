@@ -1,0 +1,71 @@
+[
+    {
+        "department": {
+            "title": "bessa lavanderia",
+            "description": "description"
+        },
+        "contact": {
+            "email": [
+                "lavanderia@bessahostel.com.br",
+                "lavanderia@bessahostel.com.br",
+                "lavanderia@bessahostel.com.br"
+            ],
+            "phone": [
+                "11940058153",
+                "11940058153",
+                "11940058153"
+            ]
+        },
+        "attendance": [
+            {
+                "daylong": true,
+                "weekday": "domingo",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": true
+            },
+            {
+                "daylong": false,
+                "weekday": "segunda-feira",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": true
+            },
+            {
+                "daylong": false,
+                "weekday": "terça-feira",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": false
+            },
+            {
+                "daylong": false,
+                "weekday": "quarta-feira",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": true
+            },
+            {
+                "daylong": false,
+                "weekday": "quinta-feira",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": false
+            },
+            {
+                "daylong": false,
+                "weekday": "sexta-feira",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": true
+            },
+            {
+                "daylong": true,
+                "weekday": "sábado",
+                "starttime": "07:00",
+                "endtime": "15:00",
+                "closed": true
+            }
+        ]
+    }
+]

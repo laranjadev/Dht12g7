@@ -1,0 +1,86 @@
+[
+    {
+        "business": {
+            "title": "bessa cafeteria",
+            "description": "description",
+            "disable": true
+        },
+        "contact": {
+            "email": [
+                {
+                    "title": "recepção",
+                    "address": "recepcao@bessahostel.com.br",
+                    "disable": true
+                },
+                {
+                    "title": "recepção",
+                    "address": "recepcao@bessahostel.com.br",
+                    "disable": true
+                }
+            ],
+            "phone": [
+                {
+                    "title": "recepção",
+                    "number": "11940058153",
+                    "disable": true
+                },
+                {
+                    "title": "lavanderia",
+                    "number": "11940058153",
+                    "disable": true
+                }
+            ]
+        },
+        "week": [
+            {
+                "daylong": false,
+                "weekday": "domingo",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": true
+            },
+            {
+                "daylong": false,
+                "weekday": "segunda-feira",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": true
+            },
+            {
+                "daylong": false,
+                "weekday": "terça-feira",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": false
+            },
+            {
+                "daylong": false,
+                "weekday": "quarta-feira",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": true
+            },
+            {
+                "daylong": false,
+                "weekday": "quinta-feira",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": false
+            },
+            {
+                "daylong": false,
+                "weekday": "sexta-feira",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": true
+            },
+            {
+                "daylong": false,
+                "weekday": "sábado",
+                "open": "18:00",
+                "close": "23:00",
+                "disable": true
+            }
+        ]
+    }
+]
