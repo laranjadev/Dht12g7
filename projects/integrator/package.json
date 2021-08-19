@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "scss": "sass --style=compressed --watch public/stylesheets:public/stylesheets"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -32,6 +33,7 @@
     "url-join": "^4.0.1"
   },
   "devDependencies": {
+    "sass": "^1.38.0",
     "sequelize-cli": "^6.2.0"
   },
   "main": "app.js",

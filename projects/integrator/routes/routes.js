@@ -68,6 +68,7 @@ const routes = {
             'accordion',
             'index',
             'maps',
+            'regulation',
         ], 'get'),
     ],
     api : [

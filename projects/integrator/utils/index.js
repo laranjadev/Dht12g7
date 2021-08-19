@@ -121,6 +121,8 @@ let bootstrapAccordion = (object) => {
                 result += ' data-bs-toggle=\"collapse\"'
                 result += ' type=\"button\"';
             result += '>';
+                result += i + 1;
+                result += '. ';
                 result += object['array'][i]['title'];
             result += '</button>';
             result += '</h2>';
@@ -130,9 +132,54 @@ let bootstrapAccordion = (object) => {
             result += ' data-bs-parent=\"#' + object['id'] + '\"';
             result += ' id=\"collapse' + isID + '\"';
             result += '>';
-                result += '<div class=\"accordion-body\">';
-                    result += object['array'][i]['paragraph'];
-                result += '</div>';
+                if (isThis(object['array'][i]['description'], 'string')) {
+                    result += '<div class=\"accordion-body\">';
+                        result += '<p>';
+                        result += object['array'][i]['description'];
+                        result += '</p>';
+                    result += '</div>';
+                } else if (isThis(object['array'][i]['description'], 'object')) {
+                    result += '<div class=\"accordion-body\">';
+                        result += '<ul>';
+                            for (let x = 0; x < object['array'][i]['description']['length']; x++) {
+                                result += '<li>';
+                                    result += '<p>';
+                                        result += i + 1;
+                                        result += '. ';
+                                        result += x + 1;
+                                        result += '. ';
+                                        result += object['array'][i]['description'][x]['title'];
+                                    result += '</p>';
+                                    if (isThis(object['array'][i]['description'][x]['description'], 'string')) {
+                                        result += '<p>';
+                                            result += object['array'][i]['description'][x]['description'];
+                                        result += '</p>';
+                                    } else if (isThis(object['array'][i]['description'][x]['description'], 'object')) {
+                                        result += '<ul>';
+                                        for (let y = 0; y < object['array'][i]['description'][x]['description']['length']; y++) {
+                                            result += '<li>';
+                                            result += '<p>';
+                                            result += i + 1;
+                                            result += '. ';
+                                            result += x + 1;
+                                            result += '. ';
+                                            result += y + 1;
+                                            result += '. ';
+                                            result += object['array'][i]['description'][x]['description'][y];
+                                            result += '</p>';
+                                            result += '</li>';
+                                        }
+                                        result += '</ul>';
+                                    } else {
+                                        result += '';
+                                    }
+                                result += '</li>';
+                            }
+                        result += '</ul>';
+                    result += '</div>';
+                } else {
+                    result += '';
+                }
             result += '</div>';
         result += '</div>';
         }
@@ -216,10 +263,7 @@ const isThis = (string, type) => {
 };
 
 // const isThis = (object) => {
-//     if (getValidation(object['content']) && getValidation(object['type']))
-//         return typeof object['content'] === object['type'];
-//     else
-//         return false;
+//     return typeof object['content'] === object['type'];
 // };
 
 const getDOCNumber = (array) => {
@@ -758,19 +802,12 @@ const getJsDatabase = (object) => {
     return result;
 };
 
-let isAccordion = [];
-for (let i = 0; i <= 5; i++) {
-    isAccordion.push({
-        title : 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-        paragraph : 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, vero. Nostrum minus, asperiores laudantium dolor unde ipsa? Iusto reiciendis corporis, eligendi incidunt sit aliquam sint reprehenderit odio amet alias? Possimus.',
-    });
-};
-
 let variables = () => {
     return {
         isNavbar : jsonFileReader([ 'database', 'json', 'navbar.json' ]),
         isFooterMenu : jsonFileReader([ 'database', 'json', 'footer-menu.json' ]),
-        isAccordion : isAccordion,
+        isRegulation : jsonFileReader([ 'database', 'json', 'regulation.json' ]),
+        isAccordion : jsonFileReader([ 'database', 'json', 'accordion.json' ]),
     };
 };
 
@@ -782,7 +819,7 @@ let bootstrap = () => {
     };
 };
 
-const getPackage = () => {
+const package = () => {
     return {
         getCurrency,
         getDateFormat,
@@ -798,8 +835,8 @@ const getPackage = () => {
 };
 
 module.exports = {
-    getPackage,
-    ...getPackage(),
+    package,
+    ...package(),
     urlJoin,
     addJsDatabase,
     addJsonDatabase,

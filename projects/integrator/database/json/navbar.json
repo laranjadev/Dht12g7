@@ -221,6 +221,10 @@
                     {
                         "title": "maps",
                         "path": "/maps"
+                    },
+                    {
+                        "title": "regulation",
+                        "path": "/regulation"
                     }
                 ]
             }

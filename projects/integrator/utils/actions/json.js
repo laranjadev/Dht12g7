@@ -1,7 +1,7 @@
 let {
     addJsDatabase,
     addJsonDatabase,
-    getPackage,
+    package,
     getFormElement,
     getFormHeader,
     getHash,
@@ -51,7 +51,7 @@ const getAll = (object) => {
             };
             return res.render('menu', {
                 index : getJsPagination(jsPaginationAttributes)['listPage'],
-                ...getPackage(),
+                ...package(),
                 ...getJsPagination(jsPaginationAttributes),
                 ...getPageTitle({
                     prefix : object['prefix'],
@@ -76,7 +76,7 @@ const getOn = (object) => {
                 index : getJsDatabase(object).find((index) => {
                     return index['id'] == id;
                 }),
-                ...getPackage(),
+                ...package(),
                 ...getbtnTitle('come back'),
                 ...getFormElement({ 
                     element : object['element'],
@@ -110,7 +110,7 @@ const getEdit = (object) => {
                 index : getJsDatabase(object).find((index) => {
                     return index['id'] == id;
                 }),
-                ...getPackage(),
+                ...package(),
                 ...getbtnTitle('edit'),
                 ...getFormElement({
                     element : object['element'],
@@ -146,7 +146,7 @@ const {
 const getFormAttributes = (req, res, next, object, error) => {
     return {
         error : error ? error['errors'] : undefined,
-        ...getPackage(),
+        ...package(),
         ...getbtnTitle('create'),
         ...getFormElement({
             element : object['element'],
@@ -289,7 +289,7 @@ const getLogin = (object) => {
     const Action = {
         login : (req, res, next) => {
             return res.render('form', {
-                ...getPackage(),
+                ...package(),
                 ...getbtnTitle('login'),
                 ...getFormElement({
                     element : object['element'],

@@ -1,22 +1,26 @@
 const {
-    getPackage,
+    package,
     getScriptModule,
 } = require('../utils');
-const getViewsAction = (pageName) => {
+
+const viewActions = (pageName) => {
     const Action = {
         [pageName] : (req, res, next) => {
             return res.render(pageName, {
                 pageTitle : pageName,
                 ...getScriptModule(pageName),
-                ...getPackage(),
+                ...package(),
             });
         },
     };
     return Action;
 };
+
 const Action = {
-    ...getViewsAction('index'),
-    ...getViewsAction('accordion'),
-    ...getViewsAction('maps'),
+    ...viewActions('index'),
+    ...viewActions('accordion'),
+    ...viewActions('maps'),
+    ...viewActions('regulation'),
 };
+
 module.exports = Action;

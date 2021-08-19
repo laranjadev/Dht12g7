@@ -1,22 +1,27 @@
 $margin : 1rem;
+
 %null-margin
 {
     margin: 0;
 }
+
 %null-padding
 {
     padding: 0;
 }
+
 %null-all
 {
     @extend %null-margin;
     @extend %null-padding;
 }
+
 *
 {
     box-sizing: border-box;
     @extend %null-all;
 }
+
 body,
 html
 {
@@ -24,29 +29,34 @@ html
     width: 100%;
     @extend %null-all;
 }
-$b: 5;
-$e: 0;
-$s: 24px;
-@for $i from $b through $e
+
+$size : 42px;
+
+@for $i from 1 through 6
 {
-    h#{ ($i + 1) }
+    h#{ $i }
     {
-        font-size: 2 * $s - $s / $b * $i;
+        font-size: $size - ($i - 1) * ($size - $size / 3) / 5;
+        text-transform: capitalize;
         @extend %null-all;
     }
 }
+
 label
 {
     @extend %null-all;
 }
+
 p
 {
     @extend %null-all;
 }
+
 a
 {
     text-decoration: none;
 }
+
 ul
 {
     padding: 0 0 0 $margin;
@@ -57,46 +67,51 @@ ul
     }
     @extend %null-margin;
 }
+
 iframe
 {
     border: 0;
     width: 100%;
     height: 240px;
 }
+
 footer
 {
     text-align: center;
 }
+
 .pagination
 {
     display: inline-flex;
 }
+
 %flex-style
 {
     display: flex;
     flex-direction: row;
 }
-.center,
-.left,
-.right
-{
-    @extend %flex-style;
-}
+
 .center
 {
     justify-content: center;
+    @extend %flex-style;
 }
+
 .left
 {
     justify-content: flex-start;
+    @extend %flex-style;
 }
+
 .right
 {
     justify-content: flex-end;
+    @extend %flex-style;
 }
+
 .modal-header
 {
-    @for $i from $b through $e
+    @for $i from 1 through 6
     {
         h#{ ($i + 1) }
         {
@@ -106,20 +121,24 @@ footer
         }
     }
 }
+
 // .grow
 // {
 //     transform: scale(1.1);
 //     transition: all .3s;
 // }
+
 // .shrink
 // {
 //     transform: scale(1);
 //     transition: all .3s;
 // }
+
 .grow
 {
     animation : grow 0.3s ease-in-out forwards;
 }
+
 @keyframes grow {
     from {
         transform: scale(1);
@@ -128,10 +147,12 @@ footer
         z-index: 50;
     }
 }
+
 .shrink
 {
     animation : shrink 0.3s ease-in-out forwards;
 }
+
 @keyframes shrink {
     from {
         transform: scale(1.1);
