@@ -52,29 +52,27 @@ export let getFieldEvent = (object) => {
     };
 };
 
-
-
 export let getRomanNumber = (content) => {
-    let r = '';
+    let result = '';
     let division = 0;
     let rest = content;
-    let arabic = [1000, 500, 100, 50, 10];
-    let romans = ['M', 'D', 'C', 'L', 'X'];
-    let dozen = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    let arabic = [ 1000, 500, 100, 50, 10 ];
+    let romans = [ 'm', 'd', 'c', 'l', 'x' ];
+    let dozen = [ 'i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix' ];
     for (let i = 0; i < arabic['length']; i++) {
         division = parseInt(rest / arabic[i]);
         rest = content % arabic[i];
         if (division > 0) {
             for (let x = 0; x < division; x++) {
-                r = r + romans[i];
-            }
-        }
+                result = result + romans[i];
+            };
+        };
         if (rest < 10) {
-            r = r + dozen[rest - 1];
+            result = result + dozen[rest - 1];
             break;
-        }
-    }
-    return r;
+        };
+    };
+    return result;
 };
 
 const isEmpty = (object) => {

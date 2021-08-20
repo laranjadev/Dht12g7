@@ -18,7 +18,7 @@ createNewElement({
     elementID : 'wrap',
     elementName : '',
     elementPlaceholder : '',
-    elementStyle : [
+    elementStyles : [
     ],
     elementType : '',
 });
@@ -35,7 +35,7 @@ createNewElement({
     elementID : 'input-item',
     elementName : 'input-item',
     elementPlaceholder : 'Enter your text',
-    elementStyle : [
+    elementStyles : [
     ],
     elementType : 'text',
 });
@@ -53,7 +53,7 @@ createNewElement({
     elementID : 'add-button',
     elementName : 'add-button',
     elementPlaceholder : '',
-    elementStyle : [
+    elementStyles : [
     ],
     elementType : 'submit',
 });
@@ -71,7 +71,7 @@ createNewElement({
     elementID : 'ul',
     elementName : '',
     elementPlaceholder : '',
-    elementStyle : [
+    elementStyles : [
     ],
     elementType : '',
 });
@@ -92,15 +92,16 @@ window.addEventListener('load', (event) => {
                     'list-group-item',
                     'mb-3',
                     'p-3',
+                    'rounded',
                     'shadow-sm',
                 ],
                 elementContent : '',
                 childElement : 'li',
                 fatherElement : '#ul',
-                elementID : 'li' + getRomanNumber(number),
+                elementID : 'li-' + getRomanNumber(number),
                 elementName : '',
                 elementPlaceholder : '',
-                elementStyle : [
+                elementStyles : [
                     [ 'backgroundColor', colorGenerator()['color'] ],
                 ],
                 elementType : '',
@@ -112,11 +113,11 @@ window.addEventListener('load', (event) => {
                 ],
                 elementContent : messageContent,
                 childElement : 'p',
-                fatherElement : '#li' + getRomanNumber(number),
+                fatherElement : '#li-' + getRomanNumber(number),
                 elementID : '',
                 elementName : '',
                 elementPlaceholder : '',
-                elementStyle : [
+                elementStyles : [
                     [ 'color', colorGenerator()['color'] ],
                 ],
                 elementType : '',

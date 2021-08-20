@@ -872,21 +872,10 @@ const getCSSFile = (object) => {
     };
 };
 
-const getJSONFile = (object) => {
-    const getVariableName = (content) => {
-        let array = [];
-        for (let i = 0; i < content.split('-')['length']; i++)
-            array.push(content.split('-')[i]);
-        let result = '';
-        result += 'is';
-        for (let i = 0; i < array['length']; i++)
-            result += getFirstUpperCase(array[i]);
-        return result;
-    }
-    return {
-        [ getVariableName(object['content']) ] : jsonFileReader([ 'database', 'json', object['content'] + '.json' ]),
-    };
-};
+
+
+
+
 
 let variables = () => {
     return {
@@ -894,9 +883,9 @@ let variables = () => {
         ...getJSFileModule({ content : 'script', variable : 'isGlobalJSFile' }),
         ...getJSONFile({ content : 'accordion' }),
         ...getJSONFile({ content : 'carousel' }),
-        ...getJSONFile({ content : 'footer-menu' }),
         ...getJSONFile({ content : 'navbar' }),
         ...getJSONFile({ content : 'regulation' }),
+        ...getJSONFile({ content : 'footer-menu' }),
     };
 };
 
