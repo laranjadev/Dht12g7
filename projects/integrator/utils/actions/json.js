@@ -10,7 +10,7 @@ let {
     getJsPagination,
     getPageTitle,
     getPathPrefix,
-    getScriptModule,
+    getJSFileModule,
     getURLPath,
     getUserSession,
     isEmpty,
@@ -26,11 +26,12 @@ var userData;
 // OK!
 
 const getIndex = (object) => {
+    const pageName = 'all';
     const Action = {
         index : (req, res, next) => {
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all'
+                suffix : pageName,
             }));
         },
     }
@@ -40,6 +41,7 @@ const getIndex = (object) => {
 // OK!
 
 const getAll = (object) => {
+    const pageName = 'all';
     const Action = {
         all : (req, res, next) => {
             const amount = 2;
@@ -55,10 +57,13 @@ const getAll = (object) => {
                 ...getJsPagination(jsPaginationAttributes),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'all',
+                    suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getScriptModule('all'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(userData),
             });
         },
@@ -69,6 +74,7 @@ const getAll = (object) => {
 // OK!
 
 const getOn = (object) => {
+    const pageName = 'on';
     const Action = {
         on : (req, res, next) => {
             const { id } = req['params'];
@@ -84,15 +90,18 @@ const getOn = (object) => {
                 }),
                 ...getFormHeader({
                     prefix : object['prefix'],
-                    suffix : 'on',
+                    suffix : pageName,
                     method : 'POST',
                 }),
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'on',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('on'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(userData),
             });
         },
@@ -103,6 +112,7 @@ const getOn = (object) => {
 // OK!
 
 const getEdit = (object) => {
+    const pageName = 'edit';
     const Action = {
         edit : (req, res, next) => {
             const { id } = req['params'];
@@ -111,23 +121,26 @@ const getEdit = (object) => {
                     return index['id'] == id;
                 }),
                 ...package(),
-                ...getbtnTitle('edit'),
+                ...getbtnTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
-                    type : 'edit',
+                    type : pageName,
                 }),
                 ...getFormHeader({
                     prefix : object['prefix'],
-                    suffix : 'edit/' + id + '?_method=PUT',
+                    suffix : pageName + '/' + id + '?_method=PUT',
                     enctype : 'multipart/form-data',
                     method : 'POST',
                 }),
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'edit',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('edit'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(userData),
             });
         },
@@ -144,26 +157,30 @@ const {
 // OK!
 
 const getFormAttributes = (req, res, next, object, error) => {
+    const pageName = 'create';
     return {
         error : error ? error['errors'] : undefined,
         ...package(),
-        ...getbtnTitle('create'),
+        ...getbtnTitle(pageName),
         ...getFormElement({
             element : object['element'],
-            type : 'create',
+            type : pageName,
         }),
         ...getFormHeader({
             prefix : object['prefix'],
-            suffix : 'create',
+            suffix : pageName,
             enctype : 'multipart/form-data',
             method : 'POST',
         }),
         ...getInputType(),
         ...getPageTitle({
             prefix : object['prefix'],
-            suffix : 'create',
+            suffix : pageName,
         }),
-        ...getScriptModule('create'),
+        ...getJSFileModule({
+            content : pageName,
+            variable : 'isPageJSFile',
+        }),
         ...getUserSession(userData),
     };
 };
@@ -180,6 +197,7 @@ const getCreate = (object) => {
 // OK!
 
 const getStore = (object) => {
+    const pageName = 'edit';
     const Action = {
         store : (req, res, next) => {
             const error = validationResult(req);
@@ -211,7 +229,7 @@ const getStore = (object) => {
                 });
                 return res.redirect(getURLPath({
                     prefix : object['prefix'],
-                    suffix : 'edit' + '/' + id,
+                    suffix : pageName + '/' + id,
                 }));
             } else {
                 return res.render('form', getFormAttributes(req, res, next, object, error));
@@ -224,6 +242,7 @@ const getStore = (object) => {
 // OK!
 
 const getUpdate = (object) => {
+    const pageName = 'on';
     const Action = {
         update : (req, res, next) => {
             const { files } = req;
@@ -246,7 +265,7 @@ const getUpdate = (object) => {
             });
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'on/' + id,
+                suffix : pageName + '/' + id,
             }));
         },
     };
@@ -256,6 +275,7 @@ const getUpdate = (object) => {
 // OK!
 
 const getDestroy = (object) => {
+    const pageName = 'all';
     const Action = {
         destroy : (req, res, next) => {
             const { id } = req['params'];
@@ -270,7 +290,7 @@ const getDestroy = (object) => {
             });
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     };
@@ -286,14 +306,15 @@ const getSearch = (object) => {
 };
 
 const getLogin = (object) => {
+    const pageName = 'login';
     const Action = {
         login : (req, res, next) => {
             return res.render('form', {
                 ...package(),
-                ...getbtnTitle('login'),
+                ...getbtnTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
-                    type : 'login',
+                    type : pageName,
                 }),
                 ...getFormHeader({
                     prefix : object['prefix'],
@@ -303,9 +324,12 @@ const getLogin = (object) => {
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'login',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('login'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(userData),
             });
         },
@@ -325,6 +349,7 @@ const getLogout = (object) => {
 };
 
 const getAuthenticate = (object) => {
+    const pageName = 'all';
     const Action = {
         authenticate : (req, res, next) => {
             const record = jsonFileReader([
@@ -353,7 +378,7 @@ const getAuthenticate = (object) => {
             console.log(req.cookies);
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     }

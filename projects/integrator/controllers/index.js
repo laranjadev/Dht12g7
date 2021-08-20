@@ -1,6 +1,6 @@
 const {
+    getJSFileModule,
     package,
-    getScriptModule,
 } = require('../utils');
 
 const viewActions = (pageName) => {
@@ -8,7 +8,10 @@ const viewActions = (pageName) => {
         [pageName] : (req, res, next) => {
             return res.render(pageName, {
                 pageTitle : pageName,
-                ...getScriptModule(pageName),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...package(),
             });
         },
@@ -21,6 +24,7 @@ const Action = {
     ...viewActions('accordion'),
     ...viewActions('maps'),
     ...viewActions('regulation'),
+    ...viewActions('carousel'),
 };
 
 module.exports = Action;

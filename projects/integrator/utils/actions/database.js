@@ -1,29 +1,30 @@
 let {
-    package,
     getbtnTitle,
     getFirstUpperCase,
     getFormElement,
     getFormHeader,
     getInputType,
+    getJSFileModule,
     getModelPagination,
     getModelParams,
     getModelSearchParams,
     getPageTitle,
     getPathPrefix,
-    getScriptModule,
     getSearchAction,
     getURLPath,
     getUserSession,
+    package,
 } = require('..');
 
 // OK!
 
 const getIndex = (object) => {
+    const pageName = 'all';
     const Action = {
         index : async (req, res, next) => {
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     }
@@ -33,6 +34,7 @@ const getIndex = (object) => {
 // OK!
 
 const getAll = (object) => {
+    const pageName = 'all';
     const Action = {
         all : async (req, res, next) => {
             const amount = 2;
@@ -65,10 +67,13 @@ const getAll = (object) => {
                 }),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'all',
+                    suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getScriptModule('all'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getSearchAction({
                     prefix : object['prefix'],
                     suffix : 'search',
@@ -83,6 +88,7 @@ const getAll = (object) => {
 // OK!
 
 const getIn = (object) => {
+    const pageName = 'in';
     const Action = {
         in : async (req, res, next) => {
             const amount = 1;
@@ -113,10 +119,13 @@ const getIn = (object) => {
                 }),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'in',
+                    suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix'].replace('category', 'item')),
-                ...getScriptModule('in'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getSearchAction({
                     prefix : object['prefix'],
                     suffix : 'search',
@@ -131,6 +140,7 @@ const getIn = (object) => {
 // OK!
 
 const getOn = (object) => {
+    const pageName = 'on';
     const Action = {
         on : async (req, res, next) => {
             const { id } = req['params'];
@@ -153,13 +163,16 @@ const getOn = (object) => {
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'on',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('on'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(req['session']['user']),            
                 ...getFormHeader({
                     prefix : object['prefix'],
-                    suffix : 'on',
+                    suffix : pageName,
                     method : 'POST',
                 }),
             });
@@ -169,27 +182,31 @@ const getOn = (object) => {
 };
 
 const getCreate = (object) => {
+    const pageName = 'create';
     const Action = {
         create : async (req, res, next) => {
             return res.render('form', {
                 ...package(),
-                ...getbtnTitle('create'),
+                ...getbtnTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
-                    type : 'create',
+                    type : pageName,
                 }),
                 ...getFormHeader({
                     prefix : object['prefix'],
-                    suffix : 'create',
+                    suffix : pageName,
                     enctype : 'multipart/form-data',
                     method : 'POST',
                 }),
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'create',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('create'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(req['session']['user']),
             });
         },
@@ -198,12 +215,13 @@ const getCreate = (object) => {
 };
 
 const getStore = (object) => {
+    const pageName = 'all';
     const Action = {
         store : async (req, res, next) => {
             const index = await object['modelName'].create(req['body']);
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     }
@@ -211,6 +229,7 @@ const getStore = (object) => {
 };
 
 const getEdit = (object) => {
+    const pageName = 'edit';
     const Action = {
         edit : async (req, res, next) => {
             const { id } = req['params'];
@@ -223,23 +242,26 @@ const getEdit = (object) => {
             return res.render('form', {
                 index : index,
                 ...package(),
-                ...getbtnTitle('edit'),
+                ...getbtnTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
-                    type : 'edit'
+                    type : pageName,
                 }),
                 ...getFormHeader({
                     prefix : object['prefix'],
-                    suffix : 'edit' + '/' + id + '?_method=PUT',
+                    suffix : pageName + '/' + id + '?_method=PUT',
                     enctype : 'multipart/form-data',
                     method : 'POST',
                 }),
                 ...getInputType(),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'edit',
+                    suffix : pageName,
                 }),
-                ...getScriptModule('edit'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getUserSession(req['session']['user']),
             });
         },
@@ -248,6 +270,7 @@ const getEdit = (object) => {
 };
 
 const getUpdate = (object) => {
+    const pageName = 'all';
     const Action = {
         update : async (req, res, next) => {
             const { id } = req['params'];
@@ -260,7 +283,7 @@ const getUpdate = (object) => {
             });
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     }
@@ -268,6 +291,7 @@ const getUpdate = (object) => {
 };
 
 const getDestroy = (object) => {
+    const pageName = 'all';
     const Action = {
         destroy : async (req, res, next) => {
             const { id } = req['params'];
@@ -279,7 +303,7 @@ const getDestroy = (object) => {
             });
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
-                suffix : 'all',
+                suffix : pageName,
             }));
         },
     }
@@ -289,7 +313,9 @@ const getDestroy = (object) => {
 const getBulk = (object) => {
     const Action = {
         bulk : async (req, res, next) => {
-            const index = object['bulkMaker'] ? await object['modelName'].bulkCreate(object['bulkMaker']) : getFirstUpperCase('File not found!');
+            const index = object['bulkMaker']
+            ? await object['modelName'].bulkCreate(object['bulkMaker'])
+            : getFirstUpperCase('File not found!');
             return res.send(index);
         },
     }
@@ -297,6 +323,7 @@ const getBulk = (object) => {
 };
 
 const getSearch = (object) => {
+    const pageName = 'search';
     const Action = {
         search : async (req, res, next) => {
             const amount = 2;
@@ -336,13 +363,16 @@ const getSearch = (object) => {
                 }),
                 ...getPageTitle({
                     prefix : object['prefix'],
-                    suffix : 'search',
+                    suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getScriptModule('search'),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
                 ...getSearchAction({
                     prefix : object['prefix'],
-                    suffix : 'search',
+                    suffix : pageName,
                 }),
                 ...getUserSession(req['session']['user']),
             });
@@ -352,26 +382,30 @@ const getSearch = (object) => {
 };
 
 const getLogin = (object) => {
+    const pageName = 'login';
     const Action = {
         login : async (req, res, next) => {
             return res.render('form', {
-            ...package(),
-            ...getbtnTitle('login'),
-            ...getFormElement({
-                element : object['element'],
-                type : 'login',
-            }),
-            ...getFormHeader({
-                prefix : object['prefix'],
-                suffix : 'authenticate',
-                method : 'POST',
-            }),
-            ...getInputType(),
-            ...getPageTitle({
-                prefix : object['prefix'],
-                suffix : 'login',
-            }),
-            ...getScriptModule('login'),
+                ...package(),
+                ...getbtnTitle(pageName),
+                ...getFormElement({
+                    element : object['element'],
+                    type : pageName,
+                }),
+                ...getFormHeader({
+                    prefix : object['prefix'],
+                    suffix : 'authenticate',
+                    method : 'POST',
+                }),
+                ...getInputType(),
+                ...getPageTitle({
+                    prefix : object['prefix'],
+                    suffix : pageName,
+                }),
+                ...getJSFileModule({
+                    content : pageName,
+                    variable : 'isPageJSFile',
+                }),
             });
         },
     }

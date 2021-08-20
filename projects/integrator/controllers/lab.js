@@ -5,10 +5,10 @@ const {
     Public,
 } = require('../models');
 const {
-    package,
-    getScriptModule,
-    getURLPath,
     getFormElement,
+    getJSFileModule,
+    getURLPath,
+    package,
 } = require('../utils');
 module.exports = {
     a : async (req, res, next) => {
@@ -115,73 +115,100 @@ module.exports = {
         return res.send(index);
     },
     j : async (req, res, next) => {
-        const allNames = '_j';        
-        return res.render(allNames, {
+        const pageName = '_j';        
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
             ...getFormElement({
-                element : allNames,
+                element : pageName,
                 type : 'sendEmail',
             }),
         });
     },
     k : async (req, res, next) => {
-        const allNames = '_k';
-        return res.render(allNames, {
+        const pageName = '_k';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     l : async (req, res, next) => {
-        const allNames = '_l';
-        return res.render(allNames, {
+        const pageName = '_l';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     m : async (req, res, next) => {
-        const allNames = '_m';
-        return res.render(allNames, {
+        const pageName = '_m';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     n : async (req, res, next) => {
-        const allNames = '_n';
-        return res.render(allNames, {
+        const pageName = '_n';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     o : async (req, res, next) => {
-        const allNames = '_o';
-        return res.render(allNames, {
+        const pageName = '_o';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     p : async (req, res, next) => {
-        const allNames = '_p';
-        return res.render(allNames, {
+        const pageName = '_p';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     q : async (req, res, next) => {
-        const allNames = '_q';
-        return res.render(allNames, {
+        const pageName = '_q';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     r : async (req, res, next) => {
         const {
             key = '',
         } = req['query'];
-        const allNames = '_r';
-        return res.render(allNames, {
+        const pageName = '_r';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
             searchAction : getURLPath({
                 prefix : '/lab/',
                 suffix : 'r',
@@ -189,59 +216,83 @@ module.exports = {
         });
     },
     s : async (req, res, next) => {
-        const allNames = '_s';
-        return res.render(allNames, {
+        const pageName = '_s';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     t : async (req, res, next) => {
-        const allNames = '_t';
-        return res.render(allNames, {
+        const pageName = '_t';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     u : async (req, res, next) => {
-        const allNames = '_u';
-        return res.render(allNames, {
+        const pageName = '_u';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     v : async (req, res, next) => {
-        const allNames = '_v';
-        return res.render(allNames, {
+        const pageName = '_v';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     w : async (req, res, next) => {
-        const allNames = '_w';
-        return res.render(allNames, {
+        const pageName = '_w';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     x : async (req, res, next) => {
-        const allNames = '_x';
-        return res.render(allNames, {
+        const pageName = '_x';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     y : async (req, res, next) => {
-        const allNames = '_y';
-        return res.render(allNames, {
+        const pageName = '_y';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
     z : async (req, res, next) => {
-        const allNames = '_z';
-        return res.render(allNames, {
+        const pageName = '_z';
+        return res.render(pageName, {
             ...package(),
-            ...getScriptModule(allNames),
+            ...getJSFileModule({
+                content : pageName,
+                variable : 'isPageJSFile',
+            }),
         });
     },
 };

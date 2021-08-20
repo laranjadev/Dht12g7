@@ -106,67 +106,75 @@ const bootstrapModal = (object) => {
     return result;
 };
 
+const getTypeNumber = (object) => {
+    let result = getValidation(object['typeNumber']) ? object['typeNumber'] === 'roman' ? getRomanNumber(object['index'] + 1) : object['index'] + 1 : object['index'] + 1;
+    result += '. ';
+    return result;
+};
+
+const getLineBreak = (object) => {
+    const letter = getValidation(object['letter']) ? object['letter'] + ' ' : '';
+    const element = getValidation(object['element']) ? '</' + object['element'] + '><' + object['element'] + '>' : '';
+    return object['content'].split(letter).join(letter + element);
+};
+
 let bootstrapAccordion = (object) => {
     let result = '';
+    let isTypeNumber = !isThis(object['typeNumber'], 'undefined') ? object['typeNumber'] : false;
+    let isLineBreak = !isThis(object['lineBreak'], 'undefined') ? object['lineBreak'] : false;
     result += '<div class=\"accordion\" id=\"' + object['id'] + '\">';
-        for (let i = 0; i < object['array']['length']; i++) {
-        let isID = !isThis(object['id'], 'undefined') ? '-' + object['id'] + '-' + i : '-' + i;
+        for (let x = 0; x < object['array']['length']; x++) {
+        let isID = !isThis(object['id'], 'undefined') ? '-' + object['id'] + '-' + x : '-' + x;
         result += '<div class=\"accordion-item\">';
             result += '<h2 class=\"accordion-header\" id=\"heading' + isID + '\">';
             result += '<button'
                 result += ' aria-controls=\"collapse' + isID + '\"';
-                result += ' aria-expanded=\"' + (!i ? 'true' : 'false') + '\"';
-                result += ' class=\"accordion-button' + (!i ? '' : ' collapsed') + '\"';
+                result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
+                result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
                 result += ' data-bs-target=\"#collapse' + isID + '\"';
                 result += ' data-bs-toggle=\"collapse\"'
                 result += ' type=\"button\"';
             result += '>';
-                result += i + 1;
-                result += '. ';
-                result += object['array'][i]['title'];
+                result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                result += object['array'][x]['title'];
             result += '</button>';
             result += '</h2>';
             result += '<div'
             result += ' aria-labelledby=\"heading' + isID + '\"';
-            result += ' class=\"accordion-collapse collapse' + (!i ? ' show' : '') + '\"';
+            result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
             result += ' data-bs-parent=\"#' + object['id'] + '\"';
             result += ' id=\"collapse' + isID + '\"';
             result += '>';
-                if (isThis(object['array'][i]['description'], 'string')) {
+                if (isThis(object['array'][x]['description'], 'string')) {
                     result += '<div class=\"accordion-body\">';
                         result += '<p>';
-                        result += object['array'][i]['description'];
+                            result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '.' }) : object['array'][x]['description'];
                         result += '</p>';
                     result += '</div>';
-                } else if (isThis(object['array'][i]['description'], 'object')) {
+                } else if (isThis(object['array'][x]['description'], 'object')) {
                     result += '<div class=\"accordion-body\">';
                         result += '<ul>';
-                            for (let x = 0; x < object['array'][i]['description']['length']; x++) {
+                            for (let y = 0; y < object['array'][x]['description']['length']; y++) {
                                 result += '<li>';
                                     result += '<p>';
-                                        result += i + 1;
-                                        result += '. ';
-                                        result += x + 1;
-                                        result += '. ';
-                                        result += object['array'][i]['description'][x]['title'];
+                                        result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                        result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'][y]['title'], element : 'p', letter : '.' }) : object['array'][x]['description'][y]['title'];
                                     result += '</p>';
-                                    if (isThis(object['array'][i]['description'][x]['description'], 'string')) {
+                                    if (isThis(object['array'][x]['description'][y]['description'], 'string')) {
                                         result += '<p>';
-                                            result += object['array'][i]['description'][x]['description'];
+                                            result += lineBreak({ content : object['array'][x]['description'][y]['description'], element : 'p', letter : '.' });
                                         result += '</p>';
-                                    } else if (isThis(object['array'][i]['description'][x]['description'], 'object')) {
+                                    } else if (isThis(object['array'][x]['description'][y]['description'], 'object')) {
                                         result += '<ul>';
-                                        for (let y = 0; y < object['array'][i]['description'][x]['description']['length']; y++) {
+                                        for (let z = 0; z < object['array'][x]['description'][y]['description']['length']; z++) {
                                             result += '<li>';
-                                            result += '<p>';
-                                            result += i + 1;
-                                            result += '. ';
-                                            result += x + 1;
-                                            result += '. ';
-                                            result += y + 1;
-                                            result += '. ';
-                                            result += object['array'][i]['description'][x]['description'][y];
-                                            result += '</p>';
+                                                result += '<p>';
+                                                    result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                                    result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                                    result += getTypeNumber({ index : z, typeNumber : isTypeNumber });
+                                                    result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'][y]['description'][z], element : 'p', letter : '.' }) : object['array'][x]['description'][y]['description'][z];
+                                                result += '</p>';
                                             result += '</li>';
                                         }
                                         result += '</ul>';
@@ -276,17 +284,6 @@ const getDOCNumber = (array) => {
         num = '';
     }
     return result;
-};
-
-const getScriptModule = (content) => {
-    const contentFilePath = [
-        'public',
-        'javascripts',
-    ];
-    return {
-        scriptModule : isThere([ ...contentFilePath, content + '.js' ])
-        ? '<script type=\"module\" src=\"/javascripts/' + content + '.js\"></script>' : '',
-    };
 };
 
 const getPublicList = () => {
@@ -401,26 +398,26 @@ const getRandomIndex = (object) => {
 };
 
 const getRomanNumber = (content) => {
-    let r = '';
+    let result = '';
     let division = 0;
     let rest = content;
-    let arabic = [1000, 500, 100, 50, 10];
-    let romans = ['M', 'D', 'C', 'L', 'X'];
-    let dozen = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    let arabic = [ 1000, 500, 100, 50, 10 ];
+    let romans = [ 'm', 'd', 'c', 'l', 'x' ];
+    let dozen = [ 'i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix' ];
     for (let i = 0; i < arabic['length']; i++) {
         division = parseInt(rest / arabic[i]);
         rest = content % arabic[i];
         if (division > 0) {
             for (let x = 0; x < division; x++) {
-                r = r + romans[i];
-            }
-        }
+                result = result + romans[i];
+            };
+        };
         if (rest < 10) {
-            r = r + dozen[rest - 1];
+            result = result + dozen[rest - 1];
             break;
-        }
-    }
-    return r;
+        };
+    };
+    return result;
 };
 
 const getCNPJNumber = (array) => {
@@ -802,12 +799,40 @@ const getJsDatabase = (object) => {
     return result;
 };
 
+const getJSFileModule = (object) => {
+    const contentFilePath = [
+        'public',
+        'javascripts',
+        object['content'] + '.js',
+    ];
+    return {
+        [object['variable']] : isThere(contentFilePath)
+        ? '<script type=\"module\" src=\"/javascripts/' + object['content'] + '.js\"></script>'
+        : '',
+    };
+};
+
+const getCSSFile = (object) => {
+    const contentFilePath = [
+        'public',
+        'stylesheets',
+        object['content'] + '.css',
+    ];
+    return {
+        [object['variable']] : isThere(contentFilePath)
+        ? '<link rel=\'stylesheet\' href=\'/stylesheets/' + object['content'] + '.css\'/>'
+        : '',
+    };
+};
+
 let variables = () => {
     return {
         isNavbar : jsonFileReader([ 'database', 'json', 'navbar.json' ]),
         isFooterMenu : jsonFileReader([ 'database', 'json', 'footer-menu.json' ]),
         isRegulation : jsonFileReader([ 'database', 'json', 'regulation.json' ]),
         isAccordion : jsonFileReader([ 'database', 'json', 'accordion.json' ]),
+        ...getCSSFile({ content : 'style', variable : 'isGlobalCSSFile' }),
+        ...getJSFileModule({ content : 'script', variable : 'isGlobalJSFile' }),
     };
 };
 
@@ -837,9 +862,9 @@ const package = () => {
 module.exports = {
     package,
     ...package(),
-    urlJoin,
     addJsDatabase,
     addJsonDatabase,
+    arrayCreator,
     getbtnTitle,
     getCNPJNumber,
     getCPFNumber,
@@ -850,6 +875,7 @@ module.exports = {
     getHash,
     getInputType,
     getJsDatabase,
+    getJSFileModule,
     getJsPagination,
     getLoremIpsum,
     getModelPagination,
@@ -864,7 +890,6 @@ module.exports = {
     getRandomIndex,
     getRandomNumber,
     getSalaryRange,
-    getScriptModule,
     getSearchAction,
     getURLPath,
     getUserSession,
@@ -874,5 +899,5 @@ module.exports = {
     jsonFileReader,
     objectCreator,
     saveJsDatabase,
-    arrayCreator,
+    urlJoin,
 };

@@ -55,15 +55,35 @@ addRemoveClasses({
         '#navbar',
     ],
     classeList : [
+        'bg-white',
         'container-fluid',
-        'navbar',
+        'mb-3',
         'navbar-expand-lg',
         'navbar-light',
-        'bg-white',
-        'mb-3',
+        'navbar',
         'p-3',
         'rounded',
         'shadow-sm',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'ul',
+    ],
+    classeList : [
+        'ps-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'li p',
+    ],
+    classeList : [
+        'mb-3',
     ],
     method : 'add',
 });
@@ -89,6 +109,18 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
+for (let i = 1; i < 6; i++) {
+    addRemoveClasses({
+        elementList : [
+            'h' + i,
+        ],
+        classeList : [
+            'display-' + i,
+        ],
+        method : 'add',
+    });
+};
 
 getSignature({
     element : 'signature',

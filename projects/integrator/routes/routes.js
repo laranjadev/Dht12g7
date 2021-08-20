@@ -65,10 +65,11 @@ const routes = {
     index : [
         ...getRoute([
             [ '', 'index' ],
-            'accordion',
             'index',
+            'accordion',
             'maps',
             'regulation',
+            'carousel',
         ], 'get'),
     ],
     api : [
