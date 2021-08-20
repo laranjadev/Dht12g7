@@ -43,14 +43,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes'));
 
 const {
-  getPackage,
-  getScriptModule,
+  package,
+  getJSFileModule,
 } = require('./utils');
 app.use((req, res, next) => {
   return res.status(404).render('message', {
     pageMessage : 'this page is not found!',
-    ...getPackage(),
-    ...getScriptModule('404'),
+    ...getJSFileModule({ content : 'message', variable : 'isPageJSFile' }),
+    ...package(),
   });
 });
 
