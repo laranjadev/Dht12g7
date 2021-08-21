@@ -104,9 +104,9 @@
     }
     let html = '';
     html += '<form';
-        html += getValidation(formAttribute['action']) ? ' action=\"' + formAttribute['action'] + '\"' : '';
-        html += getValidation(formAttribute['enctype']) ? ' enctype=\"' + formAttribute['enctype'] + '\"' : '';
-        html += getValidation(formAttribute['method']) ? ' method=\"' + formAttribute['method'] + '\"' : '';
+        html += getValidation(isFormAttribute['action']) ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
+        html += getValidation(isFormAttribute['enctype']) ? ' enctype=\"' + isFormAttribute['enctype'] + '\"' : '';
+        html += getValidation(isFormAttribute['method']) ? ' method=\"' + isFormAttribute['method'] + '\"' : '';
     html += '>';
 %>
 <%- html; %>

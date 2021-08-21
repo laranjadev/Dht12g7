@@ -69,32 +69,32 @@ const bootstrapNavbar = (object) => {
             result += '<ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">';
                 result += getValidation(object['title']) ? '<li class=\"nav-item\">' + '<a class=\"nav-link\">' + getFirstUpperCase(object['title']) + '</a>' + '</li>' : '';
                 for (let x = 0; x < object['array']['length']; x++) {
-                    result += '<li class=\"nav-item ' + (getValidation(object['array'][x]['menu']) ? ' dropdown' : '') + '\">';
+                    result += '<li class=\"nav-item ' + (getValidation(object['array'][x]['items']) ? ' dropdown' : '') + '\">';
                         let id = getLowerCase('dropDown' + getRomanNumber(x + 1));
                         result += '<a';
-                        result += getValidation(object['array'][x]['menu']) ? ' aria-expanded=\"false\"' : '';
-                        result += getValidation(object['array'][x]['menu']) ? ' class=\"nav-link dropdown-toggle\"' : ' class=\"nav-link\"';
-                        result += getValidation(object['array'][x]['menu']) ? ' data-bs-toggle=\"dropdown\"' : '';
+                        result += getValidation(object['array'][x]['items']) ? ' aria-expanded=\"false\"' : '';
+                        result += getValidation(object['array'][x]['items']) ? ' class=\"nav-link dropdown-toggle\"' : ' class=\"nav-link\"';
+                        result += getValidation(object['array'][x]['items']) ? ' data-bs-toggle=\"dropdown\"' : '';
                         result += ' href=\"' + getLowerCase(object['array'][x]['path']) + '\"';
-                        result += getValidation(object['array'][x]['menu']) ? ' id=\"' + id + '\"' : '';
-                        result += getValidation(object['array'][x]['menu']) ? ' role=\"button\"' : '';
+                        result += getValidation(object['array'][x]['items']) ? ' id=\"' + id + '\"' : '';
+                        result += getValidation(object['array'][x]['items']) ? ' role=\"button\"' : '';
                         result += '>';
                         result += getFirstUpperCase(object['array'][x]['title']);
                         result += '</a>';
-                        if (getValidation(object['array'][x]['menu'])) {
+                        if (getValidation(object['array'][x]['items'])) {
                             result += '<ul class=\"dropdown-menu p-3\" aria-labelledby=\"' + id + '\">';
-                                for (let y = 0; y < object['array'][x]['menu']['length']; y++) {
+                                for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                                     result += '<li>';
-                                        result += getValidation(object['array'][x]['menu'][y]['title']) ? '<h6>' + getFirstUpperCase(object['array'][x]['menu'][y]['title']) + ':' + '</h6>' : '';
+                                        result += getValidation(object['array'][x]['items'][y]['title']) ? '<h6>' + getFirstUpperCase(object['array'][x]['items'][y]['title']) + ':' + '</h6>' : '';
                                         result += '<ul>';
-                                            for (let z = 0; z < object['array'][x]['menu'][y]['content']['length']; z++) {
+                                            for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                 result += '<li>';
-                                                    let href = getValidation(object['array'][x]['menu'][y]['content'][z]['path']) ? object['array'][x]['menu'][y]['content'][z]['path'] : '#';
+                                                    let href = getValidation(object['array'][x]['items'][y]['items'][z]['path']) ? object['array'][x]['items'][y]['items'][z]['path'] : '#';
                                                     result += '<a';
                                                     result += ' class=\"dropdown-item\"';
                                                     result += ' href=\"' + href + '\"';
                                                     result += '>';
-                                                        result += getFirstUpperCase(object['array'][x]['menu'][y]['content'][z]['title']);
+                                                        result += getFirstUpperCase(object['array'][x]['items'][y]['items'][z]['title']);
                                                     result += '</a>';
                                                 result += '</li>';
                                             };
@@ -192,49 +192,46 @@ let bootstrapAccordion = (object) => {
             result += ' data-bs-parent=\"#' + object['id'] + '\"';
             result += ' id=\"collapse' + isID + '\"';
             result += '>';
-                if (isThis(object['array'][x]['description'], 'string')) {
-                    result += '<div class=\"accordion-body\">';
+                let isValidation = getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']);
+                result += isValidation ? '<div class=\"accordion-body\">' : '';
+                    if (getValidation(object['array'][x]['description'])) {
                         result += '<p>';
                             result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '.' }) : object['array'][x]['description'];
                         result += '</p>';
-                    result += '</div>';
-                } else if (isThis(object['array'][x]['description'], 'object')) {
-                    result += '<div class=\"accordion-body\">';
+                    }
+                    if (getValidation(object['array'][x]['items'])) {
                         result += '<ul>';
-                            for (let y = 0; y < object['array'][x]['description']['length']; y++) {
+                            for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                                 result += '<li>';
                                     result += '<p>';
                                         result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
                                         result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'][y]['title'], element : 'p', letter : '.' }) : object['array'][x]['description'][y]['title'];
+                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : 'p', letter : '.' }) : object['array'][x]['items'][y]['title'];
                                     result += '</p>';
-                                    if (isThis(object['array'][x]['description'][y]['description'], 'string')) {
+                                    if (getValidation(object['array'][x]['items'][y]['description'])) {
                                         result += '<p>';
-                                            result += lineBreak({ content : object['array'][x]['description'][y]['description'], element : 'p', letter : '.' });
+                                            result += lineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '.' });
                                         result += '</p>';
-                                    } else if (isThis(object['array'][x]['description'][y]['description'], 'object')) {
+                                    }
+                                    if (getValidation(object['array'][x]['items'][y]['items'])) {
                                         result += '<ul>';
-                                        for (let z = 0; z < object['array'][x]['description'][y]['description']['length']; z++) {
-                                            result += '<li>';
-                                                result += '<p>';
-                                                    result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                                                    result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                                    result += getTypeNumber({ index : z, typeNumber : isTypeNumber });
-                                                    result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'][y]['description'][z], element : 'p', letter : '.' }) : object['array'][x]['description'][y]['description'][z];
-                                                result += '</p>';
-                                            result += '</li>';
-                                        }
+                                            for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
+                                                result += '<li>';
+                                                    result += '<p>';
+                                                        result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                                        result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                                        result += getTypeNumber({ index : z, typeNumber : isTypeNumber });
+                                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['items'][y]['items'][z], element : 'p', letter : '.' }) : object['array'][x]['items'][y]['items'][z];
+                                                    result += '</p>';
+                                                result += '</li>';
+                                            };
                                         result += '</ul>';
-                                    } else {
-                                        result += '';
                                     }
                                 result += '</li>';
-                            }
+                            };
                         result += '</ul>';
-                    result += '</div>';
-                } else {
-                    result += '';
-                }
+                    };
+                result += isValidation ? '</div>' : '';
             result += '</div>';
         result += '</div>';
         }
@@ -371,7 +368,6 @@ const getForeignKey = (table) => {
 
 const getUserSession = (content) => {
     return {
-        userSession : !isEmpty(content) ? content : undefined,
         isUserSession : !isEmpty(content) ? content : undefined,
     };
 };
@@ -405,10 +401,6 @@ const saveJsDatabase = (object) => {
     fs.appendFileSync(urlJoin(contentFilePath), 'module.exports = ' + object['title'] + ';');
 };
 
-
-
-
-
 const getLoremIpsum = (object) => {
     const contentFilePath = [ 'database', 'option.js' ];
     return {
@@ -424,13 +416,6 @@ const getRandomIndex = (object) => {
         result.push(getRequest(contentFilePath)[object['array']][i]['option']);
     return result[Math.floor(Math.random() * result['length'])];
 };
-
-
-
-
-
-
-
 
 const getRomanNumber = (content) => {
     let result = '';
@@ -537,7 +522,7 @@ const getModelPagination = (object) => {
 
 const getFormHeader = (object) => {
     return {
-        formAttribute : {
+        isFormAttribute : {
             ...object['prefix'] && object['suffix'] ? {
                 action : getURLPath({
                     prefix : object['prefix'],
@@ -620,10 +605,6 @@ const getInputType = () => {
 const getSearchAction = (object) => {
     return {
         isSearchAction : getURLPath({
-            prefix : object['prefix'],
-            suffix : object['suffix'],
-        }),
-        searchAction : getURLPath({
             prefix : object['prefix'],
             suffix : object['suffix'],
         }),

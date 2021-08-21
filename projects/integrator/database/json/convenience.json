@@ -1,0 +1,90 @@
+[
+    {
+        "title": "Banheiro",
+        "description": "",
+        "items": [
+            {
+                "title": "Chuveiro",
+                "description": ""
+            },
+            {
+                "title": "Papel higiênico",
+                "description": ""
+            },
+            {
+                "title": "Toalhas",
+                "description": ""
+            },
+            {
+                "title": "Vaso sanitário",
+                "description": ""
+            },
+            {
+                "title": "Roupa de banho",
+                "description": "custo adicional"
+            },
+            {
+                "title": "Toalete",
+                "description": "custo adicional"
+            },
+            {
+                "title": "Secador de cabelo",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "title": "Cozinha",
+        "description": "",
+        "items": [
+            {
+                "title": "Cozinha compartilhada",
+                "description": ""
+            },
+            {
+                "title": "Fogão",
+                "description": ""
+            },
+            {
+                "title": "Produtos de limpeza",
+                "description": ""
+            },
+            {
+                "title": "Máquina de lavar roupas",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "title": "Cozinha",
+        "description": "",
+        "items": [
+            {
+                "title": "Roupa de cama",
+                "description": ""
+            },
+            {
+                "title": "Camas com tomadas de energia",
+                "description": ""
+            }
+        ]
+    },
+    {
+        "title": "Segurança",
+        "description": "",
+        "items": [
+            {
+                "title": "Câmeras de segurança",
+                "description": ""
+            },
+            {
+                "title": "Segurança 24h",
+                "description": ""
+            },
+            {
+                "title": "Extintores de incêncio",
+                "description": ""
+            }
+        ]
+    }
+]
