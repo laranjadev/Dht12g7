@@ -10,14 +10,14 @@ let {
     getJsPagination,
     getPageTitle,
     getPathPrefix,
-    getJSFileModule,
+    getPJSMFile,
     getURLPath,
     getUserSession,
     isEmpty,
     isEqual,
     jsonFileReader,
     saveJsDatabase,
-    getbtnTitle,
+    getBTNTitle,
 } = require('..');
 
 
@@ -60,9 +60,8 @@ const getAll = (object) => {
                     suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(userData),
             });
@@ -83,7 +82,7 @@ const getOn = (object) => {
                     return index['id'] == id;
                 }),
                 ...package(),
-                ...getbtnTitle('come back'),
+                ...getBTNTitle('come back'),
                 ...getFormElement({ 
                     element : object['element'],
                     type : 'view',
@@ -98,9 +97,8 @@ const getOn = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(userData),
             });
@@ -121,7 +119,7 @@ const getEdit = (object) => {
                     return index['id'] == id;
                 }),
                 ...package(),
-                ...getbtnTitle(pageName),
+                ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
                     type : pageName,
@@ -137,9 +135,8 @@ const getEdit = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(userData),
             });
@@ -161,7 +158,7 @@ const getFormAttributes = (req, res, next, object, error) => {
     return {
         error : error ? error['errors'] : undefined,
         ...package(),
-        ...getbtnTitle(pageName),
+        ...getBTNTitle(pageName),
         ...getFormElement({
             element : object['element'],
             type : pageName,
@@ -177,9 +174,9 @@ const getFormAttributes = (req, res, next, object, error) => {
             prefix : object['prefix'],
             suffix : pageName,
         }),
-        ...getJSFileModule({
+        ...getPJSMFile({
             content : pageName,
-            variable : 'isPageJSFile',
+            variable : 'isPJSFile',
         }),
         ...getUserSession(userData),
     };
@@ -311,7 +308,7 @@ const getLogin = (object) => {
         login : (req, res, next) => {
             return res.render('form', {
                 ...package(),
-                ...getbtnTitle(pageName),
+                ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
                     type : pageName,
@@ -326,9 +323,8 @@ const getLogin = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(userData),
             });

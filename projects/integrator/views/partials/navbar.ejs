@@ -1,19 +1,19 @@
-<% if (typeof userSession === 'undefined') { } else { %>
+<% if (typeof isUserSession === 'undefined') { } else { %>
   <%
-    let userData = '';
-    userData += userSession['id'] ? '<p>' + getFirstUpperCase(userSession['id']) + '</p>' : '';
-    userData += userSession['title'] ? '<p>' + getFirstUpperCase(userSession['title']) + '</p>' : '';
-    userData += userSession['accesskey'] ? '<p>' + getFirstUpperCase(userSession['accesskey']) + '</p>' : '';
-    userData += userSession['phone'] ? '<p>' + getFirstUpperCase(userSession['phone']) + '</p>' : ''; 
+    let isUserData = '';
+    isUserData += isUserSession['id'] ? '<p>' + getFirstUpperCase(isUserSession['id']) + '</p>' : '';
+    isUserData += isUserSession['title'] ? '<p>' + getFirstUpperCase(isUserSession['title']) + '</p>' : '';
+    isUserData += isUserSession['accesskey'] ? '<p>' + getFirstUpperCase(isUserSession['accesskey']) + '</p>' : '';
+    isUserData += isUserSession['phone'] ? '<p>' + getFirstUpperCase(isUserSession['phone']) + '</p>' : ''; 
   %>
-  <div id="content"><%- userData; %></div>
+  <div id="content"><%- isUserData; %></div>
 <% } %>
 <%- bootstrapNavbar({
   key : typeof key !== 'undefined' ? key : undefined,
-  searchAction : typeof searchAction !== 'undefined' ? searchAction : undefined,
+  searchAction : typeof isSearchAction !== 'undefined' ? isSearchAction : undefined,
   array : isNavbar,
   element : 'nav',
   id : 'navbar',
 }); %>
-<%- typeof pageTitle !== 'undefined' ? '<h1>' + getFirstUpperCase(pageTitle) + '</h1>' : ''; %>
+<%- typeof isPageTitle !== 'undefined' ? '<h1>' + getFirstUpperCase(isPageTitle) + '</h1>' : ''; %>
 <div id="content">

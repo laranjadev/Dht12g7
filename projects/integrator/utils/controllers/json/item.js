@@ -9,6 +9,7 @@ let {
     getStore,
     getUpdate,
 } = require('../../actions/json');
+
 const getControllers = (object) => {
     const Action = {
         ...getAll(object),
@@ -23,6 +24,7 @@ const getControllers = (object) => {
     }
     return Action;
 };
+
 module.exports = {
     getControllers,  
 };

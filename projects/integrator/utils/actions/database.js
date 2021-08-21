@@ -1,10 +1,10 @@
 let {
-    getbtnTitle,
+    getBTNTitle,
     getFirstUpperCase,
     getFormElement,
     getFormHeader,
     getInputType,
-    getJSFileModule,
+    getPJSMFile,
     getModelPagination,
     getModelParams,
     getModelSearchParams,
@@ -70,9 +70,8 @@ const getAll = (object) => {
                     suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getSearchAction({
                     prefix : object['prefix'],
@@ -122,9 +121,8 @@ const getIn = (object) => {
                     suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix'].replace('category', 'item')),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getSearchAction({
                     prefix : object['prefix'],
@@ -165,9 +163,8 @@ const getOn = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(req['session']['user']),            
                 ...getFormHeader({
@@ -187,7 +184,7 @@ const getCreate = (object) => {
         create : async (req, res, next) => {
             return res.render('form', {
                 ...package(),
-                ...getbtnTitle(pageName),
+                ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
                     type : pageName,
@@ -203,9 +200,8 @@ const getCreate = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(req['session']['user']),
             });
@@ -242,7 +238,7 @@ const getEdit = (object) => {
             return res.render('form', {
                 index : index,
                 ...package(),
-                ...getbtnTitle(pageName),
+                ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
                     type : pageName,
@@ -258,9 +254,8 @@ const getEdit = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getUserSession(req['session']['user']),
             });
@@ -366,9 +361,8 @@ const getSearch = (object) => {
                     suffix : pageName,
                 }),
                 ...getPathPrefix(object['prefix']),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...getSearchAction({
                     prefix : object['prefix'],
@@ -387,7 +381,7 @@ const getLogin = (object) => {
         login : async (req, res, next) => {
             return res.render('form', {
                 ...package(),
-                ...getbtnTitle(pageName),
+                ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
                     type : pageName,
@@ -402,9 +396,8 @@ const getLogin = (object) => {
                     prefix : object['prefix'],
                     suffix : pageName,
                 }),
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
             });
         },

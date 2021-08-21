@@ -3,14 +3,7 @@
         <%- '<p id=\"signature\"></p>'; %>
         <%- '<p id=\"timer\"></p>'; %>
     </footer>
-    <%-
-        typeof isGlobalJSFile !== 'undefined' ? isGlobalJSFile : '';
-    %>
-    <%-
-        typeof isPageJSFile !== 'undefined' ? isPageJSFile : '';
-    %>
-    <%-
-        typeof scriptModule !== 'undefined' ? scriptModule : '';
-    %>
+    <%- typeof isGJSMFile !== 'undefined' ? isGJSMFile : ''; %>
+    <%- typeof isPJSMFile !== 'undefined' ? isPJSMFile : ''; %>
 </body>
 </html>

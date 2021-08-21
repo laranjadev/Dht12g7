@@ -120,16 +120,16 @@
         end += '</div>';
         end += '</div>';
     %>
-    <% for (let i = 0; i < formElement['length']; i++) { %>
-        <% if (getValidation(formElement[i]['active'])) { %>
-            <%- formElement[i]['type'] === 'start' ? start : ''; %>
-            <%- formElement[i]['type'] === 'end' ? end : ''; %>
-            <%- formElement[i]['type'].substr(0, 1) === 'h' ? '<' + formElement[i]['type'] + '>' + getFirstUpperCase(formElement[i]['name']) + '</' + formElement[i]['type'] + '>' : ''; %>
-            <%- formElement[i]['type'] === 'select' ? getSelectCreator(formElement[i]) : ''; %>
-            <%- formElement[i]['type'] === 'textarea' ? getTextareaCreator(formElement[i]) : ''; %>
-            <% for (let x = 0; x < inputType['length']; x++) { %>
-                <% if (formElement[i]['type'] === inputType[x]) { %>
-                    <%- getInputCreator(formElement[i]);%>
+    <% for (let i = 0; i < isFormElement['length']; i++) { %>
+        <% if (getValidation(isFormElement[i]['active'])) { %>
+            <%- isFormElement[i]['type'] === 'start' ? start : ''; %>
+            <%- isFormElement[i]['type'] === 'end' ? end : ''; %>
+            <%- isFormElement[i]['type'].substr(0, 1) === 'h' ? '<' + isFormElement[i]['type'] + '>' + getFirstUpperCase(isFormElement[i]['name']) + '</' + isFormElement[i]['type'] + '>' : ''; %>
+            <%- isFormElement[i]['type'] === 'select' ? getSelectCreator(isFormElement[i]) : ''; %>
+            <%- isFormElement[i]['type'] === 'textarea' ? getTextareaCreator(isFormElement[i]) : ''; %>
+            <% for (let x = 0; x < isInputType['length']; x++) { %>
+                <% if (isFormElement[i]['type'] === isInputType[x]) { %>
+                    <%- getInputCreator(isFormElement[i]);%>
                 <% } %>
             <% } %>
         <% } %>

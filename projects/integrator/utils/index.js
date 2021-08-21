@@ -4,7 +4,7 @@ const fs = require('fs');
 const urlJoin = require('url-join');
 
 const bootstrapCarousel = (object) => {
-    let isID = 'carouselExampleCaptions';
+    let isID = getValidation(object['id']) ? object['id'] : 'carousel';
     let result = '';
     result += '<div id=\"' + isID + '\" class=\"carousel slide\" data-bs-ride=\"carousel\">';
         result += '<div class=\"carousel-indicators\">';
@@ -135,8 +135,8 @@ const bootstrapModal = (object) => {
     result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
         result += '<div class=\"modal-dialog\">';
             result += '<div class=\"modal-content\">';
-                result += object['title'] ? '<div class=\"modal-header\">' + '<h6>' + object['title'] + '</h6>' + '</div>' : '';
-                result += object['description'] ? '<div class=\"modal-body\">' + object['description'] + '</div>' : '';
+                result += getValidation(object['title']) ? '<div class=\"modal-header\">' + '<h6>' + object['title'] + '</h6>' + '</div>' : '';
+                result += getValidation(object['description']) ? '<div class=\"modal-body\">' + object['description'] + '</div>' : '';
                 result += '<div class=\"modal-footer\">';
                     result += '<form action=\"' + currentAction + '\" method=\"POST\">';
                         result += '<button type=\"submit\">';
@@ -280,6 +280,7 @@ const isEmpty = (object) => {
 const getPathPrefix = (content) => {
     return {
         pathPrefix : getValidation(content) ? String(content).trim().split('-').join('/').toLowerCase() : '',
+        isPathPrefix : getValidation(content) ? String(content).trim().split('-').join('/').toLowerCase() : '',
     }
 };
 
@@ -288,8 +289,8 @@ const getPageTitle = (object) => {
     result += getValidation(object['prefix']) ? object['prefix'] : '';
     result += getValidation(object['suffix']) ? ' ' + object['suffix'] : '';
     return {
-        pageTitle : result.trim().split('-').join(' ').toLowerCase(),
-    }
+        isPageTitle : result.trim().split('-').join(' ').toLowerCase(),
+    };
 };
 
 const getRandomNumber = (object) => {
@@ -317,10 +318,6 @@ const isThis = (string, type) => {
     return typeof string === type;
 };
 
-// const isThis = (object) => {
-//     return typeof object['content'] === object['type'];
-// };
-
 const getDOCNumber = (array) => {
     let num = '', result = '';
     for (let x = 0; x < array['length']; x++) {    
@@ -333,18 +330,18 @@ const getDOCNumber = (array) => {
     return result;
 };
 
+const getRequest = (array) => {
+    return require(urlJoin([ '..', ...array ]));
+};
+
 const getPublicList = () => {
     const getRecordList = (content) => {
         const result = [];
-        const contentFilePath = [
-            '..',
-            'database',
-            'option.js'
-        ];
-        for (let i = 0; i < require(urlJoin(contentFilePath))[content]['length']; i++) {
+        const contentFilePath = [ 'database', 'option.js' ];
+        for (let i = 0; i < getRequest(contentFilePath)[content]['length']; i++) {
             result.push({
-                first : require(urlJoin(contentFilePath))[content][i],
-                last : require(urlJoin(contentFilePath))['last'][Math.floor(Math.random() * require(urlJoin(contentFilePath))['last']['length'])],
+                first : getRequest(contentFilePath)[content][i],
+                last : getRequest(contentFilePath)['last'][Math.floor(Math.random() * getRequest(contentFilePath)['last']['length'])],
                 gender : content,
             });
         };
@@ -375,6 +372,7 @@ const getForeignKey = (table) => {
 const getUserSession = (content) => {
     return {
         userSession : !isEmpty(content) ? content : undefined,
+        isUserSession : !isEmpty(content) ? content : undefined,
     };
 };
 
@@ -383,14 +381,8 @@ const isThere = (array) => {
 };
 
 const addJsDatabase = (object) => {
-    const contentFilePath = [
-        ...object['require'],
-        object['title'] + '.js',
-    ];
-    const contentFile = isThere(contentFilePath) ? require(urlJoin([
-        '..',
-        ...contentFilePath,
-    ])) : [];
+    const contentFilePath = [ ...object['require'], object['title'] + '.js' ];
+    const contentFile = isThere(contentFilePath) ? getRequest(contentFilePath) : [];
     object['attachment'] ? contentFile.push(object['attachment']) : undefined;
     fs.writeFileSync(urlJoin(contentFilePath), 'const ' + object['title'] + ' = ');
     fs.appendFileSync(urlJoin(contentFilePath), JSON.stringify(contentFile));
@@ -399,50 +391,46 @@ const addJsDatabase = (object) => {
 };
 
 const addJsonDatabase = (object) => {
-    const contentFilePath = [
-        ...object['require'],
-        object['title'] + '.json',
-    ];
+    const contentFilePath = [ ...object['require'], object['title'] + '.json' ];
     const contentFile = isThere(contentFilePath) ? JSON.parse(fs.readFileSync(urlJoin(contentFilePath), { encoding : 'utf-8' })) : [];
     object['attachment'] ? contentFile.push(object['attachment']) : undefined;
     fs.writeFileSync(urlJoin(contentFilePath), JSON.stringify(contentFile));
 };
 
 const saveJsDatabase = (object) => {
-    const contentFilePath = [
-        ...object['require'],
-        object['title'] + '.js',
-    ];
+    const contentFilePath = [ ...object['require'], object['title'] + '.js' ];
     fs.writeFileSync(urlJoin(contentFilePath), 'const ' + object['title'] + ' = ');
     fs.appendFileSync(urlJoin(contentFilePath), JSON.stringify(object['content']));
     fs.appendFileSync(urlJoin(contentFilePath), ';');
     fs.appendFileSync(urlJoin(contentFilePath), 'module.exports = ' + object['title'] + ';');
 };
 
+
+
+
+
 const getLoremIpsum = (object) => {
-    const contentFilePath = [
-        'database',
-        'option.js',
-    ];
+    const contentFilePath = [ 'database', 'option.js' ];
     return {
-        title : isThere(contentFilePath) ? require(urlJoin([
-            '..',
-            ...contentFilePath,
-        ]))['lorem']['title'] : '',
-        description : isThere(contentFilePath) ? require(urlJoin([
-            '..',
-            ...contentFilePath,
-        ]))['lorem']['description'] : '',
+        title : isThere(contentFilePath) ? getRequest(contentFilePath)['lorem']['title'] : '',
+        description : isThere(contentFilePath) ? getRequest(contentFilePath)['lorem']['description'] : '',
     };
 };
 
 const getRandomIndex = (object) => {
     const result = [];
-    const contentFilePath = [ '..', 'database', 'option.js' ];
-    for (let i = 0; i < require(urlJoin(contentFilePath))[object['array']]['length']; i++)
-        result.push(require(urlJoin(contentFilePath))[object['array']][i]['option']);
+    const contentFilePath = [ 'database', 'option.js' ];
+    for (let i = 0; i < getRequest(contentFilePath)[object['array']]['length']; i++)
+        result.push(getRequest(contentFilePath)[object['array']][i]['option']);
     return result[Math.floor(Math.random() * result['length'])];
 };
+
+
+
+
+
+
+
 
 const getRomanNumber = (content) => {
     let result = '';
@@ -624,18 +612,17 @@ const getModelSearchParams = (object) => {
 };
 
 const getInputType = () => {
-    const contentFilePath = [
-        '..',
-        'database',
-        'option.js',
-    ];
     return {
-        inputType : require(urlJoin(contentFilePath))['inputType'],
+        isInputType : getRequest([ 'database', 'option.js' ])['inputType'],
     };
 };
 
 const getSearchAction = (object) => {
     return {
+        isSearchAction : getURLPath({
+            prefix : object['prefix'],
+            suffix : object['suffix'],
+        }),
         searchAction : getURLPath({
             prefix : object['prefix'],
             suffix : object['suffix'],
@@ -643,21 +630,17 @@ const getSearchAction = (object) => {
     };
 };
 
+
 const getFormElement = (object) => {
-    const contentFilePath = [
-        '..',
-        'database',
-        'element.js',
-    ];
     return {
-        formElement : require(urlJoin(contentFilePath))[object['element']][object['type']],
+        isFormElement : getRequest([ 'database', 'element.js' ])[object['element']][object['type']],
     };
 };
 
-const getFirstUpperCase = (string) => {
+const getFirstUpperCase = (content) => {
     let result = '';
-    result += String(string).charAt(0).toUpperCase();
-    result += String(string).slice(1);
+    result += String(content).charAt(0).toUpperCase();
+    result += String(content).slice(1);
     return result;
 };
 
@@ -755,16 +738,16 @@ const toClean = (result) => {
     return result.trim();
 };
 
-const getPlural = (result) => {
-    if (isTheLast(result, 'y')) result = result.substr(0, result['length'] - 1) + 'ies';
-    else if (isTheLast(result, 's')) result += 'es';
-    else result += 's';
-    return result.trim().toLowerCase();
+const getPlural = (content) => {
+    if (isTheLast(content, 'y')) content = content.substr(0, content['length'] - 1) + 'ies';
+    else if (isTheLast(content, 's')) content += 'es';
+    else content += 's';
+    return content.trim().toLowerCase();
 };
 
-const getbtnTitle = (result) => {
+const getBTNTitle = (content) => {
     return {
-        btnTitle : String(result).trim(),
+        isBTNTitle : String(content).trim(),
     };
 };
 
@@ -827,46 +810,48 @@ const getSalaryRange = (object) => {
     return result;
 };
 
-let getDateFormat = (string) => {
-    const day = new Date(string).getDate().toString().padStart(2, '0'),
-    month = (new Date(string).getMonth() + 1).toString().padStart(2, '0'),
-    year = new Date(string).getFullYear();
+let getDateFormat = (content) => {
+    const day = new Date(content).getDate().toString().padStart(2, '0'),
+    month = (new Date(content).getMonth() + 1).toString().padStart(2, '0'),
+    year = new Date(content).getFullYear();
     return day + '/' + month + '/' + year;
 };
 
 const getJsDatabase = (object) => {
-    const contentFilePath = [
-        ...object['require'],
-        object['title'] + '.js',
-    ];
-    const result = isThere(contentFilePath) ? require(urlJoin([
-        '..',
-        ...contentFilePath,
-    ])) : [];
-    return result;
+    const contentFilePath = [ ...object['require'], object['title'] + '.js' ];
+    return isThere(contentFilePath) ? getRequest(contentFilePath) : [];
 };
 
-const getJSFileModule = (object) => {
-    const contentFilePath = [
-        'public',
-        'javascripts',
-        object['content'] + '.js',
-    ];
+const getGJSMFile = (object) => {
     return {
-        [object['variable']] : isThere(contentFilePath)
+        isGJSMFile
+        : isThere([ 'public', 'javascripts', object['content'] + '.js' ])
         ? '<script type=\"module\" src=\"/javascripts/' + object['content'] + '.js\"></script>'
         : '',
     };
 };
 
-const getCSSFile = (object) => {
-    const contentFilePath = [
-        'public',
-        'stylesheets',
-        object['content'] + '.css',
-    ];
+const getPJSMFile = (object) => {
     return {
-        [object['variable']] : isThere(contentFilePath)
+        isPJSMFile
+        : isThere([ 'public', 'javascripts', object['content'] + '.js' ])
+        ? '<script type=\"module\" src=\"/javascripts/' + object['content'] + '.js\"></script>'
+        : '',
+    };
+};
+
+const getGCSSFile = (object) => {
+    return {
+        isGCSSFile
+        : isThere([ 'public', 'stylesheets', object['content'] + '.css' ])
+        ? '<link rel=\'stylesheet\' href=\'/stylesheets/' + object['content'] + '.css\'/>'
+        : '',
+    };
+};
+const getPCSSFile = (object) => {
+    return {
+        isPCSSFile
+        : isThere([ 'public', 'stylesheets', object['content'] + '.css' ])
         ? '<link rel=\'stylesheet\' href=\'/stylesheets/' + object['content'] + '.css\'/>'
         : '',
     };
@@ -884,14 +869,15 @@ const getJSONFile = (object) => {
         return result;
     }
     return {
-        [ getVariableName(object['content']) ] : jsonFileReader([ 'database', 'json', object['content'] + '.json' ]),
+        [getVariableName(object['content'])]
+        : jsonFileReader([ 'database', 'json', object['content'] + '.json' ]),
     };
 };
 
 let variables = () => {
     return {
-        ...getCSSFile({ content : 'style', variable : 'isGlobalCSSFile' }),
-        ...getJSFileModule({ content : 'script', variable : 'isGlobalJSFile' }),
+        ...getGCSSFile({ content : 'style' }),
+        ...getGJSMFile({ content : 'script' }),
         ...getJSONFile({ content : 'accordion' }),
         ...getJSONFile({ content : 'carousel' }),
         ...getJSONFile({ content : 'footer-menu' }),
@@ -930,7 +916,7 @@ module.exports = {
     addJsDatabase,
     addJsonDatabase,
     arrayCreator,
-    getbtnTitle,
+    getBTNTitle,
     getCNPJNumber,
     getCPFNumber,
     getDOCNumber,
@@ -940,7 +926,9 @@ module.exports = {
     getHash,
     getInputType,
     getJsDatabase,
-    getJSFileModule,
+    
+    getPJSMFile,
+
     getJsPagination,
     getLoremIpsum,
     getModelPagination,

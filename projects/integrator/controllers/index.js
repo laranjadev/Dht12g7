@@ -1,5 +1,5 @@
 const {
-    getJSFileModule,
+    getPJSMFile,
     package,
 } = require('../utils');
 
@@ -8,9 +8,8 @@ const viewActions = (pageName) => {
         [pageName] : (req, res, next) => {
             return res.render(pageName, {
                 pageTitle : pageName,
-                ...getJSFileModule({
+                ...getPJSMFile({
                     content : pageName,
-                    variable : 'isPageJSFile',
                 }),
                 ...package(),
             });

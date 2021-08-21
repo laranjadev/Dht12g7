@@ -10,6 +10,7 @@ let {
     getStore,
     getUpdate,
 } = require('../../actions/database');
+
 const getControllers = (object) => {
     const Action = {
         ...getAll(object),
@@ -25,6 +26,7 @@ const getControllers = (object) => {
     }
     return Action;
 };
+
 module.exports = {
     getControllers,  
 };

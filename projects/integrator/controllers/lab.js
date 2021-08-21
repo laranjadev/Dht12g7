@@ -6,7 +6,7 @@ const {
 } = require('../models');
 const {
     getFormElement,
-    getJSFileModule,
+    getPJSMFile,
     getURLPath,
     package,
 } = require('../utils');
@@ -107,7 +107,7 @@ module.exports = {
                 },
             },
             order : [
-                ['title', 'ASC']
+                [ 'title', 'ASC' ]
             ],
             limit : amount,
             offset : amount,
@@ -118,9 +118,8 @@ module.exports = {
         const pageName = '_j';        
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
             ...getFormElement({
                 element : pageName,
@@ -132,9 +131,8 @@ module.exports = {
         const pageName = '_k';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -142,9 +140,8 @@ module.exports = {
         const pageName = '_l';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -152,9 +149,8 @@ module.exports = {
         const pageName = '_m';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -162,9 +158,8 @@ module.exports = {
         const pageName = '_n';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -172,9 +167,8 @@ module.exports = {
         const pageName = '_o';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -182,9 +176,8 @@ module.exports = {
         const pageName = '_p';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -192,9 +185,8 @@ module.exports = {
         const pageName = '_q';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -205,9 +197,8 @@ module.exports = {
         const pageName = '_r';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
             searchAction : getURLPath({
                 prefix : '/lab/',
@@ -219,9 +210,8 @@ module.exports = {
         const pageName = '_s';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -229,9 +219,8 @@ module.exports = {
         const pageName = '_t';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -239,9 +228,8 @@ module.exports = {
         const pageName = '_u';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -249,9 +237,8 @@ module.exports = {
         const pageName = '_v';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -259,9 +246,8 @@ module.exports = {
         const pageName = '_w';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -269,9 +255,8 @@ module.exports = {
         const pageName = '_x';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -279,9 +264,8 @@ module.exports = {
         const pageName = '_y';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
@@ -289,9 +273,8 @@ module.exports = {
         const pageName = '_z';
         return res.render(pageName, {
             ...package(),
-            ...getJSFileModule({
+            ...getPJSMFile({
                 content : pageName,
-                variable : 'isPageJSFile',
             }),
         });
     },
