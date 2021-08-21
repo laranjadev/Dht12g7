@@ -3,9 +3,31 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const urlJoin = require('url-join');
 
-const bootstrapCarousel = (object) => {
-    let isID = getValidation(object['id']) ? object['id'] : 'carousel';
+const bootstrapGallery = (object) => {
     let result = '';
+    result += '<div id=\"portfolio\">'
+        result += '<div id=\"gallery\">';
+            result += '<div id=\"row\">';
+                for (let i = 0; i < object['array']['length']; i++) {
+                    let isImage = object['array'][i]['image'], isTitle = object['array'][i]['title'];
+                    result += '<div id=\"col\">';
+                        result += '<a href=\"' + isImage + '\" title=\"' + isTitle + '\">';
+                            result += '<img src=\"' + isImage + '\" alt=\"' + isTitle + '\" />';
+                            result += '<div id=\"caption\">';
+                                result += isTitle ? '<h6>' + isTitle + '</h6>' : '';
+                                result += isTitle ? '<p>' + isTitle + '</p>' : '';
+                            result += '</div>';
+                        result += '</a>';
+                    result += '</div>';
+                };
+            result += '</div>';
+        result += '</div>';
+    result += '</div>';
+    return result;
+};
+
+const bootstrapCarousel = (object) => {
+    let result = '', isID = getValidation(object['id']) ? object['id'] : 'carousel';
     result += '<div id=\"' + isID + '\" class=\"carousel slide\" data-bs-ride=\"carousel\">';
         result += '<div class=\"carousel-indicators\">';
             for (let i = 0; i < object['array']['length']; i++) {
@@ -861,6 +883,7 @@ let variables = () => {
         ...getGJSMFile({ content : 'script' }),
         ...getJSONFile({ content : 'accordion' }),
         ...getJSONFile({ content : 'carousel' }),
+        ...getJSONFile({ content : 'gallery' }),
         ...getJSONFile({ content : 'footer-menu' }),
         ...getJSONFile({ content : 'navbar' }),
         ...getJSONFile({ content : 'regulation' }),
@@ -871,6 +894,7 @@ let bootstrap = () => {
     return {
         bootstrapAccordion,
         bootstrapCarousel,
+        bootstrapGallery,
         bootstrapModal,
         bootstrapNavbar,
     };
@@ -909,6 +933,7 @@ module.exports = {
     getJsDatabase,
     
     getPJSMFile,
+    getPCSSFile,
 
     getJsPagination,
     getLoremIpsum,

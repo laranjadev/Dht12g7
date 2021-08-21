@@ -1,4 +1,5 @@
 const {
+    getPCSSFile,
     getPJSMFile,
     package,
 } = require('../utils');
@@ -8,6 +9,9 @@ const viewActions = (pageName) => {
         [pageName] : (req, res, next) => {
             return res.render(pageName, {
                 pageTitle : pageName,
+                ...getPCSSFile({
+                    content : pageName,
+                }),
                 ...getPJSMFile({
                     content : pageName,
                 }),
@@ -24,6 +28,7 @@ const Action = {
     ...viewActions('maps'),
     ...viewActions('regulation'),
     ...viewActions('carousel'),
+    ...viewActions('gallery'),
 };
 
 module.exports = Action;

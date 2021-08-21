@@ -70,6 +70,7 @@ const routes = {
             'maps',
             'regulation',
             'carousel',
+            'gallery',
         ], 'get'),
     ],
     api : [
