@@ -246,9 +246,10 @@ const getUpdate = (object) => {
             const { id } = req['params'];
             let database = getJsDatabase(object);
             let index = database.find((index) => { return index['id'] == id; });
-            for (let i = 0; i < Object.getOwnPropertyNames(req['body'])['length']; i++) {
-                index[Object.getOwnPropertyNames(req['body'])[i]] = Object.getOwnPropertyDescriptors(req['body'])[Object.getOwnPropertyNames(req['body'])[i]]['value'];
-            }
+            let isName = Object.getOwnPropertyNames(req['body']);
+            let isDescriptor = Object.getOwnPropertyDescriptors(req['body']);
+            for (let i = 0; i < isName['length']; i++)
+                index[isName[i]] = isDescriptor[isName[i]]['value'];
             index['picture'] = files['length'] ? files[0]['filename'] : '';
             const package = {
                 content : database,

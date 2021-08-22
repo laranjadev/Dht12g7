@@ -4,40 +4,41 @@ import {
 
 addRemoveClasses({
     elementList : [
-        '#portfolio #gallery',
+        '#row',
     ],
     classeList : [
-        'container-fluid',
-        'p-0',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#portfolio #gallery #row',
-    ],
-    classeList : [
+        'gx-3',
         'row',
-        'g-0',
     ],
     method : 'add',
 });
 
 addRemoveClasses({
     elementList : [
-        '#portfolio #gallery #row #col',
+        '#gallery-title',
+    ],
+    classeList : [
+        'col',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery-image',
     ],
     classeList : [
         'col-lg-4',
         'col-sm-6',
+        'mb-3',
     ],
     method : 'add',
 });
 
 addRemoveClasses({
     elementList : [
-        '#portfolio #gallery #row #col a',
+        '#gallery-image a',
     ],
     classeList : [
         'box',
@@ -47,26 +48,68 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#portfolio #gallery #row #col a img',
+        '#gallery-image a img',
     ],
     classeList : [
         'img-fluid',
+        'img-thumbnail',
+        'rounded',
+        'shadow-sm',
     ],
     method : 'add',
 });
 
 addRemoveClasses({
     elementList : [
-        '#portfolio #gallery #row #col a #caption',
+        '#caption',
     ],
     classeList : [
         'caption',
+        'px-5',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#dark-item',
+        '#light-item',
+    ],
+    classeList : [
+        'container-fluid',
+        'mb-3',
+        'pt-3',
+        'px-3',
+        'rounded',
+        'shadow-sm',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#dark-item',
+    ],
+    classeList : [
+        'bg-dark',
+        'text-light',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#light-item',
+    ],
+    classeList : [
+        'bg-light',
+        'text-dark',
     ],
     method : 'add',
 });
 
 window.addEventListener('DOMContentLoaded', () => {
     new SimpleLightbox({
-        elements : '#portfolio a.box',
+        elements : 'a.box',
     });
 });

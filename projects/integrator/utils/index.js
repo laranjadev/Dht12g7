@@ -3,26 +3,73 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const urlJoin = require('url-join');
 
+const getValidation = (content) => {
+    if (!content)
+        return false;
+    else if (isThis(content, 'undefined'))
+        return false;
+    else
+        return true;
+};
+
+const isEmpty = (object) => {
+    if (object == null) return true;
+    if (object['length'] > 0) return false;
+    if (object['length'] === 0) return true;
+    for (let key in object)
+        if (Object.prototype.hasOwnProperty.call(object, key))
+            return false;
+    return true;
+};
+
 const bootstrapGallery = (object) => {
     let result = '';
-    result += '<div id=\"portfolio\">'
-        result += '<div id=\"gallery\">';
-            result += '<div id=\"row\">';
-                for (let i = 0; i < object['array']['length']; i++) {
-                    let isImage = object['array'][i]['image'], isTitle = object['array'][i]['title'];
-                    result += '<div id=\"col\">';
-                        result += '<a href=\"' + isImage + '\" title=\"' + isTitle + '\">';
-                            result += '<img src=\"' + isImage + '\" alt=\"' + isTitle + '\" />';
-                            result += '<div id=\"caption\">';
-                                result += isTitle ? '<h6>' + isTitle + '</h6>' : '';
-                                result += isTitle ? '<p>' + isTitle + '</p>' : '';
-                            result += '</div>';
-                        result += '</a>';
+    for (let x = 0; x < object['array']['length']; x++) {
+        result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
+            if (getValidation(object['galleryTitle']) || getValidation(object['galleryDescription'])) {
+                if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
+                    result += '<div id=\"row\">';
+                        result += '<div id=\"gallery-title\">';
+                            if (getValidation(object['galleryTitle'])) {
+                                if (getValidation(object['array'][x]['title'])) {
+                                    result += getLineBreak({ content : object['array'][x]['title'], element : 'h1', letter : '' });
+                                };
+                            };
+                            if (getValidation(object['galleryDescription'])) {
+                                if (getValidation(object['array'][x]['description'])) {
+                                    result += getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '' });
+                                };
+                            };
+                        result += '</div>';
                     result += '</div>';
                 };
-            result += '</div>';
+            };
+            if (getValidation(object['array'][x]['items'])) {
+                result += '<div id=\"row\">';
+                    for (let y = 0; y < object['array'][x]['items']['length']; y++) {
+                        if (getValidation(object['array'][x]['items'][y]['image'])) {
+                            let isImage = object['array'][x]['items'][y]['image'];
+                            let isTitle = getValidation(object['array'][x]['items'][y]['title'])
+                            ? object['array'][x]['items'][y]['title'] : '';
+                            let isDescription = getValidation(object['array'][x]['items'][y]['description'])
+                            ? getLineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '' })
+                            : '';
+                            result += '<div id=\"gallery-image\">';
+                                result += '<a href=\"' + isImage + '\"' + (isTitle ? ' title=\"' + isTitle + '\"' : '') + '>';
+                                    result += '<img src=\"' + isImage + '\"' + (isTitle ? ' alt=\"' + isTitle + '\"' : '') + '/>';
+                                    result += isTitle ? '<div id=\"caption\">' + isTitle + '</div>' : '';
+                                result += '</a>';
+                                if (getValidation(object['imageDescription'])) {
+                                    result += isTitle ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'p', 'b' ], letter : '.' }) : '';
+                                    result += isDescription;
+                                };
+                            result += '</div>';
+                        };
+                    };
+                result += '</div>';
+            };
         result += '</div>';
-    result += '</div>';
+    };
     return result;
 };
 
@@ -182,15 +229,46 @@ const getTypeNumber = (object) => {
 };
 
 const getLineBreak = (object) => {
-    const letter = getValidation(object['letter']) ? object['letter'] + ' ' : '';
-    const element = getValidation(object['element']) ? '</' + object['element'] + '><' + object['element'] + '>' : '';
-    return object['content'].split(letter).join(letter + element);
+    let start = '', end = '';
+    if (isThis(object['element'], 'string')) {
+        start = '<' + object['element'] + '>';
+        end = '</' + object['element'] + '>';
+    } else if (isThis(object['element'], 'object')) {
+        for (let i = 0; i < object['element']['length']; i++)
+            start += '<' + object['element'][i] + '>';
+        for (let i = object['element']['length']; i > 0; i--)
+            end += '</' + object['element'][i] + '>';
+    }
+    let result = '';
+    result += start;
+    if (getValidation(object['element']) && getValidation(object['letter'])) {
+        result += object['content'].split(object['letter'] + ' ').join(object['letter'] + end + start);
+    } else {
+        result += object['content'];
+    }
+    result += end;
+    return result;
+};
+
+let objectCleaner = (content) => {
+    let array = [];
+    for (let x = 0; x < content['length']; x++) {
+        let index = {};
+        for (let y = 0; y < Object.getOwnPropertyNames(content[x])['length']; y++) {
+            let isName = Object.getOwnPropertyNames(content[x])[y];
+            let isDescriptor = Object.getOwnPropertyDescriptors(content[x]);
+            isDescriptor[isName]['value'] ? index[isName] = isDescriptor[isName]['value'] : undefined;
+        };
+        if (isEmpty(index)) { } else {
+            array.push(index);
+        };
+    };
+    return array;
 };
 
 let bootstrapAccordion = (object) => {
     let result = '';
     let isTypeNumber = !isThis(object['typeNumber'], 'undefined') ? object['typeNumber'] : false;
-    let isLineBreak = !isThis(object['lineBreak'], 'undefined') ? object['lineBreak'] : false;
     result += '<div class=\"accordion\" id=\"' + object['id'] + '\">';
         for (let x = 0; x < object['array']['length']; x++) {
         let isID = !isThis(object['id'], 'undefined') ? '-' + object['id'] + '-' + x : '-' + x;
@@ -214,13 +292,8 @@ let bootstrapAccordion = (object) => {
             result += ' data-bs-parent=\"#' + object['id'] + '\"';
             result += ' id=\"collapse' + isID + '\"';
             result += '>';
-                let isValidation = getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']);
-                result += isValidation ? '<div class=\"accordion-body\">' : '';
-                    if (getValidation(object['array'][x]['description'])) {
-                        result += '<p>';
-                            result += isLineBreak ? getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '.' }) : object['array'][x]['description'];
-                        result += '</p>';
-                    }
+                result += getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']) ? '<div class=\"accordion-body\">' : '';
+                    result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '' }) : '';
                     if (getValidation(object['array'][x]['items'])) {
                         result += '<ul>';
                             for (let y = 0; y < object['array'][x]['items']['length']; y++) {
@@ -228,13 +301,9 @@ let bootstrapAccordion = (object) => {
                                     result += '<p>';
                                         result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
                                         result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : 'p', letter : '.' }) : object['array'][x]['items'][y]['title'];
+                                        result += object['array'][x]['items'][y]['title'];
                                     result += '</p>';
-                                    if (getValidation(object['array'][x]['items'][y]['description'])) {
-                                        result += '<p>';
-                                            result += lineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '.' });
-                                        result += '</p>';
-                                    }
+                                    result += getValidation(object['array'][x]['items'][y]['description']) ? lineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '.' }) : '';
                                     if (getValidation(object['array'][x]['items'][y]['items'])) {
                                         result += '<ul>';
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
@@ -243,17 +312,17 @@ let bootstrapAccordion = (object) => {
                                                         result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
                                                         result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
                                                         result += getTypeNumber({ index : z, typeNumber : isTypeNumber });
-                                                        result += isLineBreak ? getLineBreak({ content : object['array'][x]['items'][y]['items'][z], element : 'p', letter : '.' }) : object['array'][x]['items'][y]['items'][z];
+                                                        result += object['array'][x]['items'][y]['items'][z];
                                                     result += '</p>';
                                                 result += '</li>';
                                             };
                                         result += '</ul>';
-                                    }
+                                    };
                                 result += '</li>';
                             };
                         result += '</ul>';
                     };
-                result += isValidation ? '</div>' : '';
+                result += getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']) ? '</div>' : '';
             result += '</div>';
         result += '</div>';
         }
@@ -287,15 +356,6 @@ const jsonFileReader = (array) => {
     return isThere(array) ? JSON.parse(fs.readFileSync(urlJoin(array), { encoding : 'utf-8' })) : [];
 };
 
-const isEmpty = (object) => {
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-    if (object == null) return true;
-    if (object['length'] > 0) return false;
-    if (object['length'] === 0) return true;
-    for (var key in object) if (hasOwnProperty.call(object, key)) return false;
-    return true;
-};
-
 const getPathPrefix = (content) => {
     return {
         pathPrefix : getValidation(content) ? String(content).trim().split('-').join('/').toLowerCase() : '',
@@ -314,12 +374,6 @@ const getPageTitle = (object) => {
 
 const getRandomNumber = (object) => {
     return Math.floor(Math.random() * (Math.floor(object['maximum']) - Math.ceil(object['minimum']))) + Math.ceil(object['minimum']);
-};
-
-const getValidation = (content) => {
-    if (!content) return false;
-    else if (isThis(content, 'undefined')) return false;
-    else return true;
 };
 
 const isTheLast = (string, letter) => {
