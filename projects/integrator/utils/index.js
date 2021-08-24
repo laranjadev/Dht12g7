@@ -22,25 +22,57 @@ const isEmpty = (object) => {
     return true;
 };
 
+const quickMenu = (object) => {
+    let result = '';
+    result += '<div class=\"row\">';
+        result += '<div class=\"col\">';
+            result += '<div id=\"quick-menu\">';
+                for (let i = 0; i < object['array']['length']; i++) {
+                    let isHREF = '';
+                    isHREF += '/' + object['pathPrefix'];
+                    isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
+                    isHREF += '/' + object['index'];
+                    isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
+                    isHREF = isHREF.toLowerCase();
+                    let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
+                    let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
+                    let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
+                    result += '<a href=\"' + isHREF + '\"' + isTarget + isToggle + '>';
+                        result += getFirstUpperCase(isTitle);
+                    result += '</a>';
+                };
+            result += '</div>';
+        result += '</div>';
+    result += '</div>';
+    return result;
+};
+
+const bootstrapGalleryQuickMenu = (object) => {
+    let result = '';
+    result += '<div class=\"row\">';
+        result += '<div class=\"col\">';
+            result += '<div id=\"quick-menu\">';
+                for (let i = 0; i < object['object']['array']['length']; i++) {
+                    result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + '-' + i + '\">' : '';
+                        result += getFirstUpperCase(object['object']['array'][i]['title']);
+                    result += getValidation(object['id']) ? '</a>' : '';
+                };
+            result += '</div>';
+        result += '</div>';
+    result += '</div>';
+    return result;
+};
+
 const bootstrapGallery = (object) => {
     let result = '';
     for (let x = 0; x < object['array']['length']; x++) {
+        result += bootstrapGalleryQuickMenu({ id : 'header', object : object });
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
             if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
                     result += '<div id=\"header\">';
-                        result += getValidation(object['array'][x]['title'])
-                        ? getLineBreak({
-                            content : object['array'][x]['title'],
-                            element : [ 'h1' ],
-                            letter : ''
-                        }) : '';
-                        result += getValidation(object['array'][x]['description'])
-                        ? getLineBreak({
-                            content : object['array'][x]['description'],
-                            element : [ 'p', 'em' ],
-                            letter : ''
-                        }) : '';
+                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'header-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
+                        result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
                 };
             };
@@ -103,12 +135,12 @@ const bootstrapCarousel = (object) => {
                     result += ' alt=\"' + object['array'][i]['title'] + '\"';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
-                        result += '<h5>';
-                            result += object['array'][i]['title'];
-                        result += '</h5>';
-                        result += '<p>';
-                            result += object['array'][i]['description'];
-                        result += '</p>';
+                        result += getValidation(object['array'][i]['title'])
+                        ? getLineBreak({ content : object['array'][i]['title'], element : [ 'h3', 'em' ], letter : '' })
+                        : '';
+                        result += getValidation(object['array'][i]['description'])
+                        ? getLineBreak({ content : object['array'][i]['description'], element : [ 'p', 'em' ], letter : '' })
+                        : '';
                     result += '</div>';
                 result += '</div>';
             }
@@ -126,7 +158,7 @@ const bootstrapCarousel = (object) => {
 
 const bootstrapNavbar = (object) => {
     let result = '';
-    result += getElement({ element : object['element'], id : object['id'], position : 'header' });
+    result += getTagName({ element : object['element'], id : object['id'], position : 'header' });
         result += '<button';
         result += ' aria-controls=\"navbarSupportedContent\"';
         result += ' aria-expanded=\"false\"';
@@ -194,7 +226,7 @@ const bootstrapNavbar = (object) => {
                 result += '<button type=\"submit\">' + getFirstUpperCase('Search') + '</button>';
             result += '</form>';
         };
-    result += getElement({ element : object['element'], id : object['id'], position : 'footer' });
+    result += getTagName({ element : object['element'], id : object['id'], position : 'footer' });
     return result;
 };
 
@@ -234,25 +266,25 @@ const getTypeNumber = (object) => {
 };
 
 const getLineBreak = (object) => {
-    let start = '', end = '';
+    let is_start = '', is_end = '';
+    let is_id = getValidation(object['id']) ? ' id=\"' + object['id'] + '\"' : '';
     if (isThis(object['element'], 'string')) {
-        start = '', end = '';
-        start = '<' + object['element'] + '>';
-        end = '</' + object['element'] + '>';
-    }
+        is_start = '<' + object['element'] + is_id + '>';
+        is_end = '</' + object['element'] + '>';
+    };
     if (isThis(object['element'], 'object')) {
-        start = '', end = '';
         for (let i = 0; i <= object['element']['length'] - 1; i++)
-            start += '<' + object['element'][i] + '>';
+            is_start += '<' + object['element'][i] + is_id + '>';
         for (let i = object['element']['length'] + 1; i >= 0; i--)
-            end += '</' + object['element'][i] + '>';
-    }
-    let result = '';
-    result += start;
-    result += getValidation(object['element']) && getValidation(object['letter'])
-    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + end + start)
+            is_end += '</' + object['element'][i] + '>';
+    };
+    let is_content = getValidation(object['element']) && getValidation(object['letter'])
+    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
     : object['content'];
-    result += end;
+    let result = '';
+    result += is_start;
+    result += is_content;
+    result += is_end;
     return result;
 };
 
@@ -263,7 +295,9 @@ let objectCleaner = (content) => {
         for (let y = 0; y < Object.getOwnPropertyNames(content[x])['length']; y++) {
             let isName = Object.getOwnPropertyNames(content[x])[y];
             let isDescriptor = Object.getOwnPropertyDescriptors(content[x]);
-            isDescriptor[isName]['value'] ? index[isName] = isDescriptor[isName]['value'] : undefined;
+            isDescriptor[isName]['value']
+            ? index[isName] = isDescriptor[isName]['value']
+            : undefined;
         };
         if (isEmpty(index)) { } else {
             array.push(index);
@@ -340,21 +374,16 @@ const getLowerCase = (content) => {
     return String(content).trim().toLowerCase();
 };
 
-const getElement = getElementTag = (object) => {
+const getTagName = (object) => {
+    let isElement = getValidation(object['element']) ? getLowerCase(object['element']) : '';
+    let isPosition = getValidation(object['position']) ? getLowerCase(object['position']) : '';
+    let isID = getValidation(object['id']) ? ' id=\"' + getLowerCase(object['id']) + '\"' : '';
     let result = '';
-    if (getValidation(object['element']) && getValidation(object['position']))
-        if (object['position'] === 'header') {
-            result += '<';
-            result += getLowerCase(object['element']);
-            result += getValidation(object['id']) ? ' id=\"' + object['id'] + '\"' : '';
-            result += '>';
-        } else if (object['position'] === 'footer') {
-            result += '</' + getLowerCase(object['element']) + '>';
-        } else {
-            result += '';
-        }
-    else
-        result += '';
+    if (isElement && isPosition) {
+        if (isPosition === 'header') { result += '<' + isElement + isID + '>';
+        } else if (isPosition === 'footer') { result += '</' + isElement + '>';
+        } else { result += ''; }
+    } else { result += ''; }
     return result;
 };
 
@@ -944,9 +973,11 @@ let variables = () => {
         ...getJSONFile({ content : 'accordion' }),
         ...getJSONFile({ content : 'carousel' }),
         ...getJSONFile({ content : 'gallery' }),
-        ...getJSONFile({ content : 'footer-menu' }),
+        ...getJSONFile({ content : 'footer-quick-menu' }),
         ...getJSONFile({ content : 'navbar' }),
         ...getJSONFile({ content : 'regulation' }),
+        ...getJSONFile({ content : 'convenience' }),
+        ...getJSONFile({ content : 'proximity' }),
     };
 };
 
@@ -970,6 +1001,7 @@ const package = () => {
         isEmpty,
         isThis,
         toClean,
+        quickMenu,
         ...variables(),
         ...bootstrap(),
     };

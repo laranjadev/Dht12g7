@@ -2,6 +2,11 @@ import {
     getTimer,
     getSignature,
     addRemoveClasses,
+    getCEPCheck,
+    getCNPJMask,
+    getFieldEvent,
+    getFieldValidator,
+    getFormErrorList,
 } from './main.js';
 
 addRemoveClasses({
@@ -31,6 +36,29 @@ addRemoveClasses({
     ],
     classeList : [
         'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#quick-menu',
+    ],
+    classeList : [
+        'btn-group',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#quick-menu a',
+        'button',
+    ],
+    classeList : [
+        'btn',
+        'btn-outline-dark',
     ],
     method : 'add',
 });
@@ -88,16 +116,59 @@ addRemoveClasses({
     method : 'add',
 });
 
+
 addRemoveClasses({
     elementList : [
-        'button',
+        '#dark-item',
+        '#light-item',
     ],
     classeList : [
-        'btn',
-        'btn-outline-dark',
+        'mb-3',
+        'p-3',
+        'rounded',
+        'shadow-sm',
     ],
     method : 'add',
 });
+
+addRemoveClasses({
+    elementList : [
+        '#light-item',
+    ],
+    classeList : [
+        'bg-light',
+        'text-dark',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#dark-item',
+    ],
+    classeList : [
+        'bg-dark',
+        'text-light',
+    ],
+    method : 'add',
+});
+
+// addRemoveClasses({
+//     elementList : [
+//         '#dark-item img',
+//         '#light-item img',
+//     ],
+//     classeList : [
+//         'col-md-4',
+//         'float-md-start',
+//         'me-3',
+//         'bg-white',
+//         'p-3',
+//         'rounded',
+//         'shadow-sm',
+//     ],
+//     method : 'add',
+// });
 
 addRemoveClasses({
     elementList : [
@@ -133,4 +204,120 @@ getTimer({
     element : 'timer',
     number : 1,
     seconds : 1,
+});
+
+addRemoveClasses({
+    elementList : [
+        'nav#pagination',
+    ],
+    classeList : [
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'nav#pagination ul',
+    ],
+    classeList : [
+        'pagination',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'nav#pagination ul',
+    ],
+    classeList : [
+        'ps-3',
+    ],
+    method : 'remove',
+});
+
+addRemoveClasses({
+    elementList : [
+        'nav#pagination ul li',
+    ],
+    classeList : [
+        'page-item',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'nav#pagination ul li a',
+    ],
+    classeList : [
+        'page-link',
+    ],
+    method : 'add',
+});
+
+
+
+
+addRemoveClasses({
+    elementList : [
+        '#content h6',
+    ],
+    classeList : [
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'input',
+        'select',
+        'textarea',
+    ],
+    classeList : [
+        'form-control',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#alert-danger',
+        '#error-list',
+    ],
+    classeList : [
+        'alert',
+        'alert-danger',
+        'form-group',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+
+
+getCEPCheck({
+    element : '#cep',
+});
+
+getCNPJMask({
+    element : '#cnpj',
+});
+
+getFieldEvent({
+    color : '#000',
+    background : '#FFF',
+    elementList : [
+        '.form-control',
+    ],
+});
+
+getFieldValidator({
+    messageTarget : '#alert-danger',
+});
+
+getFormErrorList({
+    messageTarget : '#error-list',
 });

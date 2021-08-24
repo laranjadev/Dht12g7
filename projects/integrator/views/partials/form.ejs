@@ -102,20 +102,16 @@
         html += '<div id=\"alert-danger\" hidden><p></p></div>';
         return html;
     }
-    let html = '';
-    html += '<form';
-        html += getValidation(isFormAttribute['action']) ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
-        html += getValidation(isFormAttribute['enctype']) ? ' enctype=\"' + isFormAttribute['enctype'] + '\"' : '';
-        html += getValidation(isFormAttribute['method']) ? ' method=\"' + isFormAttribute['method'] + '\"' : '';
-    html += '>';
+    let isAction = getValidation(isFormAttribute['action']) ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
+    let isEnctype = getValidation(isFormAttribute['enctype']) ? ' enctype=\"' + isFormAttribute['enctype'] + '\"' : '';
+    let isMethod = getValidation(isFormAttribute['method']) ? ' method=\"' + isFormAttribute['method'] + '\"' : '';
 %>
-<%- html; %>
+<%- '<form' + isAction + isEnctype + isMethod + '>'; %>
     <%
-        let start = '';
+        let start = '', end = '';
         start += '<div class=\"row\">';
         start += '<div class=\"col\">';
         start += '<div id=\"light-item\">';
-        let end = '';
         end += '</div>';
         end += '</div>';
         end += '</div>';
@@ -134,5 +130,18 @@
             <% } %>
         <% } %>
     <% } %>
-    <%- include('./form-footer'); %>
+    <div class="row">
+        <div class="col">
+            <div id="error-list" hidden></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="quick-menu">
+                <button type="submit">
+                    <%- typeof isBTNTitle === 'undefined' ? getFirstUpperCase('send') : getFirstUpperCase(isBTNTitle); %>
+                </button>
+            </div>
+        </div>
+    </div>
 <%- '</form>'; %>

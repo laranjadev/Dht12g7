@@ -5,36 +5,18 @@
                 html += '<div class=\"row\">';
                     html += '<div class=\"col\">';
                         html += '<div id=\"' + (i % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
-                            html += index[i]['picture'] ? '<img src=\"' + '/images/' + index[i]['picture'] + '\" alt=\"\" height=\"200\">' : '';
-                            html += index[i]['title'] ? '<h6>' + getFirstUpperCase(index[i]['title']) + '</h6>' : '';
-                            html += index[i]['description'] ? '<p>' + getFirstUpperCase(index[i]['description']) + '</p>' : '';
+                            html += getValidation(index[i]['picture']) ? '<img src=\"' + '/images/' + index[i]['picture'] + '\" alt=\"\" height=\"200\">' : '';
+                            html += getValidation(index[i]['title']) ? '<h6>' + getFirstUpperCase(index[i]['title']) + '</h6>' : '';
+                            html += getValidation(index[i]['description']) ? '<p>' + getFirstUpperCase(index[i]['description']) + '</p>' : '';
                             html += '<div style="clear: both;"></div>';
                         html += '</div>';
                     html += '</div>';
                 html += '</div>';
-                html += '<div class=\"row\">';
-                    html += '<div class=\"col\">';
-                        html += '<div id=\"footer-menu\">';
-                            for (let x = 0; x < isFooterMenu['length']; x++) {
-                                let href = '/';
-                                href += isPathPrefix;
-                                href += '/';
-                                href += isFooterMenu[x]['title'][0];
-                                href += '/';
-                                href += index[i]['id'];
-                                href = isFooterMenu[x]['path'] ? href : '#';
-                                href = href.toLowerCase();
-                                let target = isFooterMenu[x]['target'] ? ' data-bs-toggle=\"modal\"' : '';
-                                let toggle = isFooterMenu[x]['toggle'] ? ' data-bs-target=\"#modal-' + index[i]['id'] + '\"' : '';
-                                html += '<a href=\"' + href + '\"' + target + toggle + '>';
-                                    html += '<button type=\"submit\">';
-                                        html += getFirstUpperCase(isFooterMenu[x]['title'][1]);
-                                    html += '</button>';
-                                html += '</a>';
-                            };
-                        html += '</div>';
-                    html += '</div>';
-                html += '</div>';
+                html += quickMenu({
+                    array : isFooterQuickMenu,
+                    pathPrefix : isPathPrefix,
+                    index : index[i]['id'],
+                });
                 html += bootstrapModal({
                     array : index,
                     description : '',

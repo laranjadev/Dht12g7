@@ -26,7 +26,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#thumbnail',
+        '#gallery #thumbnail',
     ],
     classeList : [
         'col-lg-4',
@@ -38,7 +38,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#thumbnail #image a',
+        '#gallery #thumbnail #image a',
     ],
     classeList : [
         'box',
@@ -48,7 +48,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#thumbnail #image a img',
+        '#gallery #thumbnail #image a img',
     ],
     classeList : [
         'img-thumbnail',
@@ -58,11 +58,10 @@ addRemoveClasses({
     method : 'add',
 });
 
-
 addRemoveClasses({
     elementList : [
-        '#thumbnail #title',
-        '#thumbnail #image',
+        '#gallery #thumbnail #title',
+        '#gallery #thumbnail #image',
     ],
     classeList : [
         'mb-3',
@@ -72,47 +71,11 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#caption',
+        '#gallery #thumbnail #image #caption',
     ],
     classeList : [
         'caption',
         'px-5',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-        '#light-item',
-    ],
-    classeList : [
-        'mb-3',
-        'px-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-    ],
-    classeList : [
-        'bg-dark',
-        'text-light',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#light-item',
-    ],
-    classeList : [
-        'bg-light',
-        'text-dark',
     ],
     method : 'add',
 });
