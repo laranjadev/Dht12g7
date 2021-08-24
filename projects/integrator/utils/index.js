@@ -242,24 +242,16 @@ const getLineBreak = (object) => {
     }
     if (isThis(object['element'], 'object')) {
         start = '', end = '';
-
-
         for (let i = 0; i <= object['element']['length'] - 1; i++)
             start += '<' + object['element'][i] + '>';
-
-
         for (let i = object['element']['length'] + 1; i >= 0; i--)
             end += '</' + object['element'][i] + '>';
-
-
     }
     let result = '';
     result += start;
-    if (getValidation(object['element']) && getValidation(object['letter'])) {
-        result += object['content'].split(object['letter'] + ' ').join(object['letter'] + end + start);
-    } else {
-        result += object['content'];
-    }
+    result += getValidation(object['element']) && getValidation(object['letter'])
+    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + end + start)
+    : object['content'];
     result += end;
     return result;
 };
