@@ -4,7 +4,18 @@ import {
 
 addRemoveClasses({
     elementList : [
-        '#row',
+        '#header',
+    ],
+    classeList : [
+        'mb-3',
+        'row',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery',
     ],
     classeList : [
         'gx-3',
@@ -15,18 +26,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-title',
-    ],
-    classeList : [
-        'col',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#gallery-image',
+        '#thumbnail',
     ],
     classeList : [
         'col-lg-4',
@@ -38,7 +38,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-image a',
+        '#thumbnail #image a',
     ],
     classeList : [
         'box',
@@ -48,13 +48,24 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-image a img',
+        '#thumbnail #image a img',
     ],
     classeList : [
-        'img-fluid',
         'img-thumbnail',
         'rounded',
         'shadow-sm',
+    ],
+    method : 'add',
+});
+
+
+addRemoveClasses({
+    elementList : [
+        '#thumbnail #title',
+        '#thumbnail #image',
+    ],
+    classeList : [
+        'mb-3',
     ],
     method : 'add',
 });
@@ -76,9 +87,7 @@ addRemoveClasses({
         '#light-item',
     ],
     classeList : [
-        'container-fluid',
         'mb-3',
-        'pt-3',
         'px-3',
         'rounded',
         'shadow-sm',

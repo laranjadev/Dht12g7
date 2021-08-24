@@ -1,9 +1,15 @@
 <%- include('./partials/header'); %>
 <%- bootstrapGallery({
-    galleryTitle : true,
-    // galleryDescription : true,
-    imageDescription : true,
     array : isGallery,
     id : 'gallery',
+    header : {
+        title : true,
+        description : true,
+    },
+    thumbnail : {
+        image : true,
+        title : false,
+        description : true,
+    },
 }); %>
 <%- include('./partials/footer'); %>

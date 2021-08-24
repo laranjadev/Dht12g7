@@ -26,42 +26,47 @@ const bootstrapGallery = (object) => {
     let result = '';
     for (let x = 0; x < object['array']['length']; x++) {
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
-            if (getValidation(object['galleryTitle']) || getValidation(object['galleryDescription'])) {
+            if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
-                    result += '<div id=\"row\">';
-                        result += '<div id=\"gallery-title\">';
-                            if (getValidation(object['galleryTitle'])) {
-                                if (getValidation(object['array'][x]['title'])) {
-                                    result += getLineBreak({ content : object['array'][x]['title'], element : 'h1', letter : '' });
-                                };
-                            };
-                            if (getValidation(object['galleryDescription'])) {
-                                if (getValidation(object['array'][x]['description'])) {
-                                    result += getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '' });
-                                };
-                            };
-                        result += '</div>';
+                    result += '<div id=\"header\">';
+                        result += getValidation(object['array'][x]['title'])
+                        ? getLineBreak({
+                            content : object['array'][x]['title'],
+                            element : [ 'h1' ],
+                            letter : ''
+                        }) : '';
+                        result += getValidation(object['array'][x]['description'])
+                        ? getLineBreak({
+                            content : object['array'][x]['description'],
+                            element : [ 'p', 'em' ],
+                            letter : ''
+                        }) : '';
                     result += '</div>';
                 };
             };
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"row\">';
+                result += '<div id=\"gallery\">';
                     for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                         if (getValidation(object['array'][x]['items'][y]['image'])) {
-                            let isImage = object['array'][x]['items'][y]['image'];
-                            let isTitle = getValidation(object['array'][x]['items'][y]['title'])
-                            ? object['array'][x]['items'][y]['title'] : '';
-                            let isDescription = getValidation(object['array'][x]['items'][y]['description'])
-                            ? getLineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '' })
-                            : '';
-                            result += '<div id=\"gallery-image\">';
-                                result += '<a href=\"' + isImage + '\"' + (isTitle ? ' title=\"' + isTitle + '\"' : '') + '>';
-                                    result += '<img src=\"' + isImage + '\"' + (isTitle ? ' alt=\"' + isTitle + '\"' : '') + '/>';
-                                    result += isTitle ? '<div id=\"caption\">' + isTitle + '</div>' : '';
-                                result += '</a>';
-                                if (getValidation(object['imageDescription'])) {
-                                    result += isTitle ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'p', 'b' ], letter : '.' }) : '';
-                                    result += isDescription;
+                            result += '<div id=\"thumbnail\">';
+                                if (getValidation(object['thumbnail']['image']) && getValidation(object['array'][x]['items'][y]['image'])) {
+                                    result += '<div id=\"image\">';
+                                        let isTitle = getValidation(object['array'][x]['items'][y]['title']) ? object['array'][x]['items'][y]['title'] : '';
+                                        result += '<a href=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' title=\"' + isTitle + '\"' : '') + '>';
+                                            result += '<img src=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' alt=\"' + isTitle + '\"' : '') + '/>';
+                                            result += isTitle ? '<div id=\"caption\">' + isTitle + '</div>' : '';
+                                        result += '</a>';
+                                    result += '</div>';
+                                }; 
+                                if (getValidation(object['thumbnail']['title']) && getValidation(object['array'][x]['items'][y]['title'])) {
+                                    result += '<div id=\"title\">';
+                                        result += getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'p', 'b' ], letter : '' });
+                                    result += '</div>';
+                                }; 
+                                if (getValidation(object['thumbnail']['description']) && getValidation(object['array'][x]['items'][y]['description'])) {
+                                    result += '<div id=\"description\">';
+                                        result += getLineBreak({ content : object['array'][x]['items'][y]['description'], element : [ 'p', 'em' ], letter : '' });
+                                    result += '</div>';
                                 };
                             result += '</div>';
                         };
@@ -231,13 +236,22 @@ const getTypeNumber = (object) => {
 const getLineBreak = (object) => {
     let start = '', end = '';
     if (isThis(object['element'], 'string')) {
+        start = '', end = '';
         start = '<' + object['element'] + '>';
         end = '</' + object['element'] + '>';
-    } else if (isThis(object['element'], 'object')) {
-        for (let i = 0; i < object['element']['length']; i++)
+    }
+    if (isThis(object['element'], 'object')) {
+        start = '', end = '';
+
+
+        for (let i = 0; i <= object['element']['length'] - 1; i++)
             start += '<' + object['element'][i] + '>';
-        for (let i = object['element']['length']; i > 0; i--)
+
+
+        for (let i = object['element']['length'] + 1; i >= 0; i--)
             end += '</' + object['element'][i] + '>';
+
+
     }
     let result = '';
     result += start;
