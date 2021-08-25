@@ -1,90 +1,94 @@
-[
-    {
-        "title": "Banheiro",
-        "description": "",
-        "items": [
-            {
-                "title": "Chuveiro",
-                "description": ""
-            },
-            {
-                "title": "Papel higiênico",
-                "description": ""
-            },
-            {
-                "title": "Toalhas",
-                "description": ""
-            },
-            {
-                "title": "Vaso sanitário",
-                "description": ""
-            },
-            {
-                "title": "Roupa de banho",
-                "description": "custo adicional"
-            },
-            {
-                "title": "Toalete",
-                "description": "custo adicional"
-            },
-            {
-                "title": "Secador de cabelo",
-                "description": ""
-            }
-        ]
-    },
-    {
-        "title": "Cozinha",
-        "description": "",
-        "items": [
-            {
-                "title": "Cozinha compartilhada",
-                "description": ""
-            },
-            {
-                "title": "Fogão",
-                "description": ""
-            },
-            {
-                "title": "Produtos de limpeza",
-                "description": ""
-            },
-            {
-                "title": "Máquina de lavar roupas",
-                "description": ""
-            }
-        ]
-    },
-    {
-        "title": "Cozinha",
-        "description": "",
-        "items": [
-            {
-                "title": "Roupa de cama",
-                "description": ""
-            },
-            {
-                "title": "Camas com tomadas de energia",
-                "description": ""
-            }
-        ]
-    },
-    {
-        "title": "Segurança",
-        "description": "",
-        "items": [
-            {
-                "title": "Câmeras de segurança",
-                "description": ""
-            },
-            {
-                "title": "Segurança 24h",
-                "description": ""
-            },
-            {
-                "title": "Extintores de incêncio",
-                "description": ""
-            }
-        ]
-    }
-]
+{
+    "title": "Conveniências",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis. Cras libero velit, tempus vel ultrices sit amet, sodales in est. Proin sed congue nibh, quis pulvinar lectus. Quisque et aliquam ipsum. Mauris pellentesque lacinia dui, euismod tempor odio ultrices eu. Ut sollicitudin euismod eros sit amet efficitur. Fusce rutrum nunc sed tempus tristique. Nulla feugiat tortor et tortor tincidunt varius. Suspendisse non lorem vehicula, cursus est eu, sollicitudin eros. Maecenas vel orci metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at odio at metus lacinia scelerisque. Donec elementum tortor nisl, et cursus leo venenatis et. Praesent consectetur ut nunc nec ornare. Morbi vulputate sit amet ligula ut fermentum. Pellentesque mi est, posuere a ultrices nec, hendrerit varius magna.",
+    "items": [
+        {
+            "title": "Banheiro",
+            "description": "",
+            "items": [
+                {
+                    "title": "Chuveiro",
+                    "description": ""
+                },
+                {
+                    "title": "Papel higiênico",
+                    "description": ""
+                },
+                {
+                    "title": "Toalhas",
+                    "description": ""
+                },
+                {
+                    "title": "Vaso sanitário",
+                    "description": ""
+                },
+                {
+                    "title": "Roupa de banho",
+                    "description": "custo adicional"
+                },
+                {
+                    "title": "Toalete",
+                    "description": "custo adicional"
+                },
+                {
+                    "title": "Secador de cabelo",
+                    "description": ""
+                }
+            ]
+        },
+        {
+            "title": "Cozinha",
+            "description": "",
+            "items": [
+                {
+                    "title": "Cozinha compartilhada",
+                    "description": ""
+                },
+                {
+                    "title": "Fogão",
+                    "description": ""
+                },
+                {
+                    "title": "Produtos de limpeza",
+                    "description": ""
+                },
+                {
+                    "title": "Máquina de lavar roupas",
+                    "description": ""
+                }
+            ]
+        },
+        {
+            "title": "Cozinha",
+            "description": "",
+            "items": [
+                {
+                    "title": "Roupa de cama",
+                    "description": ""
+                },
+                {
+                    "title": "Camas com tomadas de energia",
+                    "description": ""
+                }
+            ]
+        },
+        {
+            "title": "Segurança",
+            "description": "",
+            "items": [
+                {
+                    "title": "Câmeras de segurança",
+                    "description": ""
+                },
+                {
+                    "title": "Segurança 24h",
+                    "description": ""
+                },
+                {
+                    "title": "Extintores de incêncio",
+                    "description": ""
+                }
+            ]
+        }
+    ]
+}

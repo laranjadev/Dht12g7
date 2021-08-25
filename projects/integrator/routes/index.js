@@ -35,7 +35,6 @@ const isControl = [
     { control : jsonPublic, path : 'json-admin', },
     { control : jsonPublic, path : 'json-client', },
 ];
-
 let getRouter = (control, url, object) => {
     for (let i = 0; i < object['length']; i++) {
         router[object[i]['method']](
@@ -48,7 +47,6 @@ let getRouter = (control, url, object) => {
         );
     };
 };
-
 for (let i = 0; i < isControl['length']; i++) {
     if (isThere(['controllers', isControl[i]['path'] + '.js'])) {
         const isController = require('../controllers/' + isControl[i]['path']);

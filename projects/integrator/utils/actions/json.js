@@ -1,7 +1,7 @@
 let {
     addJsDatabase,
     addJsonDatabase,
-    package,
+    packages,
     getFormElement,
     getFormHeader,
     getHash,
@@ -53,7 +53,7 @@ const getAll = (object) => {
             };
             return res.render('menu', {
                 index : getJsPagination(jsPaginationAttributes)['listPage'],
-                ...package(),
+                ...packages(),
                 ...getJsPagination(jsPaginationAttributes),
                 ...getPageTitle({
                     prefix : object['prefix'],
@@ -81,7 +81,7 @@ const getOn = (object) => {
                 index : getJsDatabase(object).find((index) => {
                     return index['id'] == id;
                 }),
-                ...package(),
+                ...packages(),
                 ...getBTNTitle('come back'),
                 ...getFormElement({ 
                     element : object['element'],
@@ -118,7 +118,7 @@ const getEdit = (object) => {
                 index : getJsDatabase(object).find((index) => {
                     return index['id'] == id;
                 }),
-                ...package(),
+                ...packages(),
                 ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
@@ -157,7 +157,7 @@ const getFormAttributes = (req, res, next, object, error) => {
     const pageName = 'create';
     return {
         error : error ? error['errors'] : undefined,
-        ...package(),
+        ...packages(),
         ...getBTNTitle(pageName),
         ...getFormElement({
             element : object['element'],
@@ -202,7 +202,7 @@ const getStore = (object) => {
                 const { files } = req;
                 const password = getHash(req['body']['password']);
                 const id = !isEmpty(getJsDatabase(object)) ? getJsDatabase(object)[getJsDatabase(object)['length'] - 1]['id'] + 1 : 1;
-                const package = {
+                const packages = {
                     attachment : {
                         ...req['body'],
                         id : id,
@@ -219,10 +219,10 @@ const getStore = (object) => {
                     title : object['title'],
                 }
                 addJsDatabase({
-                    ...package,
+                    ...packages,
                 });
                 addJsonDatabase({
-                    ...package,
+                    ...packages,
                 });
                 return res.redirect(getURLPath({
                     prefix : object['prefix'],
@@ -251,7 +251,7 @@ const getUpdate = (object) => {
             for (let i = 0; i < isName['length']; i++)
                 index[isName[i]] = isDescriptor[isName[i]]['value'];
             index['picture'] = files['length'] ? files[0]['filename'] : '';
-            const package = {
+            const packages = {
                 content : database,
                 require : [
                     ...object['require'],
@@ -259,7 +259,7 @@ const getUpdate = (object) => {
                 title : object['title'],
             }
             saveJsDatabase({
-                ...package,
+                ...packages,
             });
             return res.redirect(getURLPath({
                 prefix : object['prefix'],
@@ -308,7 +308,7 @@ const getLogin = (object) => {
     const Action = {
         login : (req, res, next) => {
             return res.render('form', {
-                ...package(),
+                ...packages(),
                 ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],

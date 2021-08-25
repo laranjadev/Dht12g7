@@ -71,6 +71,7 @@ const routes = {
             'regulation',
             'carousel',
             'gallery',
+            'list-group-item',
         ], 'get'),
     ],
     api : [

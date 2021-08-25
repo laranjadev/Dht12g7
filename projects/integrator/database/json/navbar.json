@@ -288,6 +288,11 @@
                         "title": "gallery",
                         "description": "",
                         "path": "/gallery"
+                    },
+                    {
+                        "title": "list group item",
+                        "description": "",
+                        "path": "/list-group-item"
                     }
                 ]
             }

@@ -4,7 +4,53 @@ import {
 
 addRemoveClasses({
     elementList : [
-        '#header',
+        '#gallery-row',
+    ],
+    classeList : [
+        'row',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery-col',
+    ],
+    classeList : [
+        'col',
+        'd-flex',
+        'justify-content-center',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery-quick-menu',
+    ],
+    classeList : [
+        'align-self-center',
+        'btn-group',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery-quick-menu a',
+        'button',
+    ],
+    classeList : [
+        'btn',
+        'btn-outline-dark',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#gallery-header',
     ],
     classeList : [
         'mb-3',
@@ -15,7 +61,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery',
+        '#gallery-portfolio',
     ],
     classeList : [
         'gx-3',
@@ -26,7 +72,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery #thumbnail',
+        '#gallery-portfolio-thumbnail',
     ],
     classeList : [
         'col-lg-4',
@@ -38,7 +84,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery #thumbnail #image a',
+        '#gallery-portfolio-thumbnail-image a',
     ],
     classeList : [
         'box',
@@ -48,7 +94,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery #thumbnail #image a img',
+        '#gallery-portfolio-thumbnail-image a img',
     ],
     classeList : [
         'img-thumbnail',
@@ -60,8 +106,8 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery #thumbnail #title',
-        '#gallery #thumbnail #image',
+        '#gallery-portfolio-thumbnail-title',
+        '#gallery-portfolio-thumbnail-image',
     ],
     classeList : [
         'mb-3',
@@ -71,7 +117,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery #thumbnail #image #caption',
+        '#gallery-portfolio-thumbnail-image #caption',
     ],
     classeList : [
         'caption',

@@ -13,7 +13,7 @@ let {
     getSearchAction,
     getURLPath,
     getUserSession,
-    package,
+    packages,
 } = require('..');
 
 // OK!
@@ -58,7 +58,7 @@ const getAll = (object) => {
             return res.render('menu', {
                 key : key,
                 index : index,
-                ...package(),
+                ...packages(),
                 ...getInputType(),
                 ...getModelPagination({
                     count : count,
@@ -109,7 +109,7 @@ const getIn = (object) => {
             return res.render('menu', {
                 key : key,
                 index : index[object['includeAlias']],
-                ...package(),
+                ...packages(),
                 ...getInputType(),
                 ...getModelPagination({
                     count : index['length'],
@@ -153,7 +153,7 @@ const getOn = (object) => {
             return res.render('form', {
                 index : index,
                 btnTitle : 'come back',
-                ...package(),
+                ...packages(),
                 ...getFormElement({
                     element : object['element'],
                     type : 'view',
@@ -183,7 +183,7 @@ const getCreate = (object) => {
     const Action = {
         create : async (req, res, next) => {
             return res.render('form', {
-                ...package(),
+                ...packages(),
                 ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
@@ -237,7 +237,7 @@ const getEdit = (object) => {
             });
             return res.render('form', {
                 index : index,
-                ...package(),
+                ...packages(),
                 ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],
@@ -349,7 +349,7 @@ const getSearch = (object) => {
             return res.render('menu', {
                 key : key,
                 index : index,
-                ...package(),
+                ...packages(),
                 ...getInputType(),
                 ...getModelPagination({
                     count : count,
@@ -380,7 +380,7 @@ const getLogin = (object) => {
     const Action = {
         login : async (req, res, next) => {
             return res.render('form', {
-                ...package(),
+                ...packages(),
                 ...getBTNTitle(pageName),
                 ...getFormElement({
                     element : object['element'],

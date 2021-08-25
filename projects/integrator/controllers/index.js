@@ -1,7 +1,7 @@
 const {
     getPCSSFile,
     getPJSMFile,
-    package,
+    packages,
 } = require('../utils');
 
 const viewActions = (pageName) => {
@@ -15,7 +15,7 @@ const viewActions = (pageName) => {
                 ...getPJSMFile({
                     content : pageName,
                 }),
-                ...package(),
+                ...packages(),
             });
         },
     };
@@ -29,6 +29,7 @@ const Action = {
     ...viewActions('regulation'),
     ...viewActions('carousel'),
     ...viewActions('gallery'),
+    ...viewActions('list-group-item'),
 };
 
 module.exports = Action;

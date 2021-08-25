@@ -24,8 +24,8 @@ const isEmpty = (object) => {
 
 const quickMenu = (object) => {
     let result = '';
-    result += '<div class=\"row\">';
-        result += '<div class=\"col\">';
+    result += '<div id=\"row\">';
+        result += '<div id=\"col\">';
             result += '<div id=\"quick-menu\">';
                 for (let i = 0; i < object['array']['length']; i++) {
                     let isHREF = '';
@@ -47,13 +47,16 @@ const quickMenu = (object) => {
     return result;
 };
 
+const viewListGroupItem = (object) => {
+}
+
 const bootstrapGalleryQuickMenu = (object) => {
     let result = '';
-    result += '<div class=\"row\">';
-        result += '<div class=\"col\">';
-            result += '<div id=\"quick-menu\">';
+    result += '<div id=\"gallery-row\">';
+        result += '<div id=\"gallery-col\">';
+            result += '<div id=\"gallery-quick-menu\">';
                 for (let i = 0; i < object['object']['array']['length']; i++) {
-                    result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + '-' + i + '\">' : '';
+                    result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + i + '\">' : '';
                         result += getFirstUpperCase(object['object']['array'][i]['title']);
                     result += getValidation(object['id']) ? '</a>' : '';
                 };
@@ -66,37 +69,37 @@ const bootstrapGalleryQuickMenu = (object) => {
 const bootstrapGallery = (object) => {
     let result = '';
     for (let x = 0; x < object['array']['length']; x++) {
-        result += bootstrapGalleryQuickMenu({ id : 'header', object : object });
+        result += bootstrapGalleryQuickMenu({ id : 'i-', object : object });
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
             if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
-                    result += '<div id=\"header\">';
-                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'header-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
+                    result += '<div id=\"gallery-header\">';
+                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'i-' + x, content : object['array'][x]['title'], element : [ 'h1', 'em' ], letter : '' }) : '';
                         result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
                 };
             };
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"gallery\">';
+                result += '<div id=\"gallery-portfolio\">';
                     for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                         if (getValidation(object['array'][x]['items'][y]['image'])) {
-                            result += '<div id=\"thumbnail\">';
+                            result += '<div id=\"gallery-portfolio-thumbnail\">';
                                 if (getValidation(object['thumbnail']['image']) && getValidation(object['array'][x]['items'][y]['image'])) {
-                                    result += '<div id=\"image\">';
+                                    result += '<div id=\"gallery-portfolio-thumbnail-image\">';
                                         let isTitle = getValidation(object['array'][x]['items'][y]['title']) ? object['array'][x]['items'][y]['title'] : '';
                                         result += '<a href=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' title=\"' + isTitle + '\"' : '') + '>';
                                             result += '<img src=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' alt=\"' + isTitle + '\"' : '') + '/>';
                                             result += isTitle ? '<div id=\"caption\">' + isTitle + '</div>' : '';
                                         result += '</a>';
                                     result += '</div>';
-                                }; 
+                                };
                                 if (getValidation(object['thumbnail']['title']) && getValidation(object['array'][x]['items'][y]['title'])) {
-                                    result += '<div id=\"title\">';
+                                    result += '<div id=\"gallery-portfolio-thumbnail-title\">';
                                         result += getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'p', 'b' ], letter : '' });
                                     result += '</div>';
-                                }; 
+                                };
                                 if (getValidation(object['thumbnail']['description']) && getValidation(object['array'][x]['items'][y]['description'])) {
-                                    result += '<div id=\"description\">';
+                                    result += '<div id=\"gallery-portfolio-thumbnail-description\">';
                                         result += getLineBreak({ content : object['array'][x]['items'][y]['description'], element : [ 'p', 'em' ], letter : '' });
                                     result += '</div>';
                                 };
@@ -107,6 +110,7 @@ const bootstrapGallery = (object) => {
             };
         result += '</div>';
     };
+    result += bootstrapGalleryQuickMenu({ id : 'i-', object : object });
     return result;
 };
 
@@ -135,12 +139,8 @@ const bootstrapCarousel = (object) => {
                     result += ' alt=\"' + object['array'][i]['title'] + '\"';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
-                        result += getValidation(object['array'][i]['title'])
-                        ? getLineBreak({ content : object['array'][i]['title'], element : [ 'h3', 'em' ], letter : '' })
-                        : '';
-                        result += getValidation(object['array'][i]['description'])
-                        ? getLineBreak({ content : object['array'][i]['description'], element : [ 'p', 'em' ], letter : '' })
-                        : '';
+                        result += getValidation(object['array'][i]['title']) ? getLineBreak({ content : object['array'][i]['title'], element : [ 'h3', 'em' ], letter : '' }) : '';
+                        result += getValidation(object['array'][i]['description']) ? getLineBreak({ content : object['array'][i]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
                 result += '</div>';
             }
@@ -279,8 +279,7 @@ const getLineBreak = (object) => {
             is_end += '</' + object['element'][i] + '>';
     };
     let is_content = getValidation(object['element']) && getValidation(object['letter'])
-    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
-    : object['content'];
+    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start) : object['content'];
     let result = '';
     result += is_start;
     result += is_content;
@@ -981,7 +980,7 @@ let variables = () => {
     };
 };
 
-let bootstrap = () => {
+let bootstraps = () => {
     return {
         bootstrapAccordion,
         bootstrapCarousel,
@@ -991,7 +990,13 @@ let bootstrap = () => {
     };
 };
 
-const package = () => {
+let views = () => {
+    return {
+        viewListGroupItem,
+    };
+};
+
+const packages = () => {
     return {
         getCurrency,
         getDateFormat,
@@ -1002,14 +1007,15 @@ const package = () => {
         isThis,
         toClean,
         quickMenu,
+        ...bootstraps(),
         ...variables(),
-        ...bootstrap(),
+        ...views(),
     };
 };
 
 module.exports = {
-    package,
-    ...package(),
+    packages,
+    ...packages(),
     addJsDatabase,
     addJsonDatabase,
     arrayCreator,

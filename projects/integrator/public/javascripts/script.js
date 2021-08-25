@@ -42,9 +42,32 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
+        '#row',
+    ],
+    classeList : [
+        'row',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#col',
+    ],
+    classeList : [
+        'col',
+        'd-flex',
+        'justify-content-end',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
         '#quick-menu',
     ],
     classeList : [
+        'align-self-end',
         'btn-group',
         'mb-3',
     ],
@@ -211,6 +234,8 @@ addRemoveClasses({
         'nav#pagination',
     ],
     classeList : [
+        'd-flex',
+        'justify-content-center',
         'mb-3',
     ],
     method : 'add',
@@ -221,6 +246,7 @@ addRemoveClasses({
         'nav#pagination ul',
     ],
     classeList : [
+        'align-self-center',
         'pagination',
     ],
     method : 'add',
@@ -255,9 +281,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
-
-
 
 addRemoveClasses({
     elementList : [
@@ -295,8 +318,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
-
 
 getCEPCheck({
     element : '#cep',

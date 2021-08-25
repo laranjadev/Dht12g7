@@ -8,7 +8,7 @@ const {
     getFormElement,
     getPJSMFile,
     getURLPath,
-    package,
+    packages,
 } = require('../utils');
 module.exports = {
     a : async (req, res, next) => {
@@ -117,7 +117,7 @@ module.exports = {
     j : async (req, res, next) => {
         const pageName = '_j';        
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -130,7 +130,7 @@ module.exports = {
     k : async (req, res, next) => {
         const pageName = '_k';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -139,7 +139,7 @@ module.exports = {
     l : async (req, res, next) => {
         const pageName = '_l';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -148,7 +148,7 @@ module.exports = {
     m : async (req, res, next) => {
         const pageName = '_m';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -157,7 +157,7 @@ module.exports = {
     n : async (req, res, next) => {
         const pageName = '_n';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -166,7 +166,7 @@ module.exports = {
     o : async (req, res, next) => {
         const pageName = '_o';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -175,7 +175,7 @@ module.exports = {
     p : async (req, res, next) => {
         const pageName = '_p';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -184,7 +184,7 @@ module.exports = {
     q : async (req, res, next) => {
         const pageName = '_q';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -196,7 +196,7 @@ module.exports = {
         } = req['query'];
         const pageName = '_r';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -209,7 +209,7 @@ module.exports = {
     s : async (req, res, next) => {
         const pageName = '_s';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -218,7 +218,7 @@ module.exports = {
     t : async (req, res, next) => {
         const pageName = '_t';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -227,7 +227,7 @@ module.exports = {
     u : async (req, res, next) => {
         const pageName = '_u';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -236,7 +236,7 @@ module.exports = {
     v : async (req, res, next) => {
         const pageName = '_v';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -245,7 +245,7 @@ module.exports = {
     w : async (req, res, next) => {
         const pageName = '_w';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -254,7 +254,7 @@ module.exports = {
     x : async (req, res, next) => {
         const pageName = '_x';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -263,7 +263,7 @@ module.exports = {
     y : async (req, res, next) => {
         const pageName = '_y';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
@@ -272,7 +272,7 @@ module.exports = {
     z : async (req, res, next) => {
         const pageName = '_z';
         return res.render(pageName, {
-            ...package(),
+            ...packages(),
             ...getPJSMFile({
                 content : pageName,
             }),
