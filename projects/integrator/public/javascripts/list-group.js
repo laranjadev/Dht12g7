@@ -138,3 +138,50 @@ addRemoveClasses({
 });
 
 // 
+
+addRemoveClasses({
+    elementList : [
+        '#view-quick-menu-row',
+    ],
+    classeList : [
+        'row',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#view-quick-menu-col',
+    ],
+    classeList : [
+        'col',
+        'd-flex',
+        'justify-content-center',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#view-quick-menu',
+    ],
+    classeList : [
+        'align-self-center',
+        'btn-group',
+        'mb-3',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#view-quick-menu a',
+    ],
+    classeList : [
+        'btn',
+        'btn-outline-dark',
+    ],
+    method : 'add',
+});
+
+// 

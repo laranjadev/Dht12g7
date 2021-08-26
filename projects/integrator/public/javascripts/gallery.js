@@ -44,7 +44,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-row',
+        '#view-quick-menu-row',
     ],
     classeList : [
         'row',
@@ -54,7 +54,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-col',
+        '#view-quick-menu-col',
     ],
     classeList : [
         'col',
@@ -66,7 +66,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-quick-menu',
+        '#view-quick-menu',
     ],
     classeList : [
         'align-self-center',
@@ -78,8 +78,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-quick-menu a',
-        'button',
+        '#view-quick-menu a',
     ],
     classeList : [
         'btn',
@@ -87,6 +86,8 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
+// 
 
 addRemoveClasses({
     elementList : [
@@ -98,6 +99,8 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
+// 
 
 addRemoveClasses({
     elementList : [
@@ -112,7 +115,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio-thumbnail',
+        '#gallery-portfolio #thumbnail',
     ],
     classeList : [
         'col-lg-4',
@@ -124,7 +127,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio-thumbnail-image a',
+        '#gallery-portfolio #thumbnail #image a',
     ],
     classeList : [
         'box',
@@ -134,7 +137,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio-thumbnail-image a img',
+        '#gallery-portfolio #thumbnail #image a img',
     ],
     classeList : [
         'img-thumbnail',
@@ -146,8 +149,8 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio-thumbnail-title',
-        '#gallery-portfolio-thumbnail-image',
+        '#gallery-portfolio #thumbnail #title',
+        '#gallery-portfolio #thumbnail #image',
     ],
     classeList : [
         'mb-3',
@@ -157,7 +160,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio-thumbnail-image #caption',
+        '#gallery-portfolio #thumbnail #image #caption',
     ],
     classeList : [
         'caption',

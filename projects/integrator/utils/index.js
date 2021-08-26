@@ -22,7 +22,7 @@ const isEmpty = (object) => {
     return true;
 };
 
-const quickMenu = (object) => {
+const footerQuickMenu = (object) => {
     let result = '';
     result += '<div id=\"row\">';
         result += '<div id=\"col\">';
@@ -49,7 +49,7 @@ const quickMenu = (object) => {
 
 const viewListGroup = (object) => {
     let result = '';
-    let = isQuickMenu = bootstrapGalleryQuickMenu({ id : 'id-', object : object });
+    let = isQuickMenu = viewQuickMenu({ id : 'id-', object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickMenu;
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
@@ -100,11 +100,11 @@ const viewListGroup = (object) => {
     return result;
 };
 
-const bootstrapGalleryQuickMenu = (object) => {
+const viewQuickMenu = (object) => {
     let result = '';
-    result += '<div id=\"gallery-row\">';
-        result += '<div id=\"gallery-col\">';
-            result += '<div id=\"gallery-quick-menu\">';
+    result += '<div id=\"view-quick-menu-row\">';
+        result += '<div id=\"view-quick-menu-col\">';
+            result += '<div id=\"view-quick-menu\">';
                 for (let i = 0; i < object['object']['array']['length']; i++) {
                     result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + i + '\">' : '';
                         result += getFirstUpperCase(object['object']['array'][i]['title']);
@@ -118,7 +118,7 @@ const bootstrapGalleryQuickMenu = (object) => {
 
 const bootstrapGallery = (object) => {
     let result = '';
-    let = isQuickMenu = bootstrapGalleryQuickMenu({ id : 'id-', object : object });
+    let = isQuickMenu = viewQuickMenu({ id : 'id-', object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickMenu;
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
@@ -134,9 +134,9 @@ const bootstrapGallery = (object) => {
                 result += '<div id=\"gallery-portfolio\">';
                     for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                         if (getValidation(object['array'][x]['items'][y]['image'])) {
-                            result += '<div id=\"gallery-portfolio-thumbnail\">';
+                            result += '<div id=\"thumbnail\">';
                                 if (getValidation(object['thumbnail']['image']) && getValidation(object['array'][x]['items'][y]['image'])) {
-                                    result += '<div id=\"gallery-portfolio-thumbnail-image\">';
+                                    result += '<div id=\"image\">';
                                         let isTitle = getValidation(object['array'][x]['items'][y]['title']) ? object['array'][x]['items'][y]['title'] : '';
                                         result += '<a href=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' title=\"' + isTitle + '\"' : '') + '>';
                                             result += '<img src=\"' + object['array'][x]['items'][y]['image'] + '\"' + (isTitle ? ' alt=\"' + isTitle + '\"' : '') + '/>';
@@ -145,12 +145,12 @@ const bootstrapGallery = (object) => {
                                     result += '</div>';
                                 };
                                 if (getValidation(object['thumbnail']['title']) && getValidation(object['array'][x]['items'][y]['title'])) {
-                                    result += '<div id=\"gallery-portfolio-thumbnail-title\">';
+                                    result += '<div id=\"title\">';
                                         result += getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'p', 'b' ], letter : '' });
                                     result += '</div>';
                                 };
                                 if (getValidation(object['thumbnail']['description']) && getValidation(object['array'][x]['items'][y]['description'])) {
-                                    result += '<div id=\"gallery-portfolio-thumbnail-description\">';
+                                    result += '<div id=\"description\">';
                                         result += getLineBreak({ content : object['array'][x]['items'][y]['description'], element : [ 'p', 'em' ], letter : '' });
                                     result += '</div>';
                                 };
@@ -1078,7 +1078,7 @@ const packages = () => {
         isEmpty,
         isThis,
         toClean,
-        quickMenu,
+        footerQuickMenu,
         ...bootstraps(),
         ...variables(),
         ...views(),

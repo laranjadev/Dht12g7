@@ -94,7 +94,6 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#quick-menu a',
         'button',
     ],
     classeList : [
