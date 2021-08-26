@@ -4,6 +4,16 @@ import {
     getTimer,
 } from './main.js';
 
+import {
+    navbarClasses,
+} from './classes.js';
+navbarClasses();
+
+import {
+    titleClasses,
+} from './classes.js';
+titleClasses();
+
 // 
 
 addRemoveClasses({
@@ -16,28 +26,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
-// 
-
-addRemoveClasses({
-    elementList : [
-        'nav#navbar',
-    ],
-    classeList : [
-        'bg-white',
-        'container-fluid',
-        'mb-3',
-        'navbar-expand-lg',
-        'navbar-light',
-        'navbar',
-        'p-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-// 
 
 addRemoveClasses({
     elementList : [
@@ -64,22 +52,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
-// 
-
-for (let i = 1; i < 6; i++) {
-    addRemoveClasses({
-        elementList : [
-            'h' + i,
-        ],
-        classeList : [
-            'display-' + i,
-        ],
-        method : 'add',
-    });
-};
-
-// 
 
 addRemoveClasses({
     elementList : [

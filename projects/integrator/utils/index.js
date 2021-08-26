@@ -24,23 +24,25 @@ const isEmpty = (object) => {
 
 const footerQuickMenu = (object) => {
     let result = '';
-    result += '<div id=\"row\">';
-        result += '<div id=\"col\">';
-            result += '<div id=\"quick-menu\">';
-                for (let i = 0; i < object['array']['length']; i++) {
-                    let isHREF = '';
-                    isHREF += '/' + object['pathPrefix'];
-                    isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
-                    isHREF += '/' + object['index'];
-                    isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
-                    isHREF = isHREF.toLowerCase();
-                    let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
-                    let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
-                    let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
-                    result += '<a href=\"' + isHREF + '\"' + isTarget + isToggle + '>';
-                        result += getFirstUpperCase(isTitle);
-                    result += '</a>';
-                };
+    result += '<div id=\"view-quick\">';
+        result += '<div id=\"row\">';
+            result += '<div id=\"col\">';
+                result += '<div id=\"menu\">';
+                    for (let i = 0; i < object['array']['length']; i++) {
+                        let isHREF = '';
+                        isHREF += '/' + object['pathPrefix'];
+                        isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
+                        isHREF += '/' + object['index'];
+                        isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
+                        isHREF = isHREF.toLowerCase();
+                        let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
+                        let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
+                        let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
+                        result += '<a href=\"' + isHREF + '\"' + isTarget + isToggle + '>';
+                            result += getFirstUpperCase(isTitle);
+                        result += '</a>';
+                    };
+                result += '</div>';
             result += '</div>';
         result += '</div>';
     result += '</div>';
@@ -62,36 +64,31 @@ const viewListGroup = (object) => {
                 result += '</div>';
             }
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"body-row\">';
-                    for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                        result += '<div id=\"body-col\">';
-                            result += '<div id=\"body-list-group\">';
-                                result += '<a href=\"#\">';
-                                    if (getValidation(object['array'][x]['items'][y]['title'])) {
-                                        result += '<div id=\"body-content\">';
-                                            result += getValidation(object['array'][x]['items'][y]['title'])
-                                            ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'h5' ], letter : '' }) : '';
-                                            result += getLineBreak({ content : getTypeNumber({ index : y }), element : [ 'small', 'b' ], letter : '' });
-                                        result += '</div>';
-                                    };
-                                    if (getValidation(object['array'][x]['items'][y]['items'])) {
-                                        result += '<ul>';
-                                            for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
-                                                result += '<li>';
-                                                    let n = '';
-                                                    n += getTypeNumber({ index : y });
-                                                    n += getTypeNumber({ index : z });
-                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? getLineBreak({ index : n, content : object['array'][x]['items'][y]['items'][z]['title'], element : [ 'p', 'b' ], letter : '' }) : '';
-                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? getLineBreak({ content : object['array'][x]['items'][y]['items'][z]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
-                                                result += '</li>';
-                                            }
-                                        result += '</ul>';
-                                    };
-                                    // result += '<small>Donec id elit non mi porta.</small>';
-                                result += '</a>';
+                result += '<div id=\"body\">';
+                    result += '<div id=\"row\">';
+                        for (let y = 0; y < object['array'][x]['items']['length']; y++) {
+                            result += '<div id=\"col\">';
+                                result += '<div id=\"list-group\">';
+                                    result += '<a href=\"#\">';
+                                        result += getValidation(object['array'][x]['items'][y]['title']) ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'h5' ], letter : '' }) : '';
+                                        if (getValidation(object['array'][x]['items'][y]['items'])) {
+                                            result += '<ul>';
+                                                for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
+                                                    result += '<li>';
+                                                        let n = '';
+                                                        n += getTypeNumber({ index : y });
+                                                        n += getTypeNumber({ index : z });
+                                                        result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? getLineBreak({ index : n, content : object['array'][x]['items'][y]['items'][z]['title'], element : [ 'p', 'b' ], letter : '' }) : '';
+                                                        result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? getLineBreak({ content : object['array'][x]['items'][y]['items'][z]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
+                                                    result += '</li>';
+                                                }
+                                            result += '</ul>';
+                                        };
+                                    result += '</a>';
+                                result += '</div>';
                             result += '</div>';
-                        result += '</div>';
-                    }
+                        }
+                    result += '</div>';
                 result += '</div>';
             };
         result += '</div>';
@@ -102,14 +99,16 @@ const viewListGroup = (object) => {
 
 const viewQuickMenu = (object) => {
     let result = '';
-    result += '<div id=\"view-quick-menu-row\">';
-        result += '<div id=\"view-quick-menu-col\">';
-            result += '<div id=\"view-quick-menu\">';
-                for (let i = 0; i < object['object']['array']['length']; i++) {
-                    result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + i + '\">' : '';
-                        result += getFirstUpperCase(object['object']['array'][i]['title']);
-                    result += getValidation(object['id']) ? '</a>' : '';
-                };
+    result += '<div id=\"view-quick\">';
+        result += '<div id=\"row\">';
+            result += '<div id=\"col\">';
+                result += '<div id=\"menu\">';
+                    for (let i = 0; i < object['object']['array']['length']; i++) {
+                        result += getValidation(object['id']) ? '<a href=\"#' + object['id'] + i + '\">' : '';
+                            result += getFirstUpperCase(object['object']['array'][i]['title']);
+                        result += getValidation(object['id']) ? '</a>' : '';
+                    };
+                result += '</div>';
             result += '</div>';
         result += '</div>';
     result += '</div>';
@@ -124,14 +123,14 @@ const bootstrapGallery = (object) => {
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
             if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
-                    result += '<div id=\"gallery-header\">';
+                    result += '<div id=\"header\">';
                         result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'id-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
                         result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
                 };
             };
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"gallery-portfolio\">';
+                result += '<div id=\"portfolio\">';
                     for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                         if (getValidation(object['array'][x]['items'][y]['image'])) {
                             result += '<div id=\"thumbnail\">';

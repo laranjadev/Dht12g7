@@ -2,96 +2,9 @@ import {
     addRemoveClasses,
 } from './main.js';
 
-// 
-
 addRemoveClasses({
     elementList : [
-        '#dark-item',
-        '#light-item',
-    ],
-    classeList : [
-        'mb-3',
-        'p-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#light-item',
-    ],
-    classeList : [
-        'bg-light',
-        'text-dark',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-    ],
-    classeList : [
-        'bg-dark',
-        'text-light',
-    ],
-    method : 'add',
-});
-
-// 
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu-row',
-    ],
-    classeList : [
-        'row',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu-col',
-    ],
-    classeList : [
-        'col',
-        'd-flex',
-        'justify-content-center',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu',
-    ],
-    classeList : [
-        'align-self-center',
-        'btn-group',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu a',
-    ],
-    classeList : [
-        'btn',
-        'btn-outline-dark',
-    ],
-    method : 'add',
-});
-
-// 
-
-addRemoveClasses({
-    elementList : [
-        '#gallery-header',
+        '#header',
     ],
     classeList : [
         'mb-3',
@@ -100,11 +13,9 @@ addRemoveClasses({
     method : 'add',
 });
 
-// 
-
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio',
+        '#portfolio',
     ],
     classeList : [
         'gx-3',
@@ -115,7 +26,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio #thumbnail',
+        '#portfolio #thumbnail',
     ],
     classeList : [
         'col-lg-4',
@@ -127,7 +38,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio #thumbnail #image a',
+        '#portfolio #thumbnail #image a',
     ],
     classeList : [
         'box',
@@ -137,7 +48,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio #thumbnail #image a img',
+        '#portfolio #thumbnail #image a img',
     ],
     classeList : [
         'img-thumbnail',
@@ -149,8 +60,8 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio #thumbnail #title',
-        '#gallery-portfolio #thumbnail #image',
+        '#portfolio #thumbnail #title',
+        '#portfolio #thumbnail #image',
     ],
     classeList : [
         'mb-3',
@@ -160,13 +71,25 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#gallery-portfolio #thumbnail #image #caption',
+        '#portfolio #thumbnail #image #caption',
     ],
     classeList : [
         'caption',
         'px-5',
     ],
     method : 'add',
+});
+
+import {
+    itemsClasses,
+} from './classes.js';
+itemsClasses();
+
+import {
+    viewQuickClasses,
+} from './classes.js';
+viewQuickClasses({
+    position : 'center',
 });
 
 window.addEventListener('DOMContentLoaded', () => {

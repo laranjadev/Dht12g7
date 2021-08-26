@@ -2,8 +2,6 @@ import {
     addRemoveClasses,
 } from './main.js';
 
-// 
-
 addRemoveClasses({
     elementList : [
         '#header-row',
@@ -31,7 +29,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#body-row',
+        '#body #row',
     ],
     classeList : [
         'gx-3',
@@ -42,7 +40,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#body-col',
+        '#body #col',
     ],
     classeList : [
         'col-lg-4',
@@ -54,7 +52,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#body-list-group a',
+        '#body #list-group a',
     ],
     classeList : [
         'list-group-item',
@@ -68,7 +66,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#body-list-group ul',
+        '#body #list-group ul',
     ],
     classeList : [
         'list-group',
@@ -79,7 +77,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#body-list-group ul li',
+        '#body #list-group ul li',
     ],
     classeList : [
         'list-group-item',
@@ -87,101 +85,14 @@ addRemoveClasses({
     method : 'add',
 });
 
-addRemoveClasses({
-    elementList : [
-        '#body-content',
-    ],
-    classeList : [
-        'd-flex',
-        'w-100',
-        'justify-content-between',
-    ],
-    method : 'add',
+import {
+    itemsClasses,
+} from './classes.js';
+itemsClasses();
+
+import {
+    viewQuickClasses,
+} from './classes.js';
+viewQuickClasses({
+    position : 'center',
 });
-
-// 
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-        '#light-item',
-    ],
-    classeList : [
-        'mb-3',
-        'p-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#light-item',
-    ],
-    classeList : [
-        'bg-light',
-        'text-dark',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-    ],
-    classeList : [
-        'bg-dark',
-        'text-light',
-    ],
-    method : 'add',
-});
-
-// 
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu-row',
-    ],
-    classeList : [
-        'row',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu-col',
-    ],
-    classeList : [
-        'col',
-        'd-flex',
-        'justify-content-center',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu',
-    ],
-    classeList : [
-        'align-self-center',
-        'btn-group',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#view-quick-menu a',
-    ],
-    classeList : [
-        'btn',
-        'btn-outline-dark',
-    ],
-    method : 'add',
-});
-
-// 
