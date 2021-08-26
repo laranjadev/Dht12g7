@@ -6,7 +6,7 @@ const {
 
 const viewActions = (pageName) => {
     const Action = {
-        [pageName] : (req, res, next) => {
+        [ pageName ] : (req, res, next) => {
             return res.render(pageName, {
                 pageTitle : pageName,
                 ...getPCSSFile({
@@ -29,7 +29,7 @@ const Action = {
     ...viewActions('regulation'),
     ...viewActions('carousel'),
     ...viewActions('gallery'),
-    ...viewActions('list-group-item'),
+    ...viewActions('list-group'),
 };
 
 module.exports = Action;

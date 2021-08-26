@@ -290,9 +290,9 @@
                         "path": "/gallery"
                     },
                     {
-                        "title": "list group item",
+                        "title": "list group",
                         "description": "",
-                        "path": "/list-group-item"
+                        "path": "/list-group"
                     }
                 ]
             }

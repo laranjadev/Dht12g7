@@ -2,6 +2,46 @@ import {
     addRemoveClasses,
 } from './main.js';
 
+// 
+
+addRemoveClasses({
+    elementList : [
+        '#dark-item',
+        '#light-item',
+    ],
+    classeList : [
+        'mb-3',
+        'p-3',
+        'rounded',
+        'shadow-sm',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#light-item',
+    ],
+    classeList : [
+        'bg-light',
+        'text-dark',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#dark-item',
+    ],
+    classeList : [
+        'bg-dark',
+        'text-light',
+    ],
+    method : 'add',
+});
+
+// 
+
 addRemoveClasses({
     elementList : [
         '#gallery-row',

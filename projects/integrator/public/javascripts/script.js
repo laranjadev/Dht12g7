@@ -1,13 +1,43 @@
 import {
-    getTimer,
-    getSignature,
     addRemoveClasses,
-    getCEPCheck,
-    getCNPJMask,
-    getFieldEvent,
-    getFieldValidator,
-    getFormErrorList,
+    getSignature,
+    getTimer,
 } from './main.js';
+
+// 
+
+addRemoveClasses({
+    elementList : [
+        'body',
+        'html',
+    ],
+    classeList : [
+        'bg-light',
+    ],
+    method : 'add',
+});
+
+// 
+
+addRemoveClasses({
+    elementList : [
+        'nav#navbar',
+    ],
+    classeList : [
+        'bg-white',
+        'container-fluid',
+        'mb-3',
+        'navbar-expand-lg',
+        'navbar-light',
+        'navbar',
+        'p-3',
+        'rounded',
+        'shadow-sm',
+    ],
+    method : 'add',
+});
+
+// 
 
 addRemoveClasses({
     elementList : [
@@ -16,72 +46,6 @@ addRemoveClasses({
     classeList : [
         'container',
         'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#search-form',
-    ],
-    classeList : [
-        'd-flex',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'footer'
-    ],
-    classeList : [
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#row',
-    ],
-    classeList : [
-        'row',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#col',
-    ],
-    classeList : [
-        'col',
-        'd-flex',
-        'justify-content-end',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#quick-menu',
-    ],
-    classeList : [
-        'align-self-end',
-        'btn-group',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#quick-menu a',
-        'button',
-    ],
-    classeList : [
-        'btn',
-        'btn-outline-dark',
     ],
     method : 'add',
 });
@@ -101,108 +65,7 @@ addRemoveClasses({
     method : 'add',
 });
 
-addRemoveClasses({
-    elementList : [
-        '#navbar',
-    ],
-    classeList : [
-        'bg-white',
-        'container-fluid',
-        'mb-3',
-        'navbar-expand-lg',
-        'navbar-light',
-        'navbar',
-        'p-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'ul',
-    ],
-    classeList : [
-        'ps-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'li p',
-    ],
-    classeList : [
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-        '#light-item',
-    ],
-    classeList : [
-        'mb-3',
-        'p-3',
-        'rounded',
-        'shadow-sm',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#light-item',
-    ],
-    classeList : [
-        'bg-light',
-        'text-dark',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#dark-item',
-    ],
-    classeList : [
-        'bg-dark',
-        'text-light',
-    ],
-    method : 'add',
-});
-
-// addRemoveClasses({
-//     elementList : [
-//         '#dark-item img',
-//         '#light-item img',
-//     ],
-//     classeList : [
-//         'col-md-4',
-//         'float-md-start',
-//         'me-3',
-//         'bg-white',
-//         'p-3',
-//         'rounded',
-//         'shadow-sm',
-//     ],
-//     method : 'add',
-// });
-
-addRemoveClasses({
-    elementList : [
-        'body',
-        'html',
-    ],
-    classeList : [
-        'bg-light',
-    ],
-    method : 'add',
-});
+// 
 
 for (let i = 1; i < 6; i++) {
     addRemoveClasses({
@@ -216,6 +79,33 @@ for (let i = 1; i < 6; i++) {
     });
 };
 
+// 
+
+addRemoveClasses({
+    elementList : [
+        'footer'
+    ],
+    classeList : [
+        'mb-3',
+        'text-center',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        '#quick-menu a',
+        'button',
+    ],
+    classeList : [
+        'btn',
+        'btn-outline-dark',
+    ],
+    method : 'add',
+});
+
+// 
+
 getSignature({
     element : 'signature',
     name : 'laranja dev br',
@@ -227,118 +117,4 @@ getTimer({
     element : 'timer',
     number : 1,
     seconds : 1,
-});
-
-addRemoveClasses({
-    elementList : [
-        'nav#pagination',
-    ],
-    classeList : [
-        'd-flex',
-        'justify-content-center',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'nav#pagination ul',
-    ],
-    classeList : [
-        'align-self-center',
-        'pagination',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'nav#pagination ul',
-    ],
-    classeList : [
-        'ps-3',
-    ],
-    method : 'remove',
-});
-
-addRemoveClasses({
-    elementList : [
-        'nav#pagination ul li',
-    ],
-    classeList : [
-        'page-item',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'nav#pagination ul li a',
-    ],
-    classeList : [
-        'page-link',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#content h6',
-    ],
-    classeList : [
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        'input',
-        'select',
-        'textarea',
-    ],
-    classeList : [
-        'form-control',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#alert-danger',
-        '#error-list',
-    ],
-    classeList : [
-        'alert',
-        'alert-danger',
-        'form-group',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-getCEPCheck({
-    element : '#cep',
-});
-
-getCNPJMask({
-    element : '#cnpj',
-});
-
-getFieldEvent({
-    color : '#000',
-    background : '#FFF',
-    elementList : [
-        '.form-control',
-    ],
-});
-
-getFieldValidator({
-    messageTarget : '#alert-danger',
-});
-
-getFormErrorList({
-    messageTarget : '#error-list',
 });

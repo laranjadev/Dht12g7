@@ -47,8 +47,58 @@ const quickMenu = (object) => {
     return result;
 };
 
-const viewListGroupItem = (object) => {
-}
+const viewListGroup = (object) => {
+    let result = '';
+    let = isQuickMenu = bootstrapGalleryQuickMenu({ id : 'id-', object : object });
+    for (let x = 0; x < object['array']['length']; x++) {
+        result += isQuickMenu;
+        result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
+            if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
+                result += '<div id=\"header-row\">';
+                    result += '<div id=\"header-col\">';
+                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'id-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
+                        result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
+                    result += '</div>';
+                result += '</div>';
+            }
+            if (getValidation(object['array'][x]['items'])) {
+                result += '<div id=\"body-row\">';
+                    for (let y = 0; y < object['array'][x]['items']['length']; y++) {
+                        result += '<div id=\"body-col\">';
+                            result += '<div id=\"body-list-group\">';
+                                result += '<a href=\"#\">';
+                                    if (getValidation(object['array'][x]['items'][y]['title'])) {
+                                        result += '<div id=\"body-content\">';
+                                            result += getValidation(object['array'][x]['items'][y]['title'])
+                                            ? getLineBreak({ content : object['array'][x]['items'][y]['title'], element : [ 'h5' ], letter : '' }) : '';
+                                            result += getLineBreak({ content : getTypeNumber({ index : y }), element : [ 'small', 'b' ], letter : '' });
+                                        result += '</div>';
+                                    };
+                                    if (getValidation(object['array'][x]['items'][y]['items'])) {
+                                        result += '<ul>';
+                                            for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
+                                                result += '<li>';
+                                                    let n = '';
+                                                    n += getTypeNumber({ index : y });
+                                                    n += getTypeNumber({ index : z });
+                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? getLineBreak({ index : n, content : object['array'][x]['items'][y]['items'][z]['title'], element : [ 'p', 'b' ], letter : '' }) : '';
+                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? getLineBreak({ content : object['array'][x]['items'][y]['items'][z]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
+                                                result += '</li>';
+                                            }
+                                        result += '</ul>';
+                                    };
+                                    // result += '<small>Donec id elit non mi porta.</small>';
+                                result += '</a>';
+                            result += '</div>';
+                        result += '</div>';
+                    }
+                result += '</div>';
+            };
+        result += '</div>';
+    }
+    result += isQuickMenu;
+    return result;
+};
 
 const bootstrapGalleryQuickMenu = (object) => {
     let result = '';
@@ -68,13 +118,14 @@ const bootstrapGalleryQuickMenu = (object) => {
 
 const bootstrapGallery = (object) => {
     let result = '';
+    let = isQuickMenu = bootstrapGalleryQuickMenu({ id : 'id-', object : object });
     for (let x = 0; x < object['array']['length']; x++) {
-        result += bootstrapGalleryQuickMenu({ id : 'i-', object : object });
+        result += isQuickMenu;
         result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
             if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
                     result += '<div id=\"gallery-header\">';
-                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'i-' + x, content : object['array'][x]['title'], element : [ 'h1', 'em' ], letter : '' }) : '';
+                        result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'id-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
                         result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
                 };
@@ -110,7 +161,7 @@ const bootstrapGallery = (object) => {
             };
         result += '</div>';
     };
-    result += bootstrapGalleryQuickMenu({ id : 'i-', object : object });
+    result += isQuickMenu;
     return result;
 };
 
@@ -231,18 +282,26 @@ const bootstrapNavbar = (object) => {
 };
 
 const bootstrapModal = (object) => {
-    let currentAction = '/';
-    currentAction += object['prefix'];
-    currentAction += '/delete/';
-    currentAction += object['array'][object['index']]['id'];
+    let result = '';
+    let currentAction = '';
+    currentAction += '/' + object['prefix'];
+    currentAction += '/' + 'delete';
+    currentAction += '/' + object['array'][object['index']]['id'];
     currentAction += '?_method=DELETE';
     currentAction = currentAction.trim().toLowerCase();
-    let result = '';
     result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
         result += '<div class=\"modal-dialog\">';
             result += '<div class=\"modal-content\">';
-                result += getValidation(object['title']) ? '<div class=\"modal-header\">' + '<h6>' + object['title'] + '</h6>' + '</div>' : '';
-                result += getValidation(object['description']) ? '<div class=\"modal-body\">' + object['description'] + '</div>' : '';
+                if (getValidation(object['title'])) {
+                    result += '<div class=\"modal-header\">';
+                        result += getLineBreak({ content : object['title'], element : [ 'h5' ], letter : '' });
+                    result += '</div>';
+                }
+                if (getValidation(object['description'])) {
+                    result += '<div class=\"modal-body\">';
+                        result += getLineBreak({ content : object['description'], element : [ 'p', 'em' ], letter : '' });
+                    result += '</div>';
+                }
                 result += '<div class=\"modal-footer\">';
                     result += '<form action=\"' + currentAction + '\" method=\"POST\">';
                         result += '<button type=\"submit\">';
@@ -260,7 +319,8 @@ const bootstrapModal = (object) => {
 };
 
 const getTypeNumber = (object) => {
-    let result = getValidation(object['typeNumber']) ? object['typeNumber'] === 'roman' ? getRomanNumber(object['index'] + 1) : object['index'] + 1 : object['index'] + 1;
+    let result = getValidation(object['typeNumber']) ? object['typeNumber'] === 'roman'
+    ? getRomanNumber(object['index'] + 1) : object['index'] + 1 : object['index'] + 1;
     result += '. ';
     return result;
 };
@@ -278,8 +338,11 @@ const getLineBreak = (object) => {
         for (let i = object['element']['length'] + 1; i >= 0; i--)
             is_end += '</' + object['element'][i] + '>';
     };
-    let is_content = getValidation(object['element']) && getValidation(object['letter'])
-    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start) : object['content'];
+    let is_content = '';
+    is_content += getValidation(object['index']) ? object['index'] : '';
+    is_content += getValidation(object['element']) && getValidation(object['letter'])
+    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
+    : object['content'];
     let result = '';
     result += is_start;
     result += is_content;
@@ -337,22 +400,32 @@ let bootstrapAccordion = (object) => {
                         result += '<ul>';
                             for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                                 result += '<li>';
-                                    result += '<p>';
-                                        result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                                        result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                        result += object['array'][x]['items'][y]['title'];
-                                    result += '</p>';
+                                    let n = '';
+                                    n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                    n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                    result += getValidation(object['array'][x]['items'][y]['title'])
+                                    ? getLineBreak({
+                                        index : n,
+                                        content : object['array'][x]['items'][y]['title'],
+                                        element : [ 'p' ],
+                                        letter : ''
+                                    }) : '';
                                     result += getValidation(object['array'][x]['items'][y]['description']) ? lineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '.' }) : '';
                                     if (getValidation(object['array'][x]['items'][y]['items'])) {
                                         result += '<ul>';
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                 result += '<li>';
-                                                    result += '<p>';
-                                                        result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                                                        result += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                                        result += getTypeNumber({ index : z, typeNumber : isTypeNumber });
-                                                        result += object['array'][x]['items'][y]['items'][z];
-                                                    result += '</p>';
+                                                    let n = '';
+                                                    n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                                    n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                                    n += getTypeNumber({ index : z, typeNumber : isTypeNumber });
+                                                    result += getValidation(object['array'][x]['items'][y]['items'][z])
+                                                    ? getLineBreak({
+                                                        index : n,
+                                                        content : object['array'][x]['items'][y]['items'][z],
+                                                        element : [ 'p' ],
+                                                        letter : ''
+                                                    }) : '';
                                                 result += '</li>';
                                             };
                                         result += '</ul>';
@@ -976,7 +1049,6 @@ let variables = () => {
         ...getJSONFile({ content : 'navbar' }),
         ...getJSONFile({ content : 'regulation' }),
         ...getJSONFile({ content : 'convenience' }),
-        ...getJSONFile({ content : 'proximity' }),
     };
 };
 
@@ -992,7 +1064,7 @@ let bootstraps = () => {
 
 let views = () => {
     return {
-        viewListGroupItem,
+        viewListGroup,
     };
 };
 

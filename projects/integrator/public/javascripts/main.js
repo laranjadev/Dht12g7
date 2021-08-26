@@ -455,18 +455,18 @@ export let getFormErrorList = (object) => {
             return object['item']['innerHTML'] += '';
         } else {
             let messageContent = '';
-            messageContent += '<li>';
-            messageContent += '<p>';
-            messageContent += getMessageContent({
-                index : object['index'],
-                name : object['name'],
-            });
-            messageContent += '</p>';
+            messageContent += '<li class=\"list-group-item\">';
+                messageContent += '<p>';
+                    messageContent += getMessageContent({
+                        index : object['index'],
+                        name : object['name'],
+                    });
+                messageContent += '</p>';
             messageContent += '</li>';
             return object['item']['innerHTML'] += messageContent;
         };
     };
-    getSelector(object['messageTarget'])['innerHTML'] = '<ul></ul>';
+    getSelector(object['messageTarget'])['innerHTML'] = '<ul class=\"list-group list-group-flush\"></ul>';
     getSelector('form').addEventListener('submit', function (event) {
         getSelector(object['messageTarget']).querySelector('ul')['innerHTML'] = '';
         for (let x = 0; x < getElementList()['length']; x++) {

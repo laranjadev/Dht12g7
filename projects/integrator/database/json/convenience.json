@@ -1,94 +1,252 @@
-{
-    "title": "Conveniências",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis. Cras libero velit, tempus vel ultrices sit amet, sodales in est. Proin sed congue nibh, quis pulvinar lectus. Quisque et aliquam ipsum. Mauris pellentesque lacinia dui, euismod tempor odio ultrices eu. Ut sollicitudin euismod eros sit amet efficitur. Fusce rutrum nunc sed tempus tristique. Nulla feugiat tortor et tortor tincidunt varius. Suspendisse non lorem vehicula, cursus est eu, sollicitudin eros. Maecenas vel orci metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at odio at metus lacinia scelerisque. Donec elementum tortor nisl, et cursus leo venenatis et. Praesent consectetur ut nunc nec ornare. Morbi vulputate sit amet ligula ut fermentum. Pellentesque mi est, posuere a ultrices nec, hendrerit varius magna.",
-    "items": [
-        {
-            "title": "Banheiro",
-            "description": "",
-            "items": [
-                {
-                    "title": "Chuveiro",
-                    "description": ""
-                },
-                {
-                    "title": "Papel higiênico",
-                    "description": ""
-                },
-                {
-                    "title": "Toalhas",
-                    "description": ""
-                },
-                {
-                    "title": "Vaso sanitário",
-                    "description": ""
-                },
-                {
-                    "title": "Roupa de banho",
-                    "description": "custo adicional"
-                },
-                {
-                    "title": "Toalete",
-                    "description": "custo adicional"
-                },
-                {
-                    "title": "Secador de cabelo",
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "title": "Cozinha",
-            "description": "",
-            "items": [
-                {
-                    "title": "Cozinha compartilhada",
-                    "description": ""
-                },
-                {
-                    "title": "Fogão",
-                    "description": ""
-                },
-                {
-                    "title": "Produtos de limpeza",
-                    "description": ""
-                },
-                {
-                    "title": "Máquina de lavar roupas",
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "title": "Cozinha",
-            "description": "",
-            "items": [
-                {
-                    "title": "Roupa de cama",
-                    "description": ""
-                },
-                {
-                    "title": "Camas com tomadas de energia",
-                    "description": ""
-                }
-            ]
-        },
-        {
-            "title": "Segurança",
-            "description": "",
-            "items": [
-                {
-                    "title": "Câmeras de segurança",
-                    "description": ""
-                },
-                {
-                    "title": "Segurança 24h",
-                    "description": ""
-                },
-                {
-                    "title": "Extintores de incêncio",
-                    "description": ""
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "title": "Conveniências",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis. Cras libero velit, tempus vel ultrices sit amet, sodales in est. Proin sed congue nibh, quis pulvinar lectus. Quisque et aliquam ipsum. Mauris pellentesque lacinia dui, euismod tempor odio ultrices eu. Ut sollicitudin euismod eros sit amet efficitur. Fusce rutrum nunc sed tempus tristique. Nulla feugiat tortor et tortor tincidunt varius. Suspendisse non lorem vehicula, cursus est eu, sollicitudin eros. Maecenas vel orci metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at odio at metus lacinia scelerisque. Donec elementum tortor nisl, et cursus leo venenatis et. Praesent consectetur ut nunc nec ornare. Morbi vulputate sit amet ligula ut fermentum. Pellentesque mi est, posuere a ultrices nec, hendrerit varius magna.",
+        "items": [
+            {
+                "title": "Banheiro",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis.",
+                "items": [
+                    {
+                        "title": "Chuveiro",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Papel higiênico",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Toalhas",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Vaso sanitário",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Roupa de banho",
+                        "description": "custo adicional"
+                    },
+                    {
+                        "title": "Toalete",
+                        "description": "custo adicional"
+                    },
+                    {
+                        "title": "Secador de cabelo",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    }
+                ]
+            },
+            {
+                "title": "Cozinha",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Cozinha compartilhada",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Fogão",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Produtos de limpeza",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Máquina de lavar roupas",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    }
+                ]
+            },
+            {
+                "title": "Cozinha",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Roupa de cama",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Camas com tomadas de energia",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    }
+                ]
+            },
+            {
+                "title": "Segurança",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Câmeras de segurança",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Segurança 24h",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    },
+                    {
+                        "title": "Extintores de incêncio",
+                        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Proximidades",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum augue mi, volutpat mollis dui sodales quis. Cras libero velit, tempus vel ultrices sit amet, sodales in est. Proin sed congue nibh, quis pulvinar lectus. Quisque et aliquam ipsum. Mauris pellentesque lacinia dui, euismod tempor odio ultrices eu. Ut sollicitudin euismod eros sit amet efficitur. Fusce rutrum nunc sed tempus tristique. Nulla feugiat tortor et tortor tincidunt varius. Suspendisse non lorem vehicula, cursus est eu, sollicitudin eros. Maecenas vel orci metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at odio at metus lacinia scelerisque. Donec elementum tortor nisl, et cursus leo venenatis et. Praesent consectetur ut nunc nec ornare. Morbi vulputate sit amet ligula ut fermentum. Pellentesque mi est, posuere a ultrices nec, hendrerit varius magna.",
+        "items": [
+            {
+                "title": "O que há por perto?",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Teatro Ruth Escobar",
+                        "description": "0,4"
+                    },
+                    {
+                        "title": "Shopping Cidade São Paulo",
+                        "description": "0,4"
+                    },
+                    {
+                        "title": "Hospital Sírio-Libanês",
+                        "description": "0,5"
+                    },
+                    {
+                        "title": "Teatro Gazeta",
+                        "description": "0,5"
+                    },
+                    {
+                        "title": "Fiesp - Federação das Indústrias do Estado de São Paulo",
+                        "description": "0,6"
+                    },
+                    {
+                        "title": "Hospital 9 de Julho",
+                        "description": "0,6"
+                    },
+                    {
+                        "title": "Maternidade Pro Matre Paulista",
+                        "description": "0,6"
+                    },
+                    {
+                        "title": "MASP - Museu de Arte de São Paulo",
+                        "description": "0,6"
+                    },
+                    {
+                        "title": "Teatro Maria Della Costa",
+                        "description": "0,6"
+                    },
+                    {
+                        "title": "Teatro Sergio Cardoso",
+                        "description": "0,7"
+                    }
+                ]
+            },
+            {
+                "title": "Principais atrações.",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Edifício Copan",
+                        "description": "1,7"
+                    },
+                    {
+                        "title": "Catedral da Sé",
+                        "description": "1,9"
+                    },
+                    {
+                        "title": "Mercado Municipal de São Paulo",
+                        "description": "2,9"
+                    },
+                    {
+                        "title": "Museu Catavento",
+                        "description": "2,9"
+                    },
+                    {
+                        "title": "Bienal de São Paulo - Pavilhão Ciccillo Matarazzo",
+                        "description": "3,1"
+                    },
+                    {
+                        "title": "Sala São Paulo",
+                        "description": "3,1"
+                    },
+                    {
+                        "title": "Pinacoteca",
+                        "description": "3,3"
+                    },
+                    {
+                        "title": "Teatro Porto Seguro",
+                        "description": "3,4"
+                    },
+                    {
+                        "title": "Allianz Parque",
+                        "description": "4,7"
+                    },
+                    {
+                        "title": "Estádio do Canindé",
+                        "description": "5,4"
+                    }
+                ]
+            },
+            {
+                "title": "Restaurantes e Cafés.",
+                "description": "",
+                "items": [
+                    {
+                        "title": "China Box",
+                        "description": "0,3"
+                    },
+                    {
+                        "title": "Catzo Boteco Italiano",
+                        "description": "0,4"
+                    },
+                    {
+                        "title": "Starbucks",
+                        "description": "0,5"
+                    },
+                    {
+                        "title": "Shopping Cidade São Paulo",
+                        "description": "0,7"
+                    },
+                    {
+                        "title": "Sesc Paulista",
+                        "description": "1,2"
+                    }
+                ]
+            },
+            {
+                "title": "Rodoviárias.",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Terminal Rodoviário Barra Funda",
+                        "description": "0,5"
+                    },
+                    {
+                        "title": "Terminal Rodoviário Tietê",
+                        "description": "8,6"
+                    }
+                ]
+            },
+            {
+                "title": "Aeroportos.",
+                "description": "",
+                "items": [
+                    {
+                        "title": "Aeroporto de São Paulo - Congonhas",
+                        "description": "7,5"
+                    },
+                    {
+                        "title": "Aeroporto Internacional de São Paulo - Guarulhos",
+                        "description": "22,8"
+                    },
+                    {
+                        "title": "Aeroporto Internacional de Viracopos - Campinas",
+                        "description": "79,1"
+                    }
+                ]
+            }
+        ]
+    }
+]
