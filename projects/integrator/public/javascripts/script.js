@@ -1,10 +1,4 @@
 import {
-    addRemoveClasses,
-    getSignature,
-    getTimer,
-} from './main.js';
-
-import {
     navbarClasses,
 } from './classes.js';
 navbarClasses();
@@ -14,8 +8,47 @@ import {
 } from './classes.js';
 titleClasses();
 
-// 
+import {
+    itemsClasses,
+} from './classes.js';
+itemsClasses({
+    firstColor : 'light',
+    secondColor : 'dark',
+    // border : true,
+});
 
+
+// primary
+// secondary
+// success
+// danger
+// warning
+// info
+// light
+// dark
+
+import {
+    getSignature,
+} from './main.js';
+getSignature({
+    element : 'signature',
+    name : 'laranja dev br',
+    email : 'far820320@gmail.com',
+    phone : '+55 (11) 9 4005 8153',
+});
+
+import {
+    getTimer,
+} from './main.js';
+getTimer({
+    element : 'timer',
+    number : 1,
+    seconds : 1,
+});
+
+import {
+    addRemoveClasses,
+} from './main.js';
 addRemoveClasses({
     elementList : [
         'body',
@@ -26,7 +59,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#container',
@@ -37,7 +69,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#content'
@@ -52,7 +83,24 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
+addRemoveClasses({
+    elementList : [
+        '#row',
+    ],
+    classeList : [
+        'row',
+    ],
+    method : 'add',
+});
+addRemoveClasses({
+    elementList : [
+        '#col',
+    ],
+    classeList : [
+        'col',
+    ],
+    method : 'add',
+});
 addRemoveClasses({
     elementList : [
         'footer'
@@ -63,7 +111,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         'button',
@@ -73,19 +120,4 @@ addRemoveClasses({
         'btn-outline-dark',
     ],
     method : 'add',
-});
-
-// 
-
-getSignature({
-    element : 'signature',
-    name : 'laranja dev br',
-    email : 'far820320@gmail.com',
-    phone : '+55 (11) 9 4005 8153',
-});
-
-getTimer({
-    element : 'timer',
-    number : 1,
-    seconds : 1,
 });

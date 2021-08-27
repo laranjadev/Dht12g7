@@ -1,43 +1,24 @@
 import {
+    quickViewClasses,
+} from './classes.js';
+quickViewClasses({
+    btnColor : 'dark',
+    btnStyle : 'outline',
+    menuPosition : 'center',
+});
+
+import {
     addRemoveClasses,
 } from './main.js';
-
-addRemoveClasses({
-    elementList : [
-        '#header-row',
-    ],
-    classeList : [
-        'row',
-        'd-flex',
-        'justify-content-center',
-    ],
-    method : 'add',
-});
-
-addRemoveClasses({
-    elementList : [
-        '#header-col',
-    ],
-    classeList : [
-        'col',
-        'mb-3',
-    ],
-    method : 'add',
-});
-
-// 
-
 addRemoveClasses({
     elementList : [
         '#body #row',
     ],
     classeList : [
         'gx-3',
-        'row',
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#body #col',
@@ -49,7 +30,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#body #list-group a',
@@ -63,7 +43,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#body #list-group ul',
@@ -74,7 +53,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#body #list-group ul li',
@@ -83,16 +61,4 @@ addRemoveClasses({
         'list-group-item',
     ],
     method : 'add',
-});
-
-import {
-    itemsClasses,
-} from './classes.js';
-itemsClasses();
-
-import {
-    viewQuickClasses,
-} from './classes.js';
-viewQuickClasses({
-    position : 'center',
 });

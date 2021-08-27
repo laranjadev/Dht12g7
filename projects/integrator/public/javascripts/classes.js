@@ -2,46 +2,54 @@ import {
     addRemoveClasses,
     getCEPCheck,
     getCNPJMask,
+    getFormErrorList,
+    getFieldValidator,
+    getFieldEvent,
+    getValidation,
 } from './main.js';
 
 export let itemsClasses = (object) => {
+    let isFirstColor = getValidation(object['firstColor']) ? '-' + object['firstColor'] : '-' + 'light';
+    let isSecondColor = getValidation(object['secondColor']) ? '-' + object['secondColor'] : '-' + 'dark'; 
+    let isBorder = getValidation(object['border']) ? [ 'border', 'border' + isSecondColor ] : []; 
     addRemoveClasses({
         elementList : [
-            '#dark-item',
-            '#light-item',
+            '#first-item',
+            '#second-item',
         ],
         classeList : [
             'mb-3',
             'p-3',
-            'rounded',
+            'rounded-1',
             'shadow-sm',
+            ...isBorder,
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#light-item',
+            '#second-item',
         ],
         classeList : [
-            'bg-light',
-            'text-dark',
+            'bg' + isFirstColor,
+            'text' + isSecondColor,
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#dark-item',
+            '#first-item',
         ],
         classeList : [
-            'bg-dark',
-            'text-light',
+            'bg' + isSecondColor,
+            'text' + isFirstColor,
         ],
         method : 'add',
     });
     // addRemoveClasses({
     //     elementList : [
-    //         '#dark-item img',
-    //         '#light-item img',
+    //         '#first-item img',
+    //         '#second-item img',
     //     ],
     //     classeList : [
     //         'col-md-4',
@@ -77,16 +85,47 @@ export let formClasses = () => {
     getCNPJMask({
         element : '#cnpj',
     });
-}
 
-export let paginationClasses = () => {
+    getFormErrorList({
+        messageTarget : '#error-list',
+    });
+
+    getFieldValidator({
+        messageTarget : '#alert-danger',
+    });
+
+    getFieldEvent({
+        color : '#000',
+        background : '#FFF',
+        elementList : [
+            '.form-control',
+        ],
+    });
+
+    addRemoveClasses({
+        elementList : [
+            '#alert-danger',
+            '#error-list',
+        ],
+        classeList : [
+            'alert',
+            'alert-danger',
+            'form-group',
+            'mb-3',
+        ],
+        method : 'add',
+    });
+};
+
+export let paginationClasses = (object) => {
+    let isMenuPosition = getValidation(object['menuPosition']) ? object['menuPosition'] : 'center';
     addRemoveClasses({
         elementList : [
             'nav#pagination',
         ],
         classeList : [
             'd-flex',
-            'justify-content-center',
+            'justify-content-' + isMenuPosition,
             'mb-3',
         ],
         method : 'add',
@@ -96,7 +135,7 @@ export let paginationClasses = () => {
             'nav#pagination ul',
         ],
         classeList : [
-            'align-self-center',
+            'align-self-' + isMenuPosition,
             'pagination',
         ],
         method : 'add',
@@ -153,34 +192,28 @@ export let accordionClasses = (object) => {
     });
 };
 
-export let viewQuickClasses = (object) => {
-    let isPosition = object['position'] ? object['position'] : 'center';
+export let quickViewClasses = (object) => {
+    let isBTNClass = '';
+    isBTNClass += 'btn';
+    isBTNClass += getValidation(object['btnStyle']) ? '-' + object['btnStyle'] : '';
+    isBTNClass += getValidation(object['btnColor']) ? '-' + object['btnColor'] : '-' + 'dark';
+    let isMenuPosition = getValidation(object['menuPosition']) ? object['menuPosition'] : 'center';
     addRemoveClasses({
         elementList : [
-            '#view-quick #row',
+            '#quick-view #col',
         ],
         classeList : [
-            'row',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#view-quick #col',
-        ],
-        classeList : [
-            'col',
             'd-flex',
-            'justify-content-' + isPosition,
+            'justify-content-' + isMenuPosition,
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#view-quick #menu',
+            '#quick-view #menu',
         ],
         classeList : [
-            'align-self-' + isPosition,
+            'align-self-' + isMenuPosition,
             'btn-group',
             'mb-3',
         ],
@@ -188,11 +221,11 @@ export let viewQuickClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#view-quick #menu a',
+            '#quick-view #menu a',
         ],
         classeList : [
             'btn',
-            'btn-outline-dark',
+            isBTNClass,
         ],
         method : 'add',
     });
@@ -216,6 +249,15 @@ export let navbarClasses = () => {
         ],
         method : 'add',
     });
+    addRemoveClasses({
+        elementList : [
+            '#search-form',
+        ],
+        classeList : [
+            'd-flex',
+        ],
+        method : 'add',
+    });
 };
 
 export let titleClasses = () => {
@@ -231,7 +273,3 @@ export let titleClasses = () => {
         });
     };
 };
-
-
-
-

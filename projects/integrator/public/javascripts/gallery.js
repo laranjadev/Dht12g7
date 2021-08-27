@@ -1,7 +1,15 @@
 import {
+    quickViewClasses,
+} from './classes.js';
+quickViewClasses({
+    btnColor : 'dark',
+    btnStyle : 'outline',
+    menuPosition : 'center',
+});
+
+import {
     addRemoveClasses,
 } from './main.js';
-
 addRemoveClasses({
     elementList : [
         '#header',
@@ -12,7 +20,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio',
@@ -23,7 +30,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio #thumbnail',
@@ -35,7 +41,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio #thumbnail #image a',
@@ -45,7 +50,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio #thumbnail #image a img',
@@ -57,7 +61,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio #thumbnail #title',
@@ -68,7 +71,6 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
 addRemoveClasses({
     elementList : [
         '#portfolio #thumbnail #image #caption',
@@ -78,18 +80,6 @@ addRemoveClasses({
         'px-5',
     ],
     method : 'add',
-});
-
-import {
-    itemsClasses,
-} from './classes.js';
-itemsClasses();
-
-import {
-    viewQuickClasses,
-} from './classes.js';
-viewQuickClasses({
-    position : 'center',
 });
 
 window.addEventListener('DOMContentLoaded', () => {

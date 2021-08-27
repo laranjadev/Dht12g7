@@ -24,7 +24,7 @@ const isEmpty = (object) => {
 
 const footerQuickMenu = (object) => {
     let result = '';
-    result += '<div id=\"view-quick\">';
+    result += '<div id=\"quick-view\">';
         result += '<div id=\"row\">';
             result += '<div id=\"col\">';
                 result += '<div id=\"menu\">';
@@ -51,13 +51,13 @@ const footerQuickMenu = (object) => {
 
 const viewListGroup = (object) => {
     let result = '';
-    let = isQuickMenu = viewQuickMenu({ id : 'id-', object : object });
+    let = isQuickMenu = quickViewMenu({ id : 'id-', object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickMenu;
-        result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
+        result += '<div id=\"' + (x % 2 === 0 ? 'first-item' : 'second-item') + '\">';
             if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
-                result += '<div id=\"header-row\">';
-                    result += '<div id=\"header-col\">';
+                result += '<div id=\"row\">';
+                    result += '<div id=\"col\">';
                         result += getValidation(object['array'][x]['title']) ? getLineBreak({ id : 'id-' + x, content : object['array'][x]['title'], element : [ 'h1' ], letter : '' }) : '';
                         result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : [ 'p', 'em' ], letter : '' }) : '';
                     result += '</div>';
@@ -97,9 +97,9 @@ const viewListGroup = (object) => {
     return result;
 };
 
-const viewQuickMenu = (object) => {
+const quickViewMenu = (object) => {
     let result = '';
-    result += '<div id=\"view-quick\">';
+    result += '<div id=\"quick-view\">';
         result += '<div id=\"row\">';
             result += '<div id=\"col\">';
                 result += '<div id=\"menu\">';
@@ -117,10 +117,10 @@ const viewQuickMenu = (object) => {
 
 const bootstrapGallery = (object) => {
     let result = '';
-    let = isQuickMenu = viewQuickMenu({ id : 'id-', object : object });
+    let = isQuickMenu = quickViewMenu({ id : 'id-', object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickMenu;
-        result += '<div id=\"' + (x % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
+        result += '<div id=\"' + (x % 2 === 0 ? 'first-item' : 'second-item') + '\">';
             if (getValidation(object['header']['title']) || getValidation(object['header']['description'])) {
                 if (getValidation(object['array'][x]['title']) || getValidation(object['array'][x]['description'])) {
                     result += '<div id=\"header\">';
@@ -186,7 +186,7 @@ const bootstrapCarousel = (object) => {
                     result += '<img';
                     result += ' src=\"' + object['array'][i]['image'] + '\"';
                     result += ' class=\"d-block w-100\"';
-                    result += ' alt=\"' + object['array'][i]['title'] + '\"';
+                    result += getValidation(object['array'][i]['title']) ? ' alt=\"' + object['array'][i]['title'] + '\"' : '';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
                         result += getValidation(object['array'][i]['title']) ? getLineBreak({ content : object['array'][i]['title'], element : [ 'h3', 'em' ], letter : '' }) : '';
@@ -245,10 +245,10 @@ const bootstrapNavbar = (object) => {
                                         result += '<ul>';
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                 result += '<li>';
-                                                    let href = getValidation(object['array'][x]['items'][y]['items'][z]['path']) ? object['array'][x]['items'][y]['items'][z]['path'] : '#';
+                                                    let isHref = getValidation(object['array'][x]['items'][y]['items'][z]['path']) ? object['array'][x]['items'][y]['items'][z]['path'] : '#';
                                                     result += '<a';
                                                     result += ' class=\"dropdown-item\"';
-                                                    result += ' href=\"' + href + '\"';
+                                                    result += ' href=\"' + isHref + '\"';
                                                     result += '>';
                                                         result += getFirstUpperCase(object['array'][x]['items'][y]['items'][z]['title']);
                                                     result += '</a>';

@@ -14,6 +14,19 @@ export let createElement = (element) => { return window.document.createElement(e
 
 export let getLang = () => { return window.document.documentElement.lang; };
 
+export let isThis = (string, type) => {
+    return typeof string === type;
+};
+
+export let getValidation = (content) => {
+    if (!content)
+        return false;
+    else if (isThis(content, 'undefined'))
+        return false;
+    else
+        return true;
+};
+
 export let getClearBoth = (object) => {
     let childElement = createElement(object['childElement']);
     childElement['style']['clear'] = 'both';
@@ -258,14 +271,6 @@ export let colorGenerator = (opacity = 1) => {
     };
 };
 
-export let isThis = (string, type) => {
-    return typeof string === type;
-};
-
-export let getValidation = (content) => {
-    if (!content || isThis(content, 'undefined')) return false;
-    else return true;
-};
 
 export let getTimer = (object) => {
     setInterval(function (event) {

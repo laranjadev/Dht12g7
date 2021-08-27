@@ -2,9 +2,9 @@
         <% for (let i = 0; i < index['length']; i++) { %>
             <%
                 let html = '';
-                html += '<div class=\"row\">';
-                    html += '<div class=\"col\">';
-                        html += '<div id=\"' + (i % 2 === 0 ? 'light-item' : 'dark-item') + '\">';
+                html += '<div id=\"row\">';
+                    html += '<div id=\"col\">';
+                        html += '<div id=\"' + (i % 2 === 0 ? 'first-item' : 'second-item') + '\">';
                             html += getValidation(index[i]['picture']) ? '<img src=\"' + '/images/' + index[i]['picture'] + '\" alt=\"\" height=\"200\">' : '';
                             html += getValidation(index[i]['title']) ? '<h6>' + getFirstUpperCase(index[i]['title']) + '</h6>' : '';
                             html += getValidation(index[i]['description']) ? '<p>' + getFirstUpperCase(index[i]['description']) + '</p>' : '';
