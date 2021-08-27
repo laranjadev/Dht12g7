@@ -427,19 +427,6 @@ export let getCNPJMask = (object) => {
     });
 };
 
-export let getMessageContent = (object) => {
-    let result = '';
-    result += !isThis(object['index'], 'undefined') ? object['index'] + ') ' : '';
-    result += 'The';
-    result += ' ';
-    result += '\"';
-    result += getFirstUpperCase(object['name'].split('#').join('').split('.').join(''));
-    result += '\"';
-    result += ' ';
-    result += 'Field Invalid!';
-    return result;
-};
-
 export let getElementList = () => {
     const array = [];
     const indexes = [
@@ -483,27 +470,30 @@ export let getFormErrorList = (object) => {
     let errorMessage = (object) => {
         let result = '';
         result += '<li class=\"list-group-item\">';
-            result += getLineBreak({
-                index : object['index'] + ') ',
-                content : getFirstUpperCase(object['name'].split('#').join('').split('.').join('')) + '!',
-                element : [ 'p', 'em' ],
-                letter : ''
-            });
+            result += '<a href=\"#' + object['id'] + object['index'] + '\">';
+                result += getLineBreak({
+                    index : object['index'] + ') ',
+                    content : getFirstUpperCase(object['name'].split('#').join('').split('.').join('')) + '!',
+                    element : [ 'p', 'em' ],
+                });
+            result += '</a>';
         result += '</li>';
         return object['item']['innerHTML'] += !getValidation(getSelector(object['name'])['value']) ? result : '';
-        // getMessageContent
     };
     getSelector(object['messageTarget'])['innerHTML'] = '';
-    getSelector(object['messageTarget'])['innerHTML'] += getLineBreak({ content : getFirstUpperCase('error list!'), element : [ 'h1', 'em' ] });
-    getSelector(object['messageTarget'])['innerHTML'] += '<ul class=\"list-group list-group-flush\">';
-    getSelector(object['messageTarget'])['innerHTML'] += '</ul>';
+    getSelector(object['messageTarget'])['innerHTML'] += getLineBreak({
+        content : getFirstUpperCase('error list!'),
+        element : [ 'h1', 'em' ],
+    });
+    getSelector(object['messageTarget'])['innerHTML'] += '<ul class=\"list-group list-group-flush\"></ul>';
     getSelector('form').addEventListener('submit', function (event) {
         getSelector(object['messageTarget']).querySelector('ul')['innerHTML'] = '';
-        for (let x = 0; x < getElementList()['length']; x++) {
+        for (let i = 0; i < getElementList()['length']; i++) {
             errorMessage({
+                id : 'wrong-item-',
                 item : getSelector(object['messageTarget']).querySelector('ul'),
-                name : getElementList()[x],
-                index : x + 1,
+                name : getElementList()[i],
+                index : i + 1,
             });
         };
         if (getSelector(object['messageTarget']).querySelector('ul').querySelectorAll('li')['length']) {
@@ -522,10 +512,13 @@ export let getFieldValidator = (object) => {
                 getSelectors(object['messageTarget'])[i]['hidden'] = 'hidden';
             } else {
                 getSelectors(object['messageTarget'])[i]['innerHTML'] = '';
+                let result = '';
+                result += 'The \"';
+                result += getFirstUpperCase(getSelectors(getElementList())[i]['name'].split('#').join('').split('.').join(''));
+                result += '\" Field Invalid!';
                 getSelectors(object['messageTarget'])[i]['innerHTML'] += getLineBreak({
-                    content : getMessageContent({ name : getSelectors(getElementList())[i]['name'] }),
+                    content : result,
                     element : [ 'p', 'em' ],
-                    letter : ''
                 });
                 getSelectors(object['messageTarget'])[i]['hidden'] = '';
             }

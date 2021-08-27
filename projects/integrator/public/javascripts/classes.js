@@ -4,7 +4,6 @@ import {
     getCNPJMask,
     getFormErrorList,
     getFieldValidator,
-    getFieldEvent,
     getValidation,
 } from './main.js';
 
@@ -65,17 +64,6 @@ export let itemsClasses = (object) => {
 };
 
 export let formClasses = () => {
-
-    getFieldEvent({
-        color : '#000',
-        background : '#FFF',
-        elementList : [
-            '.form-control',
-        ],
-    });
-
-    // 
-
     getCEPCheck({
         element : '#cep',
     });
@@ -95,8 +83,6 @@ export let formClasses = () => {
         method : 'add',
     });
 
-    // 
-    
     getFormErrorList({
         messageTarget : '#error-list',
     });
@@ -115,27 +101,6 @@ export let formClasses = () => {
         ],
         method : 'add',
     });
-    addRemoveClasses({
-        elementList : [
-            '#error-list ul',
-        ],
-        classeList : [
-            'list-group-flush',
-            'list-group',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#error-list ul li',
-        ],
-        classeList : [
-            'list-group-item',
-        ],
-        method : 'add',
-    });
-
-    // 
 
     getFieldValidator({
         messageTarget : '#alert',
