@@ -28,7 +28,7 @@ export let itemsClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#second-item',
+            '#first-item',
         ],
         classeList : [
             'bg' + isFirstColor,
@@ -38,7 +38,7 @@ export let itemsClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#first-item',
+            '#second-item',
         ],
         classeList : [
             'bg' + isSecondColor,
@@ -65,6 +65,23 @@ export let itemsClasses = (object) => {
 };
 
 export let formClasses = () => {
+
+    getFieldEvent({
+        color : '#000',
+        background : '#FFF',
+        elementList : [
+            '.form-control',
+        ],
+    });
+
+    // 
+
+    getCEPCheck({
+        element : '#cep',
+    });
+    getCNPJMask({
+        element : '#cnpj',
+    });
     addRemoveClasses({
         elementList : [
             'input',
@@ -78,39 +95,58 @@ export let formClasses = () => {
         method : 'add',
     });
 
-    getCEPCheck({
-        element : '#cep',
-    });
+    // 
     
-    getCNPJMask({
-        element : '#cnpj',
-    });
-
     getFormErrorList({
         messageTarget : '#error-list',
     });
-
-    getFieldValidator({
-        messageTarget : '#alert-danger',
-    });
-
-    getFieldEvent({
-        color : '#000',
-        background : '#FFF',
-        elementList : [
-            '.form-control',
-        ],
-    });
-
     addRemoveClasses({
         elementList : [
-            '#alert-danger',
             '#error-list',
         ],
-        classeList : [
+        classeList : [            
+            'alert-light',
             'alert',
+            'border-secondary',
+            'border',
+            'mb-3',
+            'rounded-1',
+            'shadow-sm',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#error-list ul',
+        ],
+        classeList : [
+            'list-group-flush',
+            'list-group',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#error-list ul li',
+        ],
+        classeList : [
+            'list-group-item',
+        ],
+        method : 'add',
+    });
+
+    // 
+
+    getFieldValidator({
+        messageTarget : '#alert',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#alert',
+        ],
+        classeList : [
             'alert-danger',
-            'form-group',
+            'alert',
             'mb-3',
         ],
         method : 'add',

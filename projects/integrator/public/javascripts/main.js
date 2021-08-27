@@ -427,7 +427,7 @@ export let getCNPJMask = (object) => {
     });
 };
 
-let getMessageContent = (object) => {
+export let getMessageContent = (object) => {
     let result = '';
     result += !isThis(object['index'], 'undefined') ? object['index'] + ') ' : '';
     result += 'The';
@@ -440,7 +440,7 @@ let getMessageContent = (object) => {
     return result;
 };
 
-let getElementList = () => {
+export let getElementList = () => {
     const array = [];
     const indexes = [
         'input',
@@ -454,24 +454,49 @@ let getElementList = () => {
     return array;
 };
 
+export let getLineBreak = (object) => {
+    let is_start = '', is_end = '';
+    let is_id = getValidation(object['id']) ? ' id=\"' + object['id'] + '\"' : '';
+    if (isThis(object['element'], 'string')) {
+        is_start = '<' + object['element'] + is_id + '>';
+        is_end = '</' + object['element'] + '>';
+    };
+    if (isThis(object['element'], 'object')) {
+        for (let i = 0; i <= object['element']['length'] - 1; i++)
+            is_start += '<' + object['element'][i] + is_id + '>';
+        for (let i = object['element']['length'] + 1; i >= 0; i--)
+            is_end += '</' + object['element'][i] + '>';
+    };
+    let is_content = '';
+    is_content += getValidation(object['index']) ? object['index'] : '';
+    is_content += getValidation(object['element']) && getValidation(object['letter'])
+    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
+    : object['content'];
+    let result = '';
+    result += is_start;
+    result += is_content;
+    result += is_end;
+    return result;
+};
+
 export let getFormErrorList = (object) => {
     let errorMessage = (object) => {
-        if (getValidation(getSelector(object['name'])['value'])) {
-            return object['item']['innerHTML'] += '';
-        } else {
-            let messageContent = '';
-            messageContent += '<li class=\"list-group-item\">';
-                messageContent += '<p>';
-                    messageContent += getMessageContent({
-                        index : object['index'],
-                        name : object['name'],
-                    });
-                messageContent += '</p>';
-            messageContent += '</li>';
-            return object['item']['innerHTML'] += messageContent;
-        };
+        let result = '';
+        result += '<li class=\"list-group-item\">';
+            result += getLineBreak({
+                index : object['index'] + ') ',
+                content : getFirstUpperCase(object['name'].split('#').join('').split('.').join('')) + '!',
+                element : [ 'p', 'em' ],
+                letter : ''
+            });
+        result += '</li>';
+        return object['item']['innerHTML'] += !getValidation(getSelector(object['name'])['value']) ? result : '';
+        // getMessageContent
     };
-    getSelector(object['messageTarget'])['innerHTML'] = '<ul class=\"list-group list-group-flush\"></ul>';
+    getSelector(object['messageTarget'])['innerHTML'] = '';
+    getSelector(object['messageTarget'])['innerHTML'] += getLineBreak({ content : getFirstUpperCase('error list!'), element : [ 'h1', 'em' ] });
+    getSelector(object['messageTarget'])['innerHTML'] += '<ul class=\"list-group list-group-flush\">';
+    getSelector(object['messageTarget'])['innerHTML'] += '</ul>';
     getSelector('form').addEventListener('submit', function (event) {
         getSelector(object['messageTarget']).querySelector('ul')['innerHTML'] = '';
         for (let x = 0; x < getElementList()['length']; x++) {
@@ -497,11 +522,11 @@ export let getFieldValidator = (object) => {
                 getSelectors(object['messageTarget'])[i]['hidden'] = 'hidden';
             } else {
                 getSelectors(object['messageTarget'])[i]['innerHTML'] = '';
-                getSelectors(object['messageTarget'])[i]['innerHTML'] += '<p>';
-                getSelectors(object['messageTarget'])[i]['innerHTML'] += getMessageContent({
-                    name : getSelectors(getElementList())[i]['name'],
+                getSelectors(object['messageTarget'])[i]['innerHTML'] += getLineBreak({
+                    content : getMessageContent({ name : getSelectors(getElementList())[i]['name'] }),
+                    element : [ 'p', 'em' ],
+                    letter : ''
                 });
-                getSelectors(object['messageTarget'])[i]['innerHTML'] += '</p>';
                 getSelectors(object['messageTarget'])[i]['hidden'] = '';
             }
             errorNumber += getSelectors(getElementList())[i]['value'].trim() ? 0 : 1;

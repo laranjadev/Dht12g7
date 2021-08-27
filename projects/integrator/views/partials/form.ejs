@@ -37,7 +37,7 @@
             }
         }
         html += '</select>';
-        html += '<div id=\"alert-danger\" hidden><p></p></div>';
+        html += '<div id=\"alert\" hidden><p></p></div>';
         return html;
     };
     let getInputCreator = (array) => {
@@ -83,7 +83,7 @@
             : '';
             html += '>';
         }
-        html += '<div id=\"alert-danger\" hidden><p></p></div>';
+        html += '<div id=\"alert\" hidden><p></p></div>';
         return html;
     }
     let getTextareaCreator = (array) => {
@@ -99,7 +99,7 @@
         ? index[getLabelName(array['name'])] !== null ? index[getLabelName(array['name'])] : ''
         : '';
         html += '</textarea>';
-        html += '<div id=\"alert-danger\" hidden><p></p></div>';
+        html += '<div id=\"alert\" hidden><p></p></div>';
         return html;
     }
     let isAction = getValidation(isFormAttribute['action']) ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
@@ -109,9 +109,9 @@
 <%- '<form' + isAction + isEnctype + isMethod + '>'; %>
     <%
         let start = '', end = '';
-        start += '<div class=\"row\">';
-        start += '<div class=\"col\">';
-        start += '<div id=\"light-item\">';
+        start += '<div id=\"row\">';
+        start += '<div id=\"col\">';
+        start += '<div id=\"first-item\">';
         end += '</div>';
         end += '</div>';
         end += '</div>';
@@ -130,5 +130,6 @@
             <% } %>
         <% } %>
     <% } %>
+    <%- include('./error-list'); %>
     <%- include('./quick-menu'); %>
 <%- '</form>'; %>
