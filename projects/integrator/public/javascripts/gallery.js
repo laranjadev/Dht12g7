@@ -2,9 +2,9 @@ import {
     quickViewClasses,
 } from './classes.js';
 quickViewClasses({
-    btnColor : 'dark',
-    btnStyle : 'outline',
-    menuPosition : 'center',
+    color : 'dark',
+    position : 'center',
+    style : 'outline',
 });
 
 import {

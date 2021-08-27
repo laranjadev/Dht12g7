@@ -513,7 +513,7 @@ export let getFieldValidator = (object) => {
                 getSelectors(object['messageTarget'])[i]['innerHTML'] = '';
                 let result = '';
                 result += 'The \"';
-                result += getFirstUpperCase(getSelectors(getElementList())[i]['name'].split('#').join('').split('.').join(''));
+                result += getFirstUpperCase(getSelectors(getElementList())[i]['name'].split('#').join(''));
                 result += '\" Field Invalid!';
                 getSelectors(object['messageTarget'])[i]['innerHTML'] += getLineBreak({
                     content : result,

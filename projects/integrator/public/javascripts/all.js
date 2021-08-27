@@ -2,16 +2,16 @@ import {
     paginationClasses,
 } from './classes.js';
 paginationClasses({
-    menuPosition : 'center',
+    position : 'center',
 });
 
 import {
     quickViewClasses,
 } from './classes.js';
 quickViewClasses({
-    btnColor : 'dark',
-    btnStyle : 'outline',
-    menuPosition : 'end',
+    color : 'dark',
+    position : 'end',
+    style : 'outline',
 });
 
 // btn-outline-primary

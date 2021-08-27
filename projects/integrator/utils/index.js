@@ -282,26 +282,26 @@ const bootstrapNavbar = (object) => {
 
 const bootstrapModal = (object) => {
     let result = '';
-    let currentAction = '';
-    currentAction += '/' + object['prefix'];
-    currentAction += '/' + 'delete';
-    currentAction += '/' + object['array'][object['index']]['id'];
-    currentAction += '?_method=DELETE';
-    currentAction = currentAction.trim().toLowerCase();
     result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
         result += '<div class=\"modal-dialog\">';
             result += '<div class=\"modal-content\">';
                 if (getValidation(object['title'])) {
                     result += '<div class=\"modal-header\">';
-                        result += getLineBreak({ content : object['title'], element : [ 'h5' ], letter : '' });
+                        result += getLineBreak({ content : object['title'], element : [ 'h5' ] });
                     result += '</div>';
                 }
                 if (getValidation(object['description'])) {
                     result += '<div class=\"modal-body\">';
-                        result += getLineBreak({ content : object['description'], element : [ 'p', 'em' ], letter : '' });
+                        result += getLineBreak({ content : object['description'], element : [ 'p', 'em' ] });
                     result += '</div>';
                 }
                 result += '<div class=\"modal-footer\">';
+                    let currentAction = '';
+                    currentAction += '/' + object['prefix'];
+                    currentAction += '/' + 'delete';
+                    currentAction += '/' + object['array'][object['index']]['id'];
+                    currentAction += '?_method=DELETE';
+                    currentAction = currentAction.trim().toLowerCase();
                     result += '<form action=\"' + currentAction + '\" method=\"POST\">';
                         result += '<button type=\"submit\">';
                             result += getFirstUpperCase('yes!');
@@ -369,75 +369,88 @@ let objectCleaner = (content) => {
 
 let bootstrapAccordion = (object) => {
     let result = '';
-    let isTypeNumber = !isThis(object['typeNumber'], 'undefined') ? object['typeNumber'] : false;
-    result += '<div class=\"accordion\" id=\"' + object['id'] + '\">';
-        for (let x = 0; x < object['array']['length']; x++) {
-        let isID = !isThis(object['id'], 'undefined') ? '-' + object['id'] + '-' + x : '-' + x;
-        result += '<div class=\"accordion-item\">';
-            result += '<h2 class=\"accordion-header\" id=\"heading' + isID + '\">';
-            result += '<button'
-                result += ' aria-controls=\"collapse' + isID + '\"';
-                result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
-                result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
-                result += ' data-bs-target=\"#collapse' + isID + '\"';
-                result += ' data-bs-toggle=\"collapse\"'
-                result += ' type=\"button\"';
-            result += '>';
-                result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                result += object['array'][x]['title'];
-            result += '</button>';
-            result += '</h2>';
-            result += '<div'
-            result += ' aria-labelledby=\"heading' + isID + '\"';
-            result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
-            result += ' data-bs-parent=\"#' + object['id'] + '\"';
-            result += ' id=\"collapse' + isID + '\"';
-            result += '>';
-                result += getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']) ? '<div class=\"accordion-body\">' : '';
-                    result += getValidation(object['array'][x]['description']) ? getLineBreak({ content : object['array'][x]['description'], element : 'p', letter : '' }) : '';
-                    if (getValidation(object['array'][x]['items'])) {
-                        result += '<ul>';
-                            for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                                result += '<li>';
-                                    let n = '';
-                                    n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                                    n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                    result += getValidation(object['array'][x]['items'][y]['title'])
-                                    ? getLineBreak({
-                                        index : n,
-                                        content : object['array'][x]['items'][y]['title'],
-                                        element : [ 'p' ],
-                                        letter : ''
-                                    }) : '';
-                                    result += getValidation(object['array'][x]['items'][y]['description']) ? lineBreak({ content : object['array'][x]['items'][y]['description'], element : 'p', letter : '.' }) : '';
-                                    if (getValidation(object['array'][x]['items'][y]['items'])) {
-                                        result += '<ul>';
-                                            for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
-                                                result += '<li>';
-                                                    let n = '';
-                                                    n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
-                                                    n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
-                                                    n += getTypeNumber({ index : z, typeNumber : isTypeNumber });
-                                                    result += getValidation(object['array'][x]['items'][y]['items'][z])
-                                                    ? getLineBreak({
-                                                        index : n,
-                                                        content : object['array'][x]['items'][y]['items'][z],
-                                                        element : [ 'p' ],
-                                                        letter : ''
-                                                    }) : '';
-                                                result += '</li>';
-                                            };
-                                        result += '</ul>';
-                                    };
-                                result += '</li>';
-                            };
-                        result += '</ul>';
-                    };
-                result += getValidation(object['array'][x]['description']) || getValidation(object['array'][x]['items']) ? '</div>' : '';
+    for (let i = 0; i < object['array']['length']; i++) {
+
+        result += getValidation(object['array'][i]['title'])
+        ? getLineBreak({ content : object['array'][i]['title'], element : [ 'h1' ] }) : '';
+        result += getValidation(object['array'][i]['description']) ? 
+        getLineBreak({ content : object['array'][i]['description'], element : [ 'p', 'em' ] }) : '';
+        
+        let isTypeNumber = !isThis(object['typeNumber'], 'undefined') ? object['typeNumber'] : false;
+        result += '<div class=\"accordion\" id=\"' + object['id'] + '\">';
+            for (let x = 0; x < object['array'][i]['items']['length']; x++) {
+            let isID = !isThis(object['id'], 'undefined') ? '-' + object['id'] + '-' + x : '-' + x;
+            result += '<div class=\"accordion-item\">';
+                result += '<h2 class=\"accordion-header\" id=\"heading' + isID + '\">';
+                    result += '<button'
+                        result += ' aria-controls=\"collapse' + isID + '\"';
+                        result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
+                        result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
+                        result += ' data-bs-target=\"#collapse' + isID + '\"';
+                        result += ' data-bs-toggle=\"collapse\"'
+                        result += ' type=\"button\"';
+                    result += '>';
+                        result += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                        result += object['array'][i]['items'][x]['title'];
+                    result += '</button>';
+                result += '</h2>';
+                result += '<div'
+                result += ' aria-labelledby=\"heading' + isID + '\"';
+                result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
+                result += ' data-bs-parent=\"#' + object['id'] + '\"';
+                result += ' id=\"collapse' + isID + '\"';
+                result += '>';
+                    let isTags = [ 'p', 'em' ];
+                    result += getValidation(object['array'][i]['items'][x]['description']) || getValidation(object['array'][i]['items'][x]['items']) ? '<div class=\"accordion-body\">' : '';
+                        result += getValidation(object['array'][i]['items'][x]['description']) ? getLineBreak({
+                            content : object['array'][i]['items'][x]['description'],
+                            element : isTags
+                        }) : '';
+                        if (getValidation(object['array'][i]['items'][x]['items'])) {
+                            result += '<ul>';
+                                for (let y = 0; y < object['array'][i]['items'][x]['items']['length']; y++) {
+                                    result += '<li>';
+                                        let n = '';
+                                        n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                        n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['title'])
+                                        ? getLineBreak({
+                                            index : n,
+                                            content : object['array'][i]['items'][x]['items'][y]['title'],
+                                            element : isTags,
+                                        }) : '';
+                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? lineBreak({
+                                            content : object['array'][i]['items'][x]['items'][y]['description'],
+                                            element : isTags,
+                                        }) : '';
+                                        if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
+                                            result += '<ul>';
+                                                for (let z = 0; z < object['array'][i]['items'][x]['items'][y]['items']['length']; z++) {
+                                                    result += '<li>';
+                                                        let n = '';
+                                                        n += getTypeNumber({ index : x, typeNumber : isTypeNumber });
+                                                        n += getTypeNumber({ index : y, typeNumber : isTypeNumber });
+                                                        n += getTypeNumber({ index : z, typeNumber : isTypeNumber });
+                                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z])
+                                                        ? getLineBreak({
+                                                            index : n,
+                                                            content : object['array'][i]['items'][x]['items'][y]['items'][z],
+                                                            element : isTags,
+                                                        }) : '';
+                                                    result += '</li>';
+                                                };
+                                            result += '</ul>';
+                                        };
+                                    result += '</li>';
+                                };
+                            result += '</ul>';
+                        };
+                    result += getValidation(object['array'][i]['items'][x]['description']) || getValidation(object['array'][i]['items'][x]['items']) ? '</div>' : '';
+                result += '</div>';
             result += '</div>';
+            }
         result += '</div>';
-        }
-    result += '</div>';
+    }
     return result;
 };
 

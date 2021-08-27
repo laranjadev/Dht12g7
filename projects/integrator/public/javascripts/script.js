@@ -121,3 +121,13 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
+// addRemoveClasses({
+//     elementList : [
+//         'p',
+//     ],
+//     classeList : [
+//         'lead',
+//     ],
+//     method : 'add',
+// });

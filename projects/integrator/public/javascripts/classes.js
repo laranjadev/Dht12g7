@@ -119,14 +119,14 @@ export let formClasses = () => {
 };
 
 export let paginationClasses = (object) => {
-    let isMenuPosition = getValidation(object['menuPosition']) ? object['menuPosition'] : 'center';
+    let isPosition = getValidation(object['position']) ? object['position'] : 'center';
     addRemoveClasses({
         elementList : [
             'nav#pagination',
         ],
         classeList : [
             'd-flex',
-            'justify-content-' + isMenuPosition,
+            'justify-content-' + isPosition,
             'mb-3',
         ],
         method : 'add',
@@ -136,7 +136,7 @@ export let paginationClasses = (object) => {
             'nav#pagination ul',
         ],
         classeList : [
-            'align-self-' + isMenuPosition,
+            'align-self-' + isPosition,
             'pagination',
         ],
         method : 'add',
@@ -194,18 +194,18 @@ export let accordionClasses = (object) => {
 };
 
 export let quickViewClasses = (object) => {
-    let isBTNClass = '';
-    isBTNClass += 'btn';
-    isBTNClass += getValidation(object['btnStyle']) ? '-' + object['btnStyle'] : '';
-    isBTNClass += getValidation(object['btnColor']) ? '-' + object['btnColor'] : '-' + 'dark';
-    let isMenuPosition = getValidation(object['menuPosition']) ? object['menuPosition'] : 'center';
+    let isClass = '';
+    isClass += 'btn';
+    isClass += getValidation(object['style']) ? '-' + object['style'] : '';
+    isClass += getValidation(object['color']) ? '-' + object['color'] : '-' + 'dark';
+    let isPosition = getValidation(object['position']) ? object['position'] : 'center';
     addRemoveClasses({
         elementList : [
             '#quick-view #col',
         ],
         classeList : [
             'd-flex',
-            'justify-content-' + isMenuPosition,
+            'justify-content-' + isPosition,
         ],
         method : 'add',
     });
@@ -214,7 +214,7 @@ export let quickViewClasses = (object) => {
             '#quick-view #menu',
         ],
         classeList : [
-            'align-self-' + isMenuPosition,
+            'align-self-' + isPosition,
             'btn-group',
             'mb-3',
         ],
@@ -226,7 +226,7 @@ export let quickViewClasses = (object) => {
         ],
         classeList : [
             'btn',
-            isBTNClass,
+            isClass,
         ],
         method : 'add',
     });
