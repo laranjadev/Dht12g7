@@ -470,10 +470,10 @@ export let getFormErrorList = (object) => {
     let errorMessage = (object) => {
         let result = '';
         result += '<li class=\"list-group-item\">';
-            result += '<a href=\"#' + object['id'] + object['index'] + '\">';
+            result += '<a href=\"' + object['name'] + '\">';
                 result += getLineBreak({
                     index : object['index'] + ') ',
-                    content : getFirstUpperCase(object['name'].split('#').join('').split('.').join('')) + '!',
+                    content : getFirstUpperCase(object['name'].split('#').join('')) + '!',
                     element : [ 'p', 'em' ],
                 });
             result += '</a>';
@@ -490,7 +490,6 @@ export let getFormErrorList = (object) => {
         getSelector(object['messageTarget']).querySelector('ul')['innerHTML'] = '';
         for (let i = 0; i < getElementList()['length']; i++) {
             errorMessage({
-                id : 'wrong-item-',
                 item : getSelector(object['messageTarget']).querySelector('ul'),
                 name : getElementList()[i],
                 index : i + 1,
