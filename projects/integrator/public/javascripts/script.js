@@ -1,35 +1,28 @@
 import {
     navbarClasses,
 } from './classes.js';
+
 navbarClasses();
 
 import {
     titleClasses,
 } from './classes.js';
+
 titleClasses();
 
 import {
     itemsClasses,
 } from './classes.js';
+
 itemsClasses({
     firstColor : 'light',
     secondColor : 'dark',
-    // border : true,
 });
-
-
-// primary
-// secondary
-// success
-// danger
-// warning
-// info
-// light
-// dark
 
 import {
     getSignature,
 } from './main.js';
+
 getSignature({
     element : 'signature',
     name : 'laranja dev br',
@@ -40,6 +33,7 @@ getSignature({
 import {
     getTimer,
 } from './main.js';
+
 getTimer({
     element : 'timer',
     number : 1,
@@ -49,6 +43,7 @@ getTimer({
 import {
     addRemoveClasses,
 } from './main.js';
+
 addRemoveClasses({
     elementList : [
         'body',
@@ -59,6 +54,7 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
         '#container',
@@ -69,6 +65,7 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
         '#content'
@@ -76,6 +73,7 @@ addRemoveClasses({
     classeList : [
         'bg-white',
         'mb-3',
+        // 'p-3',
         'pt-3',
         'px-3',
         'rounded',
@@ -83,24 +81,27 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
-        '#row',
+        '#content #row',
     ],
     classeList : [
         'row',
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
-        '#col',
+        '#content #col',
     ],
     classeList : [
         'col',
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
         'footer'
@@ -111,6 +112,7 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
 addRemoveClasses({
     elementList : [
         'button',
@@ -121,13 +123,3 @@ addRemoveClasses({
     ],
     method : 'add',
 });
-
-// addRemoveClasses({
-//     elementList : [
-//         'p',
-//     ],
-//     classeList : [
-//         'lead',
-//     ],
-//     method : 'add',
-// });

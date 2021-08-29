@@ -3,7 +3,9 @@ const {
     arrayCreator,
     getSalaryRange,
     jsonFileReader,
+    variableName,
 } = require('../utils');
+
 let description = '';
 const number = 10, title = 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.';
 for (let i = 0; i < number; i++) {
@@ -12,16 +14,46 @@ for (let i = 0; i < number; i++) {
     description += 'Est dolorum totam sequi officiis eaque consequatur optio necessitatibus!';
     description += i < number ? ' ' : '';
 };
-const objectList = {};
-const objectNames = [ 'boolean', 'email', 'generous', 'level', 'status', 'uf' ];
-const objectFilePath = [ 'database', 'json' ];
-for (let i = 0; i < objectNames['length']; i++)
-    objectList[objectNames[i]] = objectCreator(jsonFileReader([ ...objectFilePath, objectNames[i] + '.json' ]));
+
+const objectsList = {};
+const objectsListNames = [
+    'boolean',
+    'email',
+    'generous',
+    'level',
+    'status',
+    'uf',
+    'input-type',
+    'index-page-names'
+];
+const objectsFilePath = [
+    'database',
+    'json',
+];
+for (let i = 0; i < objectsListNames['length']; i++) {
+    let objectsFileNames = '';
+    objectsFileNames += objectsListNames[i];
+    objectsFileNames += '.json';
+    const objectsVariableName = variableName({
+        content : objectsListNames[i],
+    });
+    objectsList[objectsVariableName] = objectCreator(jsonFileReader([
+        ...objectsFilePath,
+        objectsFileNames,
+    ]));
+};
+
 const lengthList = {};
-const lengthFilePath = [ 'database', 'json', 'lengths.json' ];
+const lengthFilePath = [
+    'database',
+    'json',
+    'lengths.json'
+];
 const lengthNames = Object.getOwnPropertyNames(jsonFileReader(lengthFilePath));
-for (let i = 0; i < lengthNames['length']; i++)
+for (let i = 0; i < lengthNames['length']; i++) {
     lengthList[lengthNames[i]] = jsonFileReader(lengthFilePath)[lengthNames[i]]['length'];
+}
+
 const getMultiArray = (object) => {
     const result = {};
     for (let i = 0; i < object['name']['length']; i++)
@@ -31,13 +63,9 @@ const getMultiArray = (object) => {
         }));
     return result;
 }
+
 module.exports = {
-    ...objectList,
-    inputType : jsonFileReader([
-        'database',
-        'json',
-        'input-type.json',
-    ]),
+    ...objectsList,
     male : jsonFileReader([
         'database',
         'json',

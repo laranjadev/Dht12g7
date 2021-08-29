@@ -275,11 +275,6 @@
                         "path": "/maps"
                     },
                     {
-                        "title": "regulation",
-                        "description": "",
-                        "path": "/regulation"
-                    },
-                    {
                         "title": "carousel",
                         "description": "",
                         "path": "/carousel"

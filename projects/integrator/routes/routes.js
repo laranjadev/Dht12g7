@@ -2,13 +2,16 @@ const {
     isTheLast,
     isThis,
 } = require('../utils');
-let getTitle = getControl = (index) => {
+
+const getTitle = getControl = (index) => {
     return isTheLast(index, '?') ? index.substr(0, index['length'] - 1) : index;
 };
-let getParam = (index) => {
+
+const getParam = (index) => {
     return isTheLast(index, '?') ? '/:id?' : '';
 };
-let getRoute = (route, method) => {
+
+const getRoute = (route, method) => {
     const result = [];
     for (let i = 0; i < route['length']; i++)
         result.push({
@@ -19,6 +22,7 @@ let getRoute = (route, method) => {
         });
     return result;
 };
+
 const view = [
     ...getRoute([
         [ '', 'index' ],
@@ -26,6 +30,7 @@ const view = [
         'on?',
     ], 'get'),
 ];
+
 const change = [
     ...getRoute([
         'create',
@@ -41,6 +46,7 @@ const change = [
         [ 'delete?', 'destroy' ],
     ], 'delete'),
 ];
+
 const log = [
     ...getRoute([
         'authenticate'
@@ -50,28 +56,29 @@ const log = [
         'logout'
     ], 'get'),
 ];
+
 const bulk = [
     ...getRoute([
         'bulk',
     ], 'get'),
 ];
+
 const search = [
     ...getRoute([
         'search',
     ], 'get'),
 ];
 
+const indexes = [];
+const index = require('../database/option')['indexPageNames'];
+for (let i = 0; i < index['length']; i++)
+    indexes.push(index[i]['option'] ? index[i]['option'] : 'index');
+
 const routes = {
     index : [
         ...getRoute([
             [ '', 'index' ],
-            'index',
-            'accordion',
-            'maps',
-            'regulation',
-            'carousel',
-            'gallery',
-            'list-group',
+            ...indexes,
         ], 'get'),
     ],
     api : [

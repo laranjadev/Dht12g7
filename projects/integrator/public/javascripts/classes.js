@@ -8,9 +8,9 @@ import {
 } from './main.js';
 
 export let itemsClasses = (object) => {
-    let isFirstColor = getValidation(object['firstColor']) ? '-' + object['firstColor'] : '-' + 'light';
-    let isSecondColor = getValidation(object['secondColor']) ? '-' + object['secondColor'] : '-' + 'dark'; 
-    let isBorder = getValidation(object['border']) ? [ 'border', 'border' + isSecondColor ] : []; 
+    let firstColor = '-' + (getValidation(object['firstColor']) ? object['firstColor'] : 'light');
+    let secondColor = '-' + (getValidation(object['secondColor']) ? object['secondColor'] : 'dark'); 
+    let border = getValidation(object['border']) ? [ 'border', 'border' + secondColor ] : []; 
     addRemoveClasses({
         elementList : [
             '#first-item',
@@ -21,7 +21,7 @@ export let itemsClasses = (object) => {
             'p-3',
             'rounded-1',
             'shadow-sm',
-            ...isBorder,
+            ...border,
         ],
         method : 'add',
     });
@@ -30,8 +30,8 @@ export let itemsClasses = (object) => {
             '#first-item',
         ],
         classeList : [
-            'bg' + isFirstColor,
-            'text' + isSecondColor,
+            'bg' + firstColor,
+            'text' + secondColor,
         ],
         method : 'add',
     });
@@ -40,8 +40,8 @@ export let itemsClasses = (object) => {
             '#second-item',
         ],
         classeList : [
-            'bg' + isSecondColor,
-            'text' + isFirstColor,
+            'bg' + secondColor,
+            'text' + firstColor,
         ],
         method : 'add',
     });
@@ -119,14 +119,15 @@ export let formClasses = () => {
 };
 
 export let paginationClasses = (object) => {
-    let isPosition = getValidation(object['position']) ? object['position'] : 'center';
+    let position = getValidation(object['position'])
+    ? object['position'] : 'center';
     addRemoveClasses({
         elementList : [
             'nav#pagination',
         ],
         classeList : [
             'd-flex',
-            'justify-content-' + isPosition,
+            'justify-content-' + position,
             'mb-3',
         ],
         method : 'add',
@@ -136,7 +137,7 @@ export let paginationClasses = (object) => {
             'nav#pagination ul',
         ],
         classeList : [
-            'align-self-' + isPosition,
+            'align-self-' + position,
             'pagination',
         ],
         method : 'add',
@@ -170,7 +171,29 @@ export let paginationClasses = (object) => {
     });
 };
 
+export let headerClasses = (object) => {
+    addRemoveClasses({
+        elementList : [
+            '#header',
+        ],
+        classeList : [
+            'mb-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#header #row',
+        ],
+        classeList : [
+            'row',
+        ],
+        method : 'add',
+    });
+};
+
 export let accordionClasses = (object) => {
+    headerClasses();
     addRemoveClasses({
         elementList : [
             'ul',
@@ -181,7 +204,6 @@ export let accordionClasses = (object) => {
         ],
         method : 'add',
     });
-    
     addRemoveClasses({
         elementList : [
             'li p',
@@ -192,20 +214,158 @@ export let accordionClasses = (object) => {
         method : 'add',
     });
 };
+export let listgroupClasses = (object) => {
+    addRemoveClasses({
+        elementList : [
+            '#body #row',
+        ],
+        classeList : [
+            'row',
+            'gx-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col',
+        ],
+        classeList : [
+            'col',
+            'col-lg-4',
+            'col-sm-6',
+            'mb-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #list-group a',
+        ],
+        classeList : [
+            'list-group-item',
+            'list-group-item-action',
+            'flex-column',
+            'rounded',
+            'shadow-sm',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #list-group ul',
+        ],
+        classeList : [
+            'list-group',
+            'list-group-flush',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #list-group ul li',
+        ],
+        classeList : [
+            'list-group-item',
+        ],
+        method : 'add',
+    });
+};
 
-export let quickViewClasses = (object) => {
+export let galleryClasses = (object) => {
+    addRemoveClasses({
+        elementList : [
+            '#body #row',
+        ],
+        classeList : [
+            'gx-3',
+            'row',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col',
+        ],
+        classeList : [
+            'col-lg-4',
+            'col-sm-6',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col',
+            '#body #col #title',
+            '#body #col #image',
+        ],
+        classeList : [
+            'mb-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col #image a',
+        ],
+        classeList : [
+            'box',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col #image a img',
+        ],
+        classeList : [
+            'img-thumbnail',
+            'rounded',
+            'shadow-sm',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #col #image #caption',
+        ],
+        classeList : [
+            'caption',
+            'px-5',
+        ],
+        method : 'add',
+    });
+};
+
+export let quickviewClasses = (object) => {
     let isClass = '';
     isClass += 'btn';
     isClass += getValidation(object['style']) ? '-' + object['style'] : '';
     isClass += getValidation(object['color']) ? '-' + object['color'] : '-' + 'dark';
-    let isPosition = getValidation(object['position']) ? object['position'] : 'center';
+    let position = getValidation(object['position']) ? object['position'] : 'center';
+    addRemoveClasses({
+        elementList : [
+            '#quick-view',
+        ],
+        classeList : [
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#quick-view #row',
+        ],
+        classeList : [
+            'row',
+        ],
+        method : 'add',
+    });
     addRemoveClasses({
         elementList : [
             '#quick-view #col',
         ],
         classeList : [
             'd-flex',
-            'justify-content-' + isPosition,
+            'justify-content-' + position,
+            'mb-3',
         ],
         method : 'add',
     });
@@ -214,9 +374,8 @@ export let quickViewClasses = (object) => {
             '#quick-view #menu',
         ],
         classeList : [
-            'align-self-' + isPosition,
+            'align-self-' + position,
             'btn-group',
-            'mb-3',
         ],
         method : 'add',
     });

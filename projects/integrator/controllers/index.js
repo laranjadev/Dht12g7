@@ -2,34 +2,26 @@ const {
     getPCSSFile,
     getPJSMFile,
     packages,
+    jsonFileReader,
+    getPageTitle,
 } = require('../utils');
-
-const viewActions = (pageName) => {
-    const Action = {
-        [ pageName ] : (req, res, next) => {
-            return res.render(pageName, {
-                pageTitle : pageName,
-                ...getPCSSFile({
-                    content : pageName,
-                }),
-                ...getPJSMFile({
-                    content : pageName,
-                }),
-                ...packages(),
-            });
-        },
+const Action = {};
+const index = jsonFileReader([ 'database', 'json', 'index-page-names.json' ]);
+index.push('index');
+index.forEach((value) => {
+    Action[value] = (req, res, next) => {
+        return res.render(value, {
+            ...getPageTitle({
+                prefix : value
+            }),
+            ...getPCSSFile({
+                content : value
+            }),
+            ...getPJSMFile({
+                content : value
+            }),
+            ...packages(),
+        });
     };
-    return Action;
-};
-
-const Action = {
-    ...viewActions('index'),
-    ...viewActions('accordion'),
-    ...viewActions('maps'),
-    ...viewActions('regulation'),
-    ...viewActions('carousel'),
-    ...viewActions('gallery'),
-    ...viewActions('list-group'),
-};
-
+});
 module.exports = Action;

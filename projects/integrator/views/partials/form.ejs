@@ -1,4 +1,9 @@
 <%
+    let isAlertHTMLTag = '';
+    isAlertHTMLTag += '<div id=\"alert\" hidden>';
+    isAlertHTMLTag += '<p>';
+    isAlertHTMLTag += '</p>';
+    isAlertHTMLTag += '</div>';
     let getElementName = (string) => {
         return typeof string === 'string' ? string : string[1];
     };
@@ -37,7 +42,7 @@
             }
         }
         html += '</select>';
-        html += '<div id=\"alert\" hidden><p></p></div>';
+        html += isAlertHTMLTag;
         return html;
     };
     let getInputCreator = (array) => {
@@ -83,7 +88,7 @@
             : '';
             html += '>';
         }
-        html += '<div id=\"alert\" hidden><p></p></div>';
+        html += isAlertHTMLTag;
         return html;
     }
     let getTextareaCreator = (array) => {
@@ -99,12 +104,15 @@
         ? index[getLabelName(array['name'])] !== null ? index[getLabelName(array['name'])] : ''
         : '';
         html += '</textarea>';
-        html += '<div id=\"alert\" hidden><p></p></div>';
+        html += isAlertHTMLTag;
         return html;
     }
-    let isAction = getValidation(isFormAttribute['action']) ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
-    let isEnctype = getValidation(isFormAttribute['enctype']) ? ' enctype=\"' + isFormAttribute['enctype'] + '\"' : '';
-    let isMethod = getValidation(isFormAttribute['method']) ? ' method=\"' + isFormAttribute['method'] + '\"' : '';
+    let isAction = getValidation(isFormAttribute['action'])
+    ? ' action=\"' + isFormAttribute['action'] + '\"' : '';
+    let isEnctype = getValidation(isFormAttribute['enctype'])
+    ? ' enctype=\"' + isFormAttribute['enctype'] + '\"' : '';
+    let isMethod = getValidation(isFormAttribute['method'])
+    ? ' method=\"' + isFormAttribute['method'] + '\"' : '';
 %>
 <%- '<form' + isAction + isEnctype + isMethod + '>'; %>
     <%
@@ -120,11 +128,17 @@
         <% if (getValidation(isFormElement[i]['active'])) { %>
             <%- isFormElement[i]['type'] === 'start' ? start : ''; %>
             <%- isFormElement[i]['type'] === 'end' ? end : ''; %>
-            <%- isFormElement[i]['type'].substr(0, 1) === 'h' ? '<' + isFormElement[i]['type'] + '>' + getFirstUpperCase(isFormElement[i]['name']) + '</' + isFormElement[i]['type'] + '>' : ''; %>
+            <%
+                let isHTMLTags = '';
+                isHTMLTags += '<' + isFormElement[i]['type'] + '>';
+                isHTMLTags += getFirstUpperCase(isFormElement[i]['name']);
+                isHTMLTags += '</' + isFormElement[i]['type'] + '>';
+            %> 
+            <%- isFormElement[i]['type'].substr(0, 1) === 'h' ? isHTMLTags : ''; %>
             <%- isFormElement[i]['type'] === 'select' ? getSelectCreator(isFormElement[i]) : ''; %>
             <%- isFormElement[i]['type'] === 'textarea' ? getTextareaCreator(isFormElement[i]) : ''; %>
             <% for (let x = 0; x < isInputType['length']; x++) { %>
-                <% if (isFormElement[i]['type'] === isInputType[x]) { %>
+                <% if (isFormElement[i]['type'] === isInputType[x]['option']) { %>
                     <%- getInputCreator(isFormElement[i]);%>
                 <% } %>
             <% } %>
