@@ -460,8 +460,10 @@ let bootstrapAccordion = (object) => {
                         result += '<h2 class=\"accordion-header\" id=\"heading' + isID + '\">';
                             result += '<button'
                                 result += ' aria-controls=\"collapse' + isID + '\"';
-                                result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
-                                result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
+                                // result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
+                                result += ' aria-expanded=\"' + 'false' + '\"';
+                                // result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
+                                result += ' class=\"accordion-button collapsed\"';
                                 result += ' data-bs-target=\"#collapse' + isID + '\"';
                                 result += ' data-bs-toggle=\"collapse\"'
                                 result += ' type=\"button\"';
@@ -472,7 +474,8 @@ let bootstrapAccordion = (object) => {
                         result += '</h2>';
                         result += '<div'
                         result += ' aria-labelledby=\"heading' + isID + '\"';
-                        result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
+                        // result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
+                        result += ' class=\"accordion-collapse collapse\"';
                         result += ' data-bs-parent=\"#' + accordionID + '\"';
                         result += ' id=\"collapse' + isID + '\"';
                         result += '>';
