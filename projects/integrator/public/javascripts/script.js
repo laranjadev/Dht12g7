@@ -84,7 +84,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#content #row',
+        '#content>#row',
     ],
     classeList : [
         'row',
@@ -94,7 +94,7 @@ addRemoveClasses({
 
 addRemoveClasses({
     elementList : [
-        '#content #col',
+        '#content>#col',
     ],
     classeList : [
         'col',

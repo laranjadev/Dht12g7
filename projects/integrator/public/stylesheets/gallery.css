@@ -10,11 +10,17 @@
   bottom: 0;
   text-align: center;
   opacity: 0;
-  color: #fff;
-  background: rgba(255, 0, 0, 0.75);
-  transition: opacity 0.25s ease;
+  transition: opacity 0.125s ease-in;
   text-align: center;
 }
+/*
+  ease
+  ease-in
+  ease-out
+  ease-in-out
+  linear
+  cubic-bezier
+*/
 
 .box:hover .caption
 {

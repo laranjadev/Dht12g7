@@ -227,19 +227,17 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #col',
+            '#body #row #col',
         ],
         classeList : [
-            'col',
             'col-lg-4',
             'col-sm-6',
-            'mb-3',
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#body #list-group a',
+            '#body #row #col #list-group a',
         ],
         classeList : [
             'list-group-item',
@@ -252,7 +250,17 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #list-group ul',
+            '#body #row #col',
+            '#body #row #col #list-group a>p',
+        ],
+        classeList : [
+            'mb-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body #row #col #list-group a ul',
         ],
         classeList : [
             'list-group',
@@ -262,7 +270,7 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #list-group ul li',
+            '#body #row #col #list-group a ul li',
         ],
         classeList : [
             'list-group-item',
@@ -320,6 +328,7 @@ export let galleryClasses = (object) => {
             'img-thumbnail',
             'rounded',
             'shadow-sm',
+            'img-fluid',
         ],
         method : 'add',
     });
@@ -328,7 +337,9 @@ export let galleryClasses = (object) => {
             '#body #col #image #caption',
         ],
         classeList : [
+            'bg-danger',
             'caption',
+            'text-white',
             'px-5',
         ],
         method : 'add',

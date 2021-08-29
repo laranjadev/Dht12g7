@@ -68,29 +68,58 @@ const viewListGroup = (object) => {
                             result += '<div id=\"col\">';
                                 result += '<div id=\"list-group\">';
                                     result += '<a href=\"#\">';
-                                        result += getValidation(object['array'][x]['items'][y]['title'])
-                                        ? textSetup({
-                                            content : object['array'][x]['items'][y]['title'],
-                                            element : [ 'h5' ],
-                                        }) : '';
+                                        // FAZER AQUI
+                                        result += '<div class=\"row\">';
+                                            let columnImage = 0, columnText = 12 - columnImage;
+                                            result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
+                                            result += columnImage ? '</div>' : '';
+                                            result += '<div class=\"col-' + columnText + '\">';
+                                                result += getValidation(object['array'][x]['items'][y]['title'])
+                                                ? textSetup({
+                                                    content : object['array'][x]['items'][y]['title'],
+                                                    element : [ 'h5' ],
+                                                }) : '';
+                                                result += getValidation(object['array'][x]['items'][y]['description'])
+                                                ? textSetup({
+                                                    content : object['array'][x]['items'][y]['description'],
+                                                    element : [ 'p', 'em' ],
+                                                }) : '';
+                                            result += '</div>';
+                                        result += '</div>';
                                         if (getValidation(object['array'][x]['items'][y]['items'])) {
                                             result += '<ul>';
                                                 for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                     result += '<li>';
-                                                        let n = '';
-                                                        n += getTypeNumber({ index : y });
-                                                        n += getTypeNumber({ index : z });
-                                                        result += getValidation(object['array'][x]['items'][y]['items'][z]['title'])
-                                                        ? textSetup({
-                                                            index : n,
-                                                            content : object['array'][x]['items'][y]['items'][z]['title'],
-                                                            element : [ 'p', 'b' ],
-                                                        }) : '';
-                                                        result += getValidation(object['array'][x]['items'][y]['items'][z]['description'])
-                                                        ? textSetup({
-                                                            content : object['array'][x]['items'][y]['items'][z]['description'],
-                                                            element : [ 'p', 'em' ],
-                                                        }) : '';
+                                                        // FAZER AQUI
+                                                        result += '<div class=\"row\">';
+                                                            let columnImage = 3, columnText = 12 - columnImage;
+                                                            result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
+                                                            result += columnImage ? '</div>' : '';
+                                                            result += '<div class=\"col-' + columnText + '\">';
+                                                                let n = '';
+                                                                n += getTypeNumber({ index : y });
+                                                                n += getTypeNumber({ index : z });
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title'])
+                                                                ? textSetup({
+                                                                    index : n,
+                                                                    content : object['array'][x]['items'][y]['items'][z]['title'],
+                                                                    element : [ 'p', 'b' ],
+                                                                }) : '';
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description'])
+                                                                ? textSetup({
+                                                                    content : object['array'][x]['items'][y]['items'][z]['description'],
+                                                                    element : [ 'p', 'em' ],
+                                                                }) : '';
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value'])
+                                                                ? textSetup({
+                                                                    content : object['array'][x]['items'][y]['items'][z]['value'],
+                                                                    element : [ 'p', 'b' ],
+                                                                    prefix : '',
+                                                                    suffix : ' km.',
+                                                                }) : '';
+                                                            result += '</div>';
+                                                        result += '</div>';
+
                                                     result += '</li>';
                                                 }
                                             result += '</ul>';
@@ -407,10 +436,12 @@ const textSetup = (object) => {
             is_end += '</' + object['element'][i] + '>';
     };
     let is_content = '';
+    is_content += getValidation(object['prefix']) ? object['prefix'] : '';
     is_content += getValidation(object['index']) ? object['index'] : '';
     is_content += getValidation(object['element']) && getValidation(object['letter'])
     ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
     : object['content'];
+    is_content += getValidation(object['suffix']) ? object['suffix'] : '';
     let result = '';
     result += is_start;
     result += is_content;
@@ -537,10 +568,6 @@ let bootstrapAccordion = (object) => {
                                                     };
                                                 result += '</ul>';
                                             result += '</div>';
-
-
-
-
                                         result += '</div>';
                                     };
                                 result += '</div>';
