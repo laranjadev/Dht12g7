@@ -40,9 +40,15 @@ const footerQuickMenu = (object) => {
                         let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
                         let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
                         let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
-                        result += '<a href=\"' + isHREF + '\"' + isTarget + isToggle + '>';
-                            result += getFirstUpperCase(isTitle);
-                        result += '</a>';
+                        result += getValidation(isTitle) ? textSetupIII({
+                            element : {
+                                href : isHREF + '\"' + isTarget + isToggle,
+                                tag : [ 'a' ],
+                            },
+                            content : {
+                                text : getFirstUpperCase(isTitle),
+                            },
+                        }) : '';
                     };
                 result += '</div>';
             result += '</div>';
@@ -70,10 +76,14 @@ const viewListGroup = (object) => {
                             result += '<div id=\"col\">';
                                 result += '<div id=\"list-group\">';
                                     result += '<a href=\"#\">';
-                                        result += textSetup({
-                                            content : object['array'][x]['items'][y]['title'],
-                                            element : [ 'h5' ],
-                                        });
+                                        result += getValidation(object['array'][x]['items'][y]['title']) ? textSetupIII({
+                                            element : {
+                                                tag : [ 'h5' ],
+                                            },
+                                            content : {
+                                                text : object['array'][x]['items'][y]['title'],
+                                            },
+                                        }) : '';
                                         result += getWrapped({
                                             tag : 'img',
                                             alt : object['array'][x]['items'][y]['title'],
@@ -82,10 +92,14 @@ const viewListGroup = (object) => {
                                                 start : true,
                                             }
                                         });
-                                        result += textSetup({
-                                            content : object['array'][x]['items'][y]['description'],
-                                            element : [ 'p', 'em' ],
-                                        });
+                                        result += getValidation(object['array'][x]['items'][y]['description']) ? textSetupIII({
+                                            element : {
+                                                tag : [ 'p', 'em' ],
+                                            },
+                                            content : {
+                                                text : object['array'][x]['items'][y]['description'],
+                                            },
+                                        }) : '';
                                         if (getValidation(object['array'][x]['items'][y]['items'])) {
                                             result += '<ul>';
                                                 for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
@@ -101,51 +115,71 @@ const viewListGroup = (object) => {
                                                                 let n = '';
                                                                 n += getTypeNumber({ index : y });
                                                                 n += getTypeNumber({ index : z });
-                                                                result += textSetup({
-                                                                    index : n,
-                                                                    content : object['array'][x]['items'][y]['items'][z]['title'],
-                                                                    element : [ 'p', 'b' ],
-                                                                });
-                                                                result += textSetup({
-                                                                    content : object['array'][x]['items'][y]['items'][z]['description'],
-                                                                    element : [ 'p', 'em' ],
-                                                                });
-                                                                result += textSetup({
-                                                                    content : object['array'][x]['items'][y]['items'][z]['value'],
-                                                                    element : [ 'p', 'b' ],
-                                                                    suffix : ' km.',
-                                                                });
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? textSetupIII({
+                                                                    element : {
+                                                                        tag : [ 'p', 'b' ],
+                                                                    },
+                                                                    content : {
+                                                                        text : object['array'][x]['items'][y]['items'][z]['title'],
+                                                                    },
+                                                                    has : {
+                                                                        index : n,
+                                                                    },
+                                                                }) : '';
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? textSetupIII({
+                                                                    element : {
+                                                                        tag : [ 'p', 'em' ],
+                                                                    },
+                                                                    content : {
+                                                                        text : object['array'][x]['items'][y]['items'][z]['description'],
+                                                                    },
+                                                                }) : '';
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value']) ? textSetupIII({
+                                                                    element : {
+                                                                        tag : [ 'p', 'b' ],
+                                                                    },
+                                                                    content : {
+                                                                        text : object['array'][x]['items'][y]['items'][z]['value'],
+                                                                    },
+                                                                    has : {
+                                                                        after : ' km.',
+                                                                    },
+                                                                }) : '';
                                                             result += '</div>';
                                                         result += '</div>';
-
                                                     result += '</li>';
-                                                }
+                                                };
                                             result += '</ul>';
                                         };
                                     result += '</a>';
                                 result += '</div>';
                             result += '</div>';
-                        }
+                        };
                     result += '</div>';
                 result += '</div>';
             };
         result += '</div>';
-    }
+    };
     result += isQuickView;
     return result;
 };
 
 const quickView = (object) => {
     let result = '';
-    let isID = '#id-';
     result += '<div id=\"quick-view\">';
         result += '<div id=\"row\">';
             result += '<div id=\"col\">';
                 result += '<div id=\"menu\">';
                     for (let i = 0; i < object['object']['array']['length']; i++) {
-                        result += '<a href=\"' + isID + i + '\">';
-                            result += getFirstUpperCase(object['object']['array'][i]['title']);
-                        result += '</a>';
+                        result += getValidation(object['object']['array'][i]['title']) ? textSetupIII({
+                            element : {
+                                href : '#id' + '-' + i,
+                                tag : [ 'a' ],
+                            },
+                            content : {
+                                text : object['object']['array'][i]['title'],
+                            },
+                        }) : '';
                     };
                 result += '</div>';
             result += '</div>';
@@ -165,15 +199,23 @@ const getHeader = (object) => {
                     result += '</div>';
                 };
                 result += getValidation(object['image']) ? '<div id=\"header-content\">' : '';
-                    result += textSetup({
-                        id : 'id' + '-' + object['index'],
-                        content : object['title'],
-                        element : [ 'h1' ],
-                    });
-                    result += textSetup({
-                        content : object['description'],
-                        element : [ 'p', 'em' ],
-                    });
+                    result += getValidation(object['title']) ? textSetupIII({
+                        element : {
+                            id : 'id' + '-' + object['index'],
+                            tag : [ 'h1' ],
+                        },
+                        content : {
+                            text : object['title'],
+                        },
+                    }) : '';
+                    result += getValidation(object['description']) ? textSetupIII({
+                        element : {
+                            tag : [ 'p', 'em' ],
+                        },
+                        content : {
+                            text : object['description'],
+                        },
+                    }) : '';
                 result += getValidation(object['image']) ? '</div>' : '';
             result += '</div>';
         result += '</div>';
@@ -207,22 +249,34 @@ const bootstrapGallery = (object) => {
                                             result += '</a>';
                                         result += '</div>';
                                     };
-                                    result += textSetup({
-                                        content : object['array'][x]['items'][y]['title'],
-                                        element : [ 'p', 'b' ],
+                                    result += getValidation(object['array'][x]['items'][y]['title']) ? textSetupIII({
+                                        element : {
+                                            tag : [ 'p', 'b' ],
+                                        },
+                                        content : {
+                                            text : object['array'][x]['items'][y]['title'],
+                                        },
                                         wrap : {
-                                            id : 'title',
-                                            tag : 'div',
+                                            element : {
+                                                id : 'title',
+                                                tag : 'div',
+                                            },
                                         }
-                                    });
-                                    result += textSetup({
-                                        content : object['array'][x]['items'][y]['description'],
-                                        element : [ 'p', 'em' ],
+                                    }) : '';
+                                    result += getValidation(object['array'][x]['items'][y]['description']) ? textSetupIII({
+                                        element : {
+                                            tag : [ 'p', 'em' ],
+                                        },
+                                        content : {
+                                            text : object['array'][x]['items'][y]['description'],
+                                        },
                                         wrap : {
-                                            id : 'description',
-                                            tag : 'div',
+                                            element : {
+                                                id : 'description',
+                                                tag : 'div',
+                                            },
                                         }
-                                    });
+                                    }) : '';
                                 result += '</div>';
                             };
                         };
@@ -330,13 +384,19 @@ const bootstrapNavbar = (object) => {
                                         result += '<ul>';
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                 result += '<li>';
-                                                    let isHref = getValidation(object['array'][x]['items'][y]['items'][z]['path']) ? object['array'][x]['items'][y]['items'][z]['path'] : '#';
-                                                    result += '<a';
-                                                    result += ' class=\"dropdown-item\"';
-                                                    result += ' href=\"' + isHref + '\"';
-                                                    result += '>';
-                                                        result += getFirstUpperCase(object['array'][x]['items'][y]['items'][z]['title']);
-                                                    result += '</a>';
+                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? textSetupIII({
+                                                        element : {
+                                                            class : [
+                                                                'dropdown-item',
+                                                            ],
+                                                            href : getValidation(object['array'][x]['items'][y]['items'][z]['path'])
+                                                            ? object['array'][x]['items'][y]['items'][z]['path'] : '#',
+                                                            tag : [ 'a' ],
+                                                        },
+                                                        content : {
+                                                            text : object['array'][x]['items'][y]['items'][z]['title'],
+                                                        },
+                                                    }) : '';
                                                 result += '</li>';
                                             };
                                         result += '</ul>';
@@ -370,22 +430,38 @@ const bootstrapModal = (object) => {
     result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
         result += '<div class=\"modal-dialog\">';
             result += '<div class=\"modal-content\">';
-                if (getValidation(object['title'])) {
-                    result += '<div class=\"modal-header\">';
-                        result += textSetup({
-                            content : object['title'],
-                            element : [ 'h5' ]
-                        });
-                    result += '</div>';
-                }
-                if (getValidation(object['description'])) {
-                    result += '<div class=\"modal-body\">';
-                        result += textSetup({
-                            content : object['description'],
-                            element : [ 'p', 'em' ]
-                        });
-                    result += '</div>';
-                }
+                result += getValidation(object['title']) ? textSetupIII({
+                    element : {
+                        tag : [ 'h5' ],
+                    },
+                    content : {
+                        text : object['title'],
+                    },
+                    wrap : {
+                        element : {
+                            class : [
+                                'modal-header',
+                            ],
+                            tag : 'div',
+                        },
+                    }
+                }) : '';
+                result += getValidation(object['description']) ? textSetupIII({
+                    element : {
+                        tag : [ 'p', 'em' ],
+                    },
+                    content : {
+                        text : object['description'],
+                    },
+                    wrap : {
+                        element : {
+                            class : [
+                                'modal-body',
+                            ],
+                            tag : 'div',
+                        },
+                    }
+                }) : '';
                 result += '<div class=\"modal-footer\">';
                     let currentAction = '';
                     currentAction += '/' + object['prefix'];
@@ -437,6 +513,8 @@ const getWrapped = (object) => {
     };
     return result;
 };
+
+// FABIO
 
 const textSetupIII = (object) => {
     const getElementStart = (object) => {
@@ -536,53 +614,6 @@ const textSetupIII = (object) => {
     return result;
 };
 
-const textSetup = (object) => {
-    let is_start = '', is_end = '';
-    let is_id = getValidation(object['id']) ? ' id=\"' + object['id'] + '\"' : '';
-    if (isThis(object['element'], 'string')) {
-        is_start = '<' + object['element'] + is_id + '>';
-        is_end = '</' + object['element'] + '>';
-    };
-    if (isThis(object['element'], 'object')) {
-        for (let i = 0; i <= object['element']['length'] - 1; i++)
-            is_start += '<' + object['element'][i] + is_id + '>';
-        for (let i = object['element']['length'] + 1; i >= 0; i--)
-            is_end += '</' + object['element'][i] + '>';
-    };
-    let is_content = '';
-    is_content += getValidation(object['prefix']) ? object['prefix'] : '';
-    is_content += getValidation(object['index']) ? object['index'] : '';
-    is_content += getValidation(object['element']) && getValidation(object['letter'])
-    ? object['content'].split(object['letter'] + ' ').join(object['letter'] + is_end + is_start)
-    : object['content'];
-    is_content += getValidation(object['suffix']) ? object['suffix'] : '';
-    let result = '';
-    if (getValidation(object['tag'])) {
-        if (getValidation(object['position']['start'])) {
-            result += '<';
-            result += getTrim(object['tag']);
-            result += getValidation(object['alt']) ? ' alt=\"' + getTrim(object['alt']) + '\"' : '';
-            result += getValidation(object['href']) ? ' href=\"' + getTrim(object['href']) + '\"' : '';
-            result += getValidation(object['id']) ? ' id=\"' + getTrim(object['id']) + '\"' : '';
-            result += getValidation(object['src']) ? ' src=\"' + getTrim(object['src']) + '\"' : '';
-            result += '>';
-        };
-    };
-    if (getValidation(object['content'])) {
-        result += is_start;
-        result += is_content;
-        result += is_end;
-    };
-    if (getValidation(object['wrap'])) {
-        if (getValidation(object['wrap']['tag'])) {
-            if (getValidation(object['wrap']['end'])) {
-                result += '</' + getTrim(object['wrap']['tag']) + '>';
-            };
-        };
-    };
-    return result;
-};
-
 let objectCleaner = (content) => {
     let array = [];
     for (let x = 0; x < content['length']; x++) {
@@ -603,10 +634,9 @@ let objectCleaner = (content) => {
 
 let bootstrapAccordion = (object) => {
     let result = '';
-    let columnImage = 2, columnText = 12 - columnImage;
     let isQuickView = quickView({ object : object });
+    let columnImage = 2, columnText = 12 - columnImage;
     for (let i = 0; i < object['array']['length']; i++) {
-        // result = '';
         result += isQuickView;
         result += '<div id=\"first-item\">';
             result += getHeader({
@@ -646,75 +676,36 @@ let bootstrapAccordion = (object) => {
                                 result += '<div class=\"accordion-body\">';
                                     if (getValidation(object['array'][i]['items'][x]['description'])) {
                                         result += '<div class=\"row\">';
+
+                                            // FABIO
+
                                             result += getValidation(columnImage) ? textSetupIII({
-                                                element : {
-                                                    alt : '',
-                                                    class : [],
-                                                    href : '',
-                                                    id : '',
-                                                    name : '',
-                                                    src : '',
-                                                    tag : [],
-                                                    title : '',
-                                                },
-                                                content : {
-                                                    text : '',
-                                                    spacer : '',
-                                                },
-                                                has : {
-                                                    index : '',
-                                                    before : '',
-                                                    after : '',
-                                                },
                                                 wrap : {
                                                     element : {
-                                                        alt : '',
                                                         class : [
                                                             'col-' + columnImage,
                                                         ],
-                                                        href : '',
-                                                        id : '',
-                                                        name : '',
-                                                        src : '',
                                                         tag : 'div',
-                                                        title : '',
                                                     },
                                                 },
                                             }) : '';
+
                                             result += getValidation(object['array'][i]['items'][x]['description']) ? textSetupIII({
                                                 element : {
-                                                    alt : '',
-                                                    class : [],
-                                                    href : '',
-                                                    id : '',
-                                                    name : '',
-                                                    src : '',
                                                     tag : [ 'h5' ],
-                                                    title : '',
                                                 },
                                                 content : {
                                                     text : object['array'][i]['items'][x]['description'],
                                                     spacer : '.',
                                                 },
-                                                has : {
-                                                    index : '',
-                                                    before : '',
-                                                    after : '',
-                                                },
                                                 wrap : {
                                                     element : {
-                                                        alt : '',
                                                         class : [
                                                             'col-' + columnText,
                                                             getValidation(object['array'][i]['items'][x]['items']) ? 'mb-3' : '',
                                                             'px-3',
                                                         ],
-                                                        href : '',
-                                                        id : '',
-                                                        name : '',
-                                                        src : '',
                                                         tag : 'div',
-                                                        title : '',
                                                     },
                                                 }
                                             }) : '';
@@ -733,38 +724,17 @@ let bootstrapAccordion = (object) => {
                                                             n += getTypeNumber({ index : y });
                                                             result += getValidation(object['array'][i]['items'][x]['items'][y]['title']) ? textSetupIII({
                                                                 element : {
-                                                                    alt : '',
                                                                     class : [
                                                                         'mb-3',
                                                                     ],
-                                                                    href : '',
-                                                                    id : '',
-                                                                    name : '',
-                                                                    src : '',
                                                                     tag : [ 'p' ],
-                                                                    title : '',
                                                                 },
                                                                 content : {
                                                                     text : object['array'][i]['items'][x]['items'][y]['title'],
-                                                                    spacer : '',
                                                                 },
                                                                 has : {
                                                                     index : n,
-                                                                    before : '',
-                                                                    after : '',
                                                                 },
-                                                                wrap : {
-                                                                    element : {
-                                                                        alt : '',
-                                                                        class : [],
-                                                                        href : '',
-                                                                        id : '',
-                                                                        name : '',
-                                                                        src : '',
-                                                                        tag : '',
-                                                                        title : '',
-                                                                    },
-                                                                }
                                                             }) : '';
                                                             result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? textSetupIII({
                                                                 element : {
@@ -773,34 +743,12 @@ let bootstrapAccordion = (object) => {
                                                                         'mb-3',
                                                                         'text-danger',
                                                                     ],
-                                                                    href : '',
-                                                                    id : '',
-                                                                    name : '',
-                                                                    src : '',
                                                                     tag : [ 'p', 'em' ],
-                                                                    title : '',
                                                                 },
                                                                 content : {
                                                                     text : object['array'][i]['items'][x]['items'][y]['description'],
                                                                     spacer : '. ',
                                                                 },
-                                                                has : {
-                                                                    index : '',
-                                                                    before : '',
-                                                                    after : '',
-                                                                },
-                                                                wrap : {
-                                                                    element : {
-                                                                        alt : '',
-                                                                        class : [],
-                                                                        href : '',
-                                                                        id : '',
-                                                                        name : '',
-                                                                        src : '',
-                                                                        tag : '',
-                                                                        title : '',
-                                                                    },
-                                                                }
                                                             }) : '';
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
                                                                 result += '<ul>';
@@ -811,39 +759,18 @@ let bootstrapAccordion = (object) => {
                                                                         n += getTypeNumber({ index : z });
                                                                         result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z]) ? textSetupIII({
                                                                             element : {
-                                                                                alt : '',
                                                                                 class : [
                                                                                     'mb-3',
                                                                                     'text-success',
                                                                                 ],
-                                                                                href : '',
-                                                                                id : '',
-                                                                                name : '',
-                                                                                src : '',
                                                                                 tag : [ 'li', 'p', 'em' ],
-                                                                                title : '',
                                                                             },
                                                                             content : {
                                                                                 text : object['array'][i]['items'][x]['items'][y]['items'][z],
-                                                                                spacer : '',
                                                                             },
                                                                             has : {
                                                                                 index : n,
-                                                                                before : '',
-                                                                                after : '',
                                                                             },
-                                                                            wrap : {
-                                                                                element : {
-                                                                                    alt : '',
-                                                                                    class : [],
-                                                                                    href : '',
-                                                                                    id : '',
-                                                                                    name : '',
-                                                                                    src : '',
-                                                                                    tag : '',
-                                                                                    title : '',
-                                                                                },
-                                                                            }
                                                                         }) : '';
                                                                     };
                                                                 result += '</ul>';
