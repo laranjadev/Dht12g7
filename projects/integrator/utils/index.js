@@ -260,37 +260,22 @@ const bootstrapCarousel = (object) => {
                     result += getValidation(object['array'][i]['title']) ? ' alt=\"' + object['array'][i]['title'] + '\"' : '';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
-
-                        result += getValidation(object['array'][i]['title']) ? textSetupIII({
+                        result += textSetupIII({
                             element : {
-                                tag : [ 'h3', 'em' ],
+                                tag : [ 'h3', 'em' ]
                             },
                             content : {
                                 text : object['array'][i]['title'],
                             },
-                        }) : '';
-
-                        // result += getValidation(object['array'][i]['title'])
-                        // ? textSetup({
-                        //     content : object['array'][i]['title'],
-                        //     element : [ 'h3', 'em' ],
-                        // }) : '';
-
-                        // result += getValidation(object['array'][i]['description']) ? textSetupIII({
-                        //     element : {
-                        //         tag : [ 'p', 'em' ],
-                        //     },
-                        //     content : {
-                        //         text : object['array'][i]['description'],
-                        //     },
-                        // }) : '';
-
-                        // result += getValidation(object['array'][i]['description'])
-                        // ? textSetup({
-                        //     content : object['array'][i]['description'],
-                        //     element : [ 'p', 'em' ],
-                        // }) : '';
-
+                        });
+                        result += textSetupIII({
+                            element : {
+                                tag : [ 'p', 'em' ],
+                            },
+                            content : {
+                                text : object['array'][i]['description'],
+                            },
+                        });
                     result += '</div>';
                 result += '</div>';
             }
@@ -507,7 +492,7 @@ const textSetupIII = (object) => {
             });
         };
         if (isThis(object['element']['tag'], 'object')) {
-            for (let i = 0; i < object['element']['tag']['length']; i++) {
+            for (let i = 0; i <= object['element']['tag']['length'] - 1; i++) {
                 elementStart += getElementStart({
                     alt : !i ? object['element']['alt'] : '',
                     class : !i ? object['element']['class'] : '',
@@ -519,17 +504,13 @@ const textSetupIII = (object) => {
                     title : !i ? object['element']['title'] : '',
                 });
             };
-            for (let i = object['element']['tag']['length']; i > 0; i--) {
+            for (let i = object['element']['tag']['length'] + 1; i >= 0; i--) {
                 elementEnd += getElementEnd({
                     tag : object['element']['tag'][i],
                 });
             };
         };
     };
-
-
-
-
     let result = '';
     result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementStart({
         alt : object['wrap']['element']['alt'],
@@ -541,24 +522,17 @@ const textSetupIII = (object) => {
         tag : object['wrap']['element']['tag'],
         title : object['wrap']['element']['title'],
     }) : '';
-
-
     result += elementStart;
     result += getValidation(object['has']) && getValidation(object['has']['before']) ? object['has']['before'] : '';
     result += getValidation(object['has']) && getValidation(object['has']['index']) ? object['has']['index'] : '';
-
-
     result += getValidation(object['content']['text']) && getValidation(object['content']['spacer'])
     ? object['content']['text'].split(object['content']['spacer']).join(object['content']['spacer'] + elementEnd + elementStart)
     : object['content']['text'];
-
     result += getValidation(object['has']) && getValidation(object['has']['after']) ? object['has']['after'] : '';
     result += elementEnd;
     result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementEnd({
         tag : object['wrap']['element']['tag']
     }) : '';
-
-
     return result;
 };
 
