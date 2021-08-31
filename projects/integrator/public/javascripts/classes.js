@@ -235,7 +235,7 @@ export let accordionClasses = (object) => {
             'li p',
         ],
         classeList : [
-            'mb-3',
+            // 'mb-3',
         ],
         method : 'add',
     });

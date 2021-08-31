@@ -3,15 +3,6 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const urlJoin = require('url-join');
 
-const getValidation = (content) => {
-    if (!content)
-        return false;
-    else if (isThis(content, 'undefined'))
-        return false;
-    else
-        return true;
-};
-
 const isEmpty = (object) => {
     if (object == null) return true;
     if (object['length'] > 0) return false;
@@ -20,6 +11,17 @@ const isEmpty = (object) => {
         if (Object.prototype.hasOwnProperty.call(object, key))
             return false;
     return true;
+};
+
+const getValidation = (content) => {
+    if (!content)
+        return false;
+    else if (isThis(content, 'undefined'))
+        return false;
+    else if (isThis(content, 'object') && isEmpty(content))
+        return false;
+    else
+        return true;
 };
 
 const footerQuickMenu = (object) => {
@@ -258,16 +260,37 @@ const bootstrapCarousel = (object) => {
                     result += getValidation(object['array'][i]['title']) ? ' alt=\"' + object['array'][i]['title'] + '\"' : '';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
-                        result += getValidation(object['array'][i]['title'])
-                        ? textSetup({
-                            content : object['array'][i]['title'],
-                            element : [ 'h3', 'em' ],
+
+                        result += getValidation(object['array'][i]['title']) ? textSetupIII({
+                            element : {
+                                tag : [ 'h3', 'em' ],
+                            },
+                            content : {
+                                text : object['array'][i]['title'],
+                            },
                         }) : '';
-                        result += getValidation(object['array'][i]['description'])
-                        ? textSetup({
-                            content : object['array'][i]['description'],
-                            element : [ 'p', 'em' ],
-                        }) : '';
+
+                        // result += getValidation(object['array'][i]['title'])
+                        // ? textSetup({
+                        //     content : object['array'][i]['title'],
+                        //     element : [ 'h3', 'em' ],
+                        // }) : '';
+
+                        // result += getValidation(object['array'][i]['description']) ? textSetupIII({
+                        //     element : {
+                        //         tag : [ 'p', 'em' ],
+                        //     },
+                        //     content : {
+                        //         text : object['array'][i]['description'],
+                        //     },
+                        // }) : '';
+
+                        // result += getValidation(object['array'][i]['description'])
+                        // ? textSetup({
+                        //     content : object['array'][i]['description'],
+                        //     element : [ 'p', 'em' ],
+                        // }) : '';
+
                     result += '</div>';
                 result += '</div>';
             }
@@ -401,7 +424,8 @@ const bootstrapModal = (object) => {
 };
 
 const getTypeNumber = (object) => {
-    let result = getValidation(object['typeNumber'])
+    let result = '';
+    result += getValidation(object['typeNumber'])
     ? object['typeNumber'] === 'roman' ? getRomanNumber(object['index'] + 1) : object['index'] + 1
     : object['index'] + 1;
     result += '. ';
@@ -441,11 +465,12 @@ const textSetupIII = (object) => {
                     result += ' class=\"';
                     result += getTrim(object['class']);
                     result += '\"';
-                } else if (isThis(object['class'], 'object')) {
+                };
+                if (isThis(object['class'], 'object')) {
                     result += ' class=\"';
-                    for (let x = 0; x < object['class']['length']; x++) {
-                        result += !x ? '' : ' ';
-                        result += getTrim(object['class'][x]);
+                    for (let i = 0; i < object['class']['length']; i++) {
+                        result += !i ? '' : ' ';
+                        result += getTrim(object['class'][i]);
                     }
                     result += '\"';
                 };
@@ -460,7 +485,9 @@ const textSetupIII = (object) => {
         return result;
     };
     const getElementEnd = (object) => {
-        return getValidation(object['tag']) ? '</' + getTrim(object['tag']) + '>' : '';
+        let result = '';
+        result += getValidation(object['tag']) ? '</' + getTrim(object['tag']) + '>' : '';
+        return result;
     };
     let elementStart = '', elementEnd = '';
     if (getValidation(object['element'])) {
@@ -478,7 +505,8 @@ const textSetupIII = (object) => {
             elementEnd += getElementEnd({
                 tag : object['element']['tag'],
             });
-        } else if (isThis(object['element']['tag'], 'object')) {
+        };
+        if (isThis(object['element']['tag'], 'object')) {
             for (let i = 0; i < object['element']['tag']['length']; i++) {
                 elementStart += getElementStart({
                     alt : !i ? object['element']['alt'] : '',
@@ -490,14 +518,18 @@ const textSetupIII = (object) => {
                     tag : object['element']['tag'][i],
                     title : !i ? object['element']['title'] : '',
                 });
-            }
+            };
             for (let i = object['element']['tag']['length']; i > 0; i--) {
-                elementEnd += getElementStart({
+                elementEnd += getElementEnd({
                     tag : object['element']['tag'][i],
                 });
             };
         };
     };
+
+
+
+
     let result = '';
     result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementStart({
         alt : object['wrap']['element']['alt'],
@@ -509,15 +541,24 @@ const textSetupIII = (object) => {
         tag : object['wrap']['element']['tag'],
         title : object['wrap']['element']['title'],
     }) : '';
+
+
     result += elementStart;
-    result += getValidation(object['has']) && getValidation(object['has']['before']) ? getTrim(object['has']['before']) : '';
-    result += getValidation(object['has']) && getValidation(object['has']['index']) ? getTrim(object['has']['index']) : '';
+    result += getValidation(object['has']) && getValidation(object['has']['before']) ? object['has']['before'] : '';
+    result += getValidation(object['has']) && getValidation(object['has']['index']) ? object['has']['index'] : '';
+
+
     result += getValidation(object['content']['text']) && getValidation(object['content']['spacer'])
-    ? object['content']['text'].split(object['content']['spacer'] + ' ').join(object['content']['spacer'] + elementEnd + elementStart)
+    ? object['content']['text'].split(object['content']['spacer']).join(object['content']['spacer'] + elementEnd + elementStart)
     : object['content']['text'];
-    result += getValidation(object['has']) && getValidation(object['has']['after']) ? getTrim(object['has']['after']) : '';
+
+    result += getValidation(object['has']) && getValidation(object['has']['after']) ? object['has']['after'] : '';
     result += elementEnd;
-    result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementEnd({ tag : object['wrap']['element']['tag'] }) : '';
+    result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementEnd({
+        tag : object['wrap']['element']['tag']
+    }) : '';
+
+
     return result;
 };
 
@@ -588,9 +629,10 @@ let objectCleaner = (content) => {
 
 let bootstrapAccordion = (object) => {
     let result = '';
-    let columnImage = 4, columnText = 12 - columnImage;
+    let columnImage = 2, columnText = 12 - columnImage;
     let isQuickView = quickView({ object : object });
     for (let i = 0; i < object['array']['length']; i++) {
+        // result = '';
         result += isQuickView;
         result += '<div id=\"first-item\">';
             result += getHeader({
@@ -610,9 +652,7 @@ let bootstrapAccordion = (object) => {
                         result += '<h2 class=\"accordion-header\" id=\"heading' + isID + '\">';
                             result += '<button'
                                 result += ' aria-controls=\"collapse' + isID + '\"';
-                                // result += ' aria-expanded=\"' + (!x ? 'true' : 'false') + '\"';
                                 result += ' aria-expanded=\"' + 'false' + '\"';
-                                // result += ' class=\"accordion-button' + (!x ? '' : ' collapsed') + '\"';
                                 result += ' class=\"accordion-button collapsed\"';
                                 result += ' data-bs-target=\"#collapse' + isID + '\"';
                                 result += ' data-bs-toggle=\"collapse\"'
@@ -624,7 +664,6 @@ let bootstrapAccordion = (object) => {
                         result += '</h2>';
                         result += '<div'
                         result += ' aria-labelledby=\"heading' + isID + '\"';
-                        // result += ' class=\"accordion-collapse collapse' + (!x ? ' show' : '') + '\"';
                         result += ' class=\"accordion-collapse collapse\"';
                         result += ' data-bs-parent=\"#' + accordionID + '\"';
                         result += ' id=\"collapse' + isID + '\"';
@@ -633,7 +672,7 @@ let bootstrapAccordion = (object) => {
                                 result += '<div class=\"accordion-body\">';
                                     if (getValidation(object['array'][i]['items'][x]['description'])) {
                                         result += '<div class=\"row\">';
-                                            result += textSetupIII({
+                                            result += getValidation(columnImage) ? textSetupIII({
                                                 element : {
                                                     alt : '',
                                                     class : [],
@@ -666,9 +705,9 @@ let bootstrapAccordion = (object) => {
                                                         tag : 'div',
                                                         title : '',
                                                     },
-                                                }
-                                            });
-                                            result += textSetupIII({
+                                                },
+                                            }) : '';
+                                            result += getValidation(object['array'][i]['items'][x]['description']) ? textSetupIII({
                                                 element : {
                                                     alt : '',
                                                     class : [],
@@ -676,12 +715,12 @@ let bootstrapAccordion = (object) => {
                                                     id : '',
                                                     name : '',
                                                     src : '',
-                                                    tag : [ 'p', 'em' ],
+                                                    tag : [ 'h5' ],
                                                     title : '',
                                                 },
                                                 content : {
                                                     text : object['array'][i]['items'][x]['description'],
-                                                    spacer : '',
+                                                    spacer : '.',
                                                 },
                                                 has : {
                                                     index : '',
@@ -693,6 +732,8 @@ let bootstrapAccordion = (object) => {
                                                         alt : '',
                                                         class : [
                                                             'col-' + columnText,
+                                                            getValidation(object['array'][i]['items'][x]['items']) ? 'mb-3' : '',
+                                                            'px-3',
                                                         ],
                                                         href : '',
                                                         id : '',
@@ -702,7 +743,7 @@ let bootstrapAccordion = (object) => {
                                                         title : '',
                                                     },
                                                 }
-                                            });
+                                            }) : '';
                                         result += '</div>';
                                     };
                                     if (getValidation(object['array'][i]['items'][x]['items'])) {
@@ -716,15 +757,17 @@ let bootstrapAccordion = (object) => {
                                                             let n = '';
                                                             n += getTypeNumber({ index : x });
                                                             n += getTypeNumber({ index : y });
-                                                            result += textSetupIII({
+                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['title']) ? textSetupIII({
                                                                 element : {
                                                                     alt : '',
-                                                                    class : [],
+                                                                    class : [
+                                                                        'mb-3',
+                                                                    ],
                                                                     href : '',
                                                                     id : '',
                                                                     name : '',
                                                                     src : '',
-                                                                    tag : [ 'p', 'em' ],
+                                                                    tag : [ 'p' ],
                                                                     title : '',
                                                                 },
                                                                 content : {
@@ -748,11 +791,14 @@ let bootstrapAccordion = (object) => {
                                                                         title : '',
                                                                     },
                                                                 }
-                                                            });
-                                                            result += textSetupIII({
+                                                            }) : '';
+                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? textSetupIII({
                                                                 element : {
                                                                     alt : '',
-                                                                    class : [],
+                                                                    class : [
+                                                                        'mb-3',
+                                                                        'text-danger',
+                                                                    ],
                                                                     href : '',
                                                                     id : '',
                                                                     name : '',
@@ -762,10 +808,10 @@ let bootstrapAccordion = (object) => {
                                                                 },
                                                                 content : {
                                                                     text : object['array'][i]['items'][x]['items'][y]['description'],
-                                                                    spacer : '',
+                                                                    spacer : '. ',
                                                                 },
                                                                 has : {
-                                                                    index : n,
+                                                                    index : '',
                                                                     before : '',
                                                                     after : '',
                                                                 },
@@ -781,7 +827,7 @@ let bootstrapAccordion = (object) => {
                                                                         title : '',
                                                                     },
                                                                 }
-                                                            });
+                                                            }) : '';
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
                                                                 result += '<ul>';
                                                                     for (let z = 0; z < object['array'][i]['items'][x]['items'][y]['items']['length']; z++) {
@@ -789,10 +835,13 @@ let bootstrapAccordion = (object) => {
                                                                         n += getTypeNumber({ index : x });
                                                                         n += getTypeNumber({ index : y });
                                                                         n += getTypeNumber({ index : z });
-                                                                        result += textSetupIII({
+                                                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z]) ? textSetupIII({
                                                                             element : {
                                                                                 alt : '',
-                                                                                class : [],
+                                                                                class : [
+                                                                                    'mb-3',
+                                                                                    'text-success',
+                                                                                ],
                                                                                 href : '',
                                                                                 id : '',
                                                                                 name : '',
@@ -821,7 +870,7 @@ let bootstrapAccordion = (object) => {
                                                                                     title : '',
                                                                                 },
                                                                             }
-                                                                        });
+                                                                        }) : '';
                                                                     };
                                                                 result += '</ul>';
                                                             };
@@ -838,7 +887,7 @@ let bootstrapAccordion = (object) => {
                 };
             result += '</div>';
         result += '</div>';
-    }
+    };
     result += isQuickView;
     return result;
 };
