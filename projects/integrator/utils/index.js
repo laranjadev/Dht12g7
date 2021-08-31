@@ -51,7 +51,7 @@ const footerQuickMenu = (object) => {
 
 const viewListGroup = (object) => {
     let result = '';
-    let = isQuickView = quickView({ object : object });
+    let isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
         result += '<div id=\"' + (x % 2 === 0 ? 'first-item' : 'second-item') + '\">';
@@ -59,7 +59,7 @@ const viewListGroup = (object) => {
                 index : x,
                 title : object['array'][x]['title'],
                 description : object['array'][x]['description'],
-                // columnImage : 2,
+                image : object['array'][x]['image'],
             });
             if (getValidation(object['array'][x]['items'])) {
                 result += '<div id=\"body\">';
@@ -68,55 +68,51 @@ const viewListGroup = (object) => {
                             result += '<div id=\"col\">';
                                 result += '<div id=\"list-group\">';
                                     result += '<a href=\"#\">';
-                                        // FAZER AQUI
-                                        result += '<div class=\"row\">';
-                                            let columnImage = 0, columnText = 12 - columnImage;
-                                            result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
-                                            result += columnImage ? '</div>' : '';
-                                            result += '<div class=\"col-' + columnText + '\">';
-                                                result += getValidation(object['array'][x]['items'][y]['title'])
-                                                ? textSetup({
-                                                    content : object['array'][x]['items'][y]['title'],
-                                                    element : [ 'h5' ],
-                                                }) : '';
-                                                result += getValidation(object['array'][x]['items'][y]['description'])
-                                                ? textSetup({
-                                                    content : object['array'][x]['items'][y]['description'],
-                                                    element : [ 'p', 'em' ],
-                                                }) : '';
-                                            result += '</div>';
-                                        result += '</div>';
+                                        result += textSetup({
+                                            content : object['array'][x]['items'][y]['title'],
+                                            element : [ 'h5' ],
+                                        });
+                                        result += getWrapped({
+                                            tag : 'img',
+                                            alt : object['array'][x]['items'][y]['title'],
+                                            src : object['array'][x]['items'][y]['image'],
+                                            position : {
+                                                start : true,
+                                            }
+                                        });
+                                        result += textSetup({
+                                            content : object['array'][x]['items'][y]['description'],
+                                            element : [ 'p', 'em' ],
+                                        });
                                         if (getValidation(object['array'][x]['items'][y]['items'])) {
                                             result += '<ul>';
                                                 for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                     result += '<li>';
-                                                        // FAZER AQUI
                                                         result += '<div class=\"row\">';
-                                                            let columnImage = 3, columnText = 12 - columnImage;
-                                                            result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
-                                                            result += columnImage ? '</div>' : '';
-                                                            result += '<div class=\"col-' + columnText + '\">';
+                                                            if (getValidation(object['array'][x]['items'][y]['items'][z]['image'])) {
+                                                                result += '<div';
+                                                                result += ' class=\"col-4 p-3\"';
+                                                                result += ' style=\"background-image: url(' + object['array'][x]['items'][y]['items'][z]['image'] + ');\">';
+                                                                result += '</div>';
+                                                            };
+                                                            result += '<div class=\"col-8 p-3\">';
                                                                 let n = '';
                                                                 n += getTypeNumber({ index : y });
                                                                 n += getTypeNumber({ index : z });
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title'])
-                                                                ? textSetup({
+                                                                result += textSetup({
                                                                     index : n,
                                                                     content : object['array'][x]['items'][y]['items'][z]['title'],
                                                                     element : [ 'p', 'b' ],
-                                                                }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description'])
-                                                                ? textSetup({
+                                                                });
+                                                                result += textSetup({
                                                                     content : object['array'][x]['items'][y]['items'][z]['description'],
                                                                     element : [ 'p', 'em' ],
-                                                                }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value'])
-                                                                ? textSetup({
+                                                                });
+                                                                result += textSetup({
                                                                     content : object['array'][x]['items'][y]['items'][z]['value'],
                                                                     element : [ 'p', 'b' ],
-                                                                    prefix : '',
                                                                     suffix : ' km.',
-                                                                }) : '';
+                                                                });
                                                             result += '</div>';
                                                         result += '</div>';
 
@@ -160,32 +156,23 @@ const quickView = (object) => {
 const getHeader = (object) => {
     let result = '';
     if (getValidation(object['title']) || getValidation(object['description'])) {
-        let isID = '';
-        isID += 'id';
-        isID += '-';
-        isID += object['index'];
-        let columnImage = getValidation(object['columnImage'])
-        ? object['columnImage'] : 0;
-        let columnText = 12 - columnImage;
         result += '<div id=\"header\">';
             result += '<div id=\"row\">';
-                result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
-                result += columnImage ? '</div>' : '';
-                result += '<div class=\"col-' + columnText + '\">';
-                    result += getValidation(object['title'])
-                    ? textSetup({
-                        id : isID,
+                if (getValidation(object['image'])) {
+                    result += '<div id=\"header-image\" style=\"background-image: url(' + object['image'] + ');\">';
+                    result += '</div>';
+                };
+                result += getValidation(object['image']) ? '<div id=\"header-content\">' : '';
+                    result += textSetup({
+                        id : 'id' + '-' + object['index'],
                         content : object['title'],
                         element : [ 'h1' ],
-                    }) : '';
-                    result += getValidation(object['description'])
-                    ? textSetup({
+                    });
+                    result += textSetup({
                         content : object['description'],
                         element : [ 'p', 'em' ],
-                    }) : '';
-                result += '</div>';
-
-
+                    });
+                result += getValidation(object['image']) ? '</div>' : '';
             result += '</div>';
         result += '</div>';
     };
@@ -202,7 +189,6 @@ const bootstrapGallery = (object) => {
                 index : x,
                 title : object['array'][x]['title'],
                 description : object['array'][x]['description'],
-                // columnImage : 2,
             });
             if (getValidation(object['array'][x]['items'])) {
                 result += '<div id=\"body\">';
@@ -219,22 +205,22 @@ const bootstrapGallery = (object) => {
                                             result += '</a>';
                                         result += '</div>';
                                     };
-                                    if (getValidation(object['array'][x]['items'][y]['title'])) {
-                                        result += '<div id=\"title\">';
-                                            result += textSetup({
-                                                content : object['array'][x]['items'][y]['title'],
-                                                element : [ 'p', 'b' ],
-                                            });
-                                        result += '</div>';
-                                    };
-                                    if (getValidation(object['array'][x]['items'][y]['description'])) {
-                                        result += '<div id=\"description\">';
-                                            result += textSetup({
-                                                content : object['array'][x]['items'][y]['description'],
-                                                element : [ 'p', 'em' ],
-                                            });
-                                        result += '</div>';
-                                    };
+                                    result += textSetup({
+                                        content : object['array'][x]['items'][y]['title'],
+                                        element : [ 'p', 'b' ],
+                                        wrap : {
+                                            id : 'title',
+                                            tag : 'div',
+                                        }
+                                    });
+                                    result += textSetup({
+                                        content : object['array'][x]['items'][y]['description'],
+                                        element : [ 'p', 'em' ],
+                                        wrap : {
+                                            id : 'description',
+                                            tag : 'div',
+                                        }
+                                    });
                                 result += '</div>';
                             };
                         };
@@ -422,6 +408,119 @@ const getTypeNumber = (object) => {
     return result;
 };
 
+const getWrapped = (object) => {
+    let result = '';
+    if (getValidation(object['tag'])) {
+        if (getValidation(object['position']['start'])) {
+            result += '<';
+            result += getTrim(object['tag']);
+            result += getValidation(object['alt']) ? ' alt=\"' + getTrim(object['alt']) + '\"' : '';
+            result += getValidation(object['href']) ? ' href=\"' + getTrim(object['href']) + '\"' : '';
+            result += getValidation(object['id']) ? ' id=\"' + getTrim(object['id']) + '\"' : '';
+            result += getValidation(object['src']) ? ' src=\"' + getTrim(object['src']) + '\"' : '';
+            result += '>';
+        };
+    };
+    if (getValidation(object['tag'])) {
+        if (getValidation(object['position']['end'])) {
+            result += '</' + getTrim(object['tag']) + '>';
+        };
+    };
+    return result;
+};
+
+const textSetupIII = (object) => {
+    const getElementStart = (object) => {
+        let result = '';
+        if (getValidation(object['tag'])) {
+            result += '<';
+            result += getTrim(object['tag']);
+            result += getValidation(object['alt']) ? ' alt=\"' + getTrim(object['alt']) + '\"' : '';
+            if (getValidation(object['class'])) {
+                if (isThis(object['class'], 'string')) {
+                    result += ' class=\"';
+                    result += getTrim(object['class']);
+                    result += '\"';
+                } else if (isThis(object['class'], 'object')) {
+                    result += ' class=\"';
+                    for (let x = 0; x < object['class']['length']; x++) {
+                        result += !x ? '' : ' ';
+                        result += getTrim(object['class'][x]);
+                    }
+                    result += '\"';
+                };
+            };
+            result += getValidation(object['href']) ? ' href=\"' + getTrim(object['href']) + '\"' : '';
+            result += getValidation(object['id']) ? ' id=\"' + getTrim(object['id']) + '\"' : '';
+            result += getValidation(object['name']) ? ' name=\"' + getTrim(object['name']) + '\"' : '';
+            result += getValidation(object['src']) ? ' src=\"' + getTrim(object['src']) + '\"' : '';
+            result += getValidation(object['title']) ? ' title=\"' + getTrim(object['title']) + '\"' : '';
+            result += '>';
+        }
+        return result;
+    };
+    const getElementEnd = (object) => {
+        return getValidation(object['tag']) ? '</' + getTrim(object['tag']) + '>' : '';
+    };
+    let elementStart = '', elementEnd = '';
+    if (getValidation(object['element'])) {
+        if (isThis(object['element']['tag'], 'string')) {
+            elementStart += getElementStart({
+                alt : object['element']['alt'],
+                class : object['element']['class'],
+                href : object['element']['href'],
+                id : object['element']['id'],
+                name : object['element']['name'],
+                src : object['element']['src'],
+                tag : object['element']['tag'],
+                title : object['element']['title'],
+            });
+            elementEnd += getElementEnd({
+                tag : object['element']['tag'],
+            });
+        } else if (isThis(object['element']['tag'], 'object')) {
+            for (let i = 0; i < object['element']['tag']['length']; i++) {
+                elementStart += getElementStart({
+                    alt : !i ? object['element']['alt'] : '',
+                    class : !i ? object['element']['class'] : '',
+                    href : !i ? object['element']['href'] : '',
+                    id : !i ? object['element']['id'] : '',
+                    name : !i ? object['element']['name'] : '',
+                    src : !i ? object['element']['src'] : '',
+                    tag : object['element']['tag'][i],
+                    title : !i ? object['element']['title'] : '',
+                });
+            }
+            for (let i = object['element']['tag']['length']; i > 0; i--) {
+                elementEnd += getElementStart({
+                    tag : object['element']['tag'][i],
+                });
+            };
+        };
+    };
+    let result = '';
+    result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementStart({
+        alt : object['wrap']['element']['alt'],
+        class : object['wrap']['element']['class'],
+        href : object['wrap']['element']['href'],
+        id : object['wrap']['element']['id'],
+        name : object['wrap']['element']['name'],
+        src : object['wrap']['element']['src'],
+        tag : object['wrap']['element']['tag'],
+        title : object['wrap']['element']['title'],
+    }) : '';
+    result += elementStart;
+    result += getValidation(object['has']) && getValidation(object['has']['before']) ? getTrim(object['has']['before']) : '';
+    result += getValidation(object['has']) && getValidation(object['has']['index']) ? getTrim(object['has']['index']) : '';
+    result += getValidation(object['content']['text']) && getValidation(object['content']['spacer'])
+    ? object['content']['text'].split(object['content']['spacer'] + ' ').join(object['content']['spacer'] + elementEnd + elementStart)
+    : object['content']['text'];
+    result += getValidation(object['has']) && getValidation(object['has']['after']) ? getTrim(object['has']['after']) : '';
+    result += elementEnd;
+    result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementEnd({ tag : object['wrap']['element']['tag'] }) : '';
+    return result;
+};
+
 const textSetup = (object) => {
     let is_start = '', is_end = '';
     let is_id = getValidation(object['id']) ? ' id=\"' + object['id'] + '\"' : '';
@@ -443,9 +542,29 @@ const textSetup = (object) => {
     : object['content'];
     is_content += getValidation(object['suffix']) ? object['suffix'] : '';
     let result = '';
-    result += is_start;
-    result += is_content;
-    result += is_end;
+    if (getValidation(object['tag'])) {
+        if (getValidation(object['position']['start'])) {
+            result += '<';
+            result += getTrim(object['tag']);
+            result += getValidation(object['alt']) ? ' alt=\"' + getTrim(object['alt']) + '\"' : '';
+            result += getValidation(object['href']) ? ' href=\"' + getTrim(object['href']) + '\"' : '';
+            result += getValidation(object['id']) ? ' id=\"' + getTrim(object['id']) + '\"' : '';
+            result += getValidation(object['src']) ? ' src=\"' + getTrim(object['src']) + '\"' : '';
+            result += '>';
+        };
+    };
+    if (getValidation(object['content'])) {
+        result += is_start;
+        result += is_content;
+        result += is_end;
+    };
+    if (getValidation(object['wrap'])) {
+        if (getValidation(object['wrap']['tag'])) {
+            if (getValidation(object['wrap']['end'])) {
+                result += '</' + getTrim(object['wrap']['tag']) + '>';
+            };
+        };
+    };
     return result;
 };
 
@@ -469,7 +588,7 @@ let objectCleaner = (content) => {
 
 let bootstrapAccordion = (object) => {
     let result = '';
-    let columnImage = 0, columnText = 12 - columnImage;
+    let columnImage = 4, columnText = 12 - columnImage;
     let isQuickView = quickView({ object : object });
     for (let i = 0; i < object['array']['length']; i++) {
         result += isQuickView;
@@ -514,14 +633,76 @@ let bootstrapAccordion = (object) => {
                                 result += '<div class=\"accordion-body\">';
                                     if (getValidation(object['array'][i]['items'][x]['description'])) {
                                         result += '<div class=\"row\">';
-                                            result += columnImage ? '<div class=\"col-' + columnImage + '\">' : '';
-                                            result += columnImage ? '</div>' : '';
-                                            result += '<div class=\"col-' + columnText + '\">';
-                                                result += textSetup({
-                                                    content : object['array'][i]['items'][x]['description'],
-                                                    element : [ 'p', 'em' ],
-                                                });
-                                            result += '</div>';
+                                            result += textSetupIII({
+                                                element : {
+                                                    alt : '',
+                                                    class : [],
+                                                    href : '',
+                                                    id : '',
+                                                    name : '',
+                                                    src : '',
+                                                    tag : [],
+                                                    title : '',
+                                                },
+                                                content : {
+                                                    text : '',
+                                                    spacer : '',
+                                                },
+                                                has : {
+                                                    index : '',
+                                                    before : '',
+                                                    after : '',
+                                                },
+                                                wrap : {
+                                                    element : {
+                                                        alt : '',
+                                                        class : [
+                                                            'col-' + columnImage,
+                                                        ],
+                                                        href : '',
+                                                        id : '',
+                                                        name : '',
+                                                        src : '',
+                                                        tag : 'div',
+                                                        title : '',
+                                                    },
+                                                }
+                                            });
+                                            result += textSetupIII({
+                                                element : {
+                                                    alt : '',
+                                                    class : [],
+                                                    href : '',
+                                                    id : '',
+                                                    name : '',
+                                                    src : '',
+                                                    tag : [ 'p', 'em' ],
+                                                    title : '',
+                                                },
+                                                content : {
+                                                    text : object['array'][i]['items'][x]['description'],
+                                                    spacer : '',
+                                                },
+                                                has : {
+                                                    index : '',
+                                                    before : '',
+                                                    after : '',
+                                                },
+                                                wrap : {
+                                                    element : {
+                                                        alt : '',
+                                                        class : [
+                                                            'col-' + columnText,
+                                                        ],
+                                                        href : '',
+                                                        id : '',
+                                                        name : '',
+                                                        src : '',
+                                                        tag : 'div',
+                                                        title : '',
+                                                    },
+                                                }
+                                            });
                                         result += '</div>';
                                     };
                                     if (getValidation(object['array'][i]['items'][x]['items'])) {
@@ -535,32 +716,112 @@ let bootstrapAccordion = (object) => {
                                                             let n = '';
                                                             n += getTypeNumber({ index : x });
                                                             n += getTypeNumber({ index : y });
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['title'])
-                                                            ? textSetup({
-                                                                index : n,
-                                                                content : object['array'][i]['items'][x]['items'][y]['title'],
-                                                                element : [ 'p', 'em' ],
-                                                            }) : '';
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['description'])
-                                                            ? textSetup({
-                                                                content : object['array'][i]['items'][x]['items'][y]['description'],
-                                                                element : [ 'p', 'em' ],
-                                                            }) : '';
+                                                            result += textSetupIII({
+                                                                element : {
+                                                                    alt : '',
+                                                                    class : [],
+                                                                    href : '',
+                                                                    id : '',
+                                                                    name : '',
+                                                                    src : '',
+                                                                    tag : [ 'p', 'em' ],
+                                                                    title : '',
+                                                                },
+                                                                content : {
+                                                                    text : object['array'][i]['items'][x]['items'][y]['title'],
+                                                                    spacer : '',
+                                                                },
+                                                                has : {
+                                                                    index : n,
+                                                                    before : '',
+                                                                    after : '',
+                                                                },
+                                                                wrap : {
+                                                                    element : {
+                                                                        alt : '',
+                                                                        class : [],
+                                                                        href : '',
+                                                                        id : '',
+                                                                        name : '',
+                                                                        src : '',
+                                                                        tag : '',
+                                                                        title : '',
+                                                                    },
+                                                                }
+                                                            });
+                                                            result += textSetupIII({
+                                                                element : {
+                                                                    alt : '',
+                                                                    class : [],
+                                                                    href : '',
+                                                                    id : '',
+                                                                    name : '',
+                                                                    src : '',
+                                                                    tag : [ 'p', 'em' ],
+                                                                    title : '',
+                                                                },
+                                                                content : {
+                                                                    text : object['array'][i]['items'][x]['items'][y]['description'],
+                                                                    spacer : '',
+                                                                },
+                                                                has : {
+                                                                    index : n,
+                                                                    before : '',
+                                                                    after : '',
+                                                                },
+                                                                wrap : {
+                                                                    element : {
+                                                                        alt : '',
+                                                                        class : [],
+                                                                        href : '',
+                                                                        id : '',
+                                                                        name : '',
+                                                                        src : '',
+                                                                        tag : '',
+                                                                        title : '',
+                                                                    },
+                                                                }
+                                                            });
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
                                                                 result += '<ul>';
                                                                     for (let z = 0; z < object['array'][i]['items'][x]['items'][y]['items']['length']; z++) {
-                                                                        result += '<li>';
-                                                                            let n = '';
-                                                                            n += getTypeNumber({ index : x });
-                                                                            n += getTypeNumber({ index : y });
-                                                                            n += getTypeNumber({ index : z });
-                                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z])
-                                                                            ? textSetup({
+                                                                        let n = '';
+                                                                        n += getTypeNumber({ index : x });
+                                                                        n += getTypeNumber({ index : y });
+                                                                        n += getTypeNumber({ index : z });
+                                                                        result += textSetupIII({
+                                                                            element : {
+                                                                                alt : '',
+                                                                                class : [],
+                                                                                href : '',
+                                                                                id : '',
+                                                                                name : '',
+                                                                                src : '',
+                                                                                tag : [ 'li', 'p', 'em' ],
+                                                                                title : '',
+                                                                            },
+                                                                            content : {
+                                                                                text : object['array'][i]['items'][x]['items'][y]['items'][z],
+                                                                                spacer : '',
+                                                                            },
+                                                                            has : {
                                                                                 index : n,
-                                                                                content : object['array'][i]['items'][x]['items'][y]['items'][z],
-                                                                                element : [ 'p', 'em' ],
-                                                                            }) : '';
-                                                                        result += '</li>';
+                                                                                before : '',
+                                                                                after : '',
+                                                                            },
+                                                                            wrap : {
+                                                                                element : {
+                                                                                    alt : '',
+                                                                                    class : [],
+                                                                                    href : '',
+                                                                                    id : '',
+                                                                                    name : '',
+                                                                                    src : '',
+                                                                                    tag : '',
+                                                                                    title : '',
+                                                                                },
+                                                                            }
+                                                                        });
                                                                     };
                                                                 result += '</ul>';
                                                             };
@@ -946,6 +1207,10 @@ const getFirstUpperCase = (content) => {
     result += String(content).charAt(0).toUpperCase();
     result += String(content).slice(1);
     return result;
+};
+
+const getTrim = (content) => {
+    return String(content).trim();
 };
 
 const toClean = (result) => {

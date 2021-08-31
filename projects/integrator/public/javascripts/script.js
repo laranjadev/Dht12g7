@@ -73,7 +73,6 @@ addRemoveClasses({
     classeList : [
         'bg-white',
         'mb-3',
-        // 'p-3',
         'pt-3',
         'px-3',
         'rounded',

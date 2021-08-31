@@ -45,22 +45,6 @@ export let itemsClasses = (object) => {
         ],
         method : 'add',
     });
-    // addRemoveClasses({
-    //     elementList : [
-    //         '#first-item img',
-    //         '#second-item img',
-    //     ],
-    //     classeList : [
-    //         'col-md-4',
-    //         'float-md-start',
-    //         'me-3',
-    //         'bg-light',
-    //         'p-3',
-    //         'rounded',
-    //         'shadow-sm',
-    //     ],
-    //     method : 'add',
-    // });
 };
 
 export let formClasses = () => {
@@ -171,22 +155,64 @@ export let paginationClasses = (object) => {
     });
 };
 
+const imageClasses = [
+    'img-fluid',
+    'img-thumbnail',
+    'rounded',
+    'shadow-sm',
+    'w-100',
+];
+
 export let headerClasses = (object) => {
+    let n = 2;
+    let imgcol = 'col' + '-' + n;
+    let txtcol = 'col' + '-' + (12 - n);
     addRemoveClasses({
         elementList : [
             '#header',
         ],
         classeList : [
             'mb-3',
+            'w-100',
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#header #row',
+            '#header>#row',
         ],
         classeList : [
             'row',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#header>#row>#header-image',
+        ],
+        classeList : [
+            'align-items-center',
+            'd-flex',
+            imgcol,
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#header>#row>#header-image>img',
+        ],
+        classeList : [
+            ...imageClasses,
+            'align-self-center',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#header>#row>#header-content',
+        ],
+        classeList : [
+            txtcol,
         ],
         method : 'add',
     });
@@ -217,7 +243,7 @@ export let accordionClasses = (object) => {
 export let listgroupClasses = (object) => {
     addRemoveClasses({
         elementList : [
-            '#body #row',
+            '#body>#row',
         ],
         classeList : [
             'row',
@@ -227,7 +253,7 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #row #col',
+            '#body>#row>#col',
         ],
         classeList : [
             'col-lg-4',
@@ -237,7 +263,7 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #row #col #list-group a',
+            '#body>#row>#col>#list-group>a',
         ],
         classeList : [
             'list-group-item',
@@ -245,13 +271,24 @@ export let listgroupClasses = (object) => {
             'flex-column',
             'rounded',
             'shadow-sm',
+            'p-3',
         ],
         method : 'add',
     });
     addRemoveClasses({
         elementList : [
-            '#body #row #col',
-            '#body #row #col #list-group a>p',
+            '#body>#row>#col>#list-group>a>img',
+        ],
+        classeList : [
+            ...imageClasses,
+            'mb-3',
+        ],
+        method : 'add',
+    });
+    addRemoveClasses({
+        elementList : [
+            '#body>#row>#col',
+            '#body>#row>#col>#list-group>a>p',
         ],
         classeList : [
             'mb-3',
@@ -260,7 +297,7 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #row #col #list-group a ul',
+            '#body>#row>#col>#list-group>a>ul',
         ],
         classeList : [
             'list-group',
@@ -270,7 +307,7 @@ export let listgroupClasses = (object) => {
     });
     addRemoveClasses({
         elementList : [
-            '#body #row #col #list-group a ul li',
+            '#body>#row>#col>#list-group>a>ul>li',
         ],
         classeList : [
             'list-group-item',
@@ -325,10 +362,7 @@ export let galleryClasses = (object) => {
             '#body #col #image a img',
         ],
         classeList : [
-            'img-thumbnail',
-            'rounded',
-            'shadow-sm',
-            'img-fluid',
+            ...imageClasses,
         ],
         method : 'add',
     });
