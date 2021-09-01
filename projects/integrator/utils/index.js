@@ -3,6 +3,14 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const urlJoin = require('url-join');
 
+const getTrim = (content) => {
+    return String(content).trim();
+};
+
+const isThis = (string, type) => {
+    return typeof string === type;
+};
+
 const isEmpty = (object) => {
     if (object == null) return true;
     if (object['length'] > 0) return false;
@@ -31,16 +39,21 @@ const footerQuickMenu = (object) => {
             result += '<div id=\"col\">';
                 result += '<div id=\"menu\">';
                     for (let i = 0; i < object['array']['length']; i++) {
+
                         let isHREF = '';
                         isHREF += '/' + object['pathPrefix'];
                         isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
                         isHREF += '/' + object['index'];
                         isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
                         isHREF = isHREF.toLowerCase();
+
                         let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
+
+
                         let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
                         let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
-                        result += getValidation(isTitle) ? textSetupIII({
+
+                        result += getValidation(isTitle) ? htmlSetup({
                             element : {
                                 href : isHREF + '\"' + isTarget + isToggle,
                                 tag : [ 'a' ],
@@ -76,7 +89,7 @@ const viewListGroup = (object) => {
                             result += '<div id=\"col\">';
                                 result += '<div id=\"list-group\">';
                                     result += '<a href=\"#\">';
-                                        result += getValidation(object['array'][x]['items'][y]['title']) ? textSetupIII({
+                                        result += getValidation(object['array'][x]['items'][y]['title']) ? htmlSetup({
                                             element : {
                                                 tag : [ 'h5' ],
                                             },
@@ -92,7 +105,7 @@ const viewListGroup = (object) => {
                                                 start : true,
                                             }
                                         });
-                                        result += getValidation(object['array'][x]['items'][y]['description']) ? textSetupIII({
+                                        result += getValidation(object['array'][x]['items'][y]['description']) ? htmlSetup({
                                             element : {
                                                 tag : [ 'p', 'em' ],
                                             },
@@ -115,7 +128,7 @@ const viewListGroup = (object) => {
                                                                 let n = '';
                                                                 n += getTypeNumber({ index : y });
                                                                 n += getTypeNumber({ index : z });
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? textSetupIII({
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? htmlSetup({
                                                                     element : {
                                                                         tag : [ 'p', 'b' ],
                                                                     },
@@ -126,7 +139,7 @@ const viewListGroup = (object) => {
                                                                         index : n,
                                                                     },
                                                                 }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? textSetupIII({
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? htmlSetup({
                                                                     element : {
                                                                         tag : [ 'p', 'em' ],
                                                                     },
@@ -134,7 +147,7 @@ const viewListGroup = (object) => {
                                                                         text : object['array'][x]['items'][y]['items'][z]['description'],
                                                                     },
                                                                 }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value']) ? textSetupIII({
+                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value']) ? htmlSetup({
                                                                     element : {
                                                                         tag : [ 'p', 'b' ],
                                                                     },
@@ -171,7 +184,7 @@ const quickView = (object) => {
             result += '<div id=\"col\">';
                 result += '<div id=\"menu\">';
                     for (let i = 0; i < object['object']['array']['length']; i++) {
-                        result += getValidation(object['object']['array'][i]['title']) ? textSetupIII({
+                        result += getValidation(object['object']['array'][i]['title']) ? htmlSetup({
                             element : {
                                 href : '#id' + '-' + i,
                                 tag : [ 'a' ],
@@ -199,7 +212,7 @@ const getHeader = (object) => {
                     result += '</div>';
                 };
                 result += getValidation(object['image']) ? '<div id=\"header-content\">' : '';
-                    result += getValidation(object['title']) ? textSetupIII({
+                    result += getValidation(object['title']) ? htmlSetup({
                         element : {
                             id : 'id' + '-' + object['index'],
                             tag : [ 'h1' ],
@@ -208,7 +221,7 @@ const getHeader = (object) => {
                             text : object['title'],
                         },
                     }) : '';
-                    result += getValidation(object['description']) ? textSetupIII({
+                    result += getValidation(object['description']) ? htmlSetup({
                         element : {
                             tag : [ 'p', 'em' ],
                         },
@@ -249,7 +262,7 @@ const bootstrapGallery = (object) => {
                                             result += '</a>';
                                         result += '</div>';
                                     };
-                                    result += getValidation(object['array'][x]['items'][y]['title']) ? textSetupIII({
+                                    result += getValidation(object['array'][x]['items'][y]['title']) ? htmlSetup({
                                         element : {
                                             tag : [ 'p', 'b' ],
                                         },
@@ -263,7 +276,7 @@ const bootstrapGallery = (object) => {
                                             },
                                         }
                                     }) : '';
-                                    result += getValidation(object['array'][x]['items'][y]['description']) ? textSetupIII({
+                                    result += getValidation(object['array'][x]['items'][y]['description']) ? htmlSetup({
                                         element : {
                                             tag : [ 'p', 'em' ],
                                         },
@@ -314,7 +327,7 @@ const bootstrapCarousel = (object) => {
                     result += getValidation(object['array'][i]['title']) ? ' alt=\"' + object['array'][i]['title'] + '\"' : '';
                     result += '>';
                     result += '<div class=\"carousel-caption d-none d-md-block\">';
-                        result += textSetupIII({
+                        result += htmlSetup({
                             element : {
                                 tag : [ 'h3', 'em' ]
                             },
@@ -322,7 +335,7 @@ const bootstrapCarousel = (object) => {
                                 text : object['array'][i]['title'],
                             },
                         });
-                        result += textSetupIII({
+                        result += htmlSetup({
                             element : {
                                 tag : [ 'p', 'em' ],
                             },
@@ -384,7 +397,7 @@ const bootstrapNavbar = (object) => {
                                         result += '<ul>';
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
                                                 result += '<li>';
-                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? textSetupIII({
+                                                    result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? htmlSetup({
                                                         element : {
                                                             class : [
                                                                 'dropdown-item',
@@ -430,7 +443,7 @@ const bootstrapModal = (object) => {
     result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
         result += '<div class=\"modal-dialog\">';
             result += '<div class=\"modal-content\">';
-                result += getValidation(object['title']) ? textSetupIII({
+                result += getValidation(object['title']) ? htmlSetup({
                     element : {
                         tag : [ 'h5' ],
                     },
@@ -446,7 +459,7 @@ const bootstrapModal = (object) => {
                         },
                     }
                 }) : '';
-                result += getValidation(object['description']) ? textSetupIII({
+                result += getValidation(object['description']) ? htmlSetup({
                     element : {
                         tag : [ 'p', 'em' ],
                     },
@@ -514,9 +527,120 @@ const getWrapped = (object) => {
     return result;
 };
 
-// FABIO
 
-const textSetupIII = (object) => {
+const getProperty = (content) => {
+    return {
+        name : Object.getOwnPropertyNames(content),
+        descriptor : Object.getOwnPropertyDescriptors(content),
+    };
+};
+
+const htmlSetupIII = (object) => {
+    let result = '';
+    for (let x = 0; x < object['wrap']['length']; x++) {
+        result += '<';
+        result += object['wrap'][x]['tag'];
+        const paramName = getProperty(object['wrap'][x]['param'])['name'];
+        const paramDescriptor = getProperty(object['wrap'][x]['param'])['descriptor'];
+        for (let y = 0; y < paramName['length']; y++) {
+            if (getValidation(paramDescriptor[paramName[y]]['value'])) {
+                result += ' ';
+                result += getTrim(paramName[y]);
+                result += '=\"';
+                if (isThis(paramDescriptor[paramName[y]]['value'], 'string')) {
+                    result += paramDescriptor[paramName[y]]['value'];
+                } else if (isThis(paramDescriptor[paramName[y]]['value'], 'object')) {
+                    for (let z = 0; z < paramDescriptor[paramName[y]]['value']['length']; z++) {
+                        result += !z ? '' : ' ';
+                        if (isThis(paramDescriptor[paramName[y]]['value'][z], 'string')) {
+                            result += paramDescriptor[paramName[y]]['value'][z];
+                        } else if (isThis(paramDescriptor[paramName[y]]['value'][z], 'object')) {
+
+                            const isName = getProperty(paramDescriptor[paramName[y]]['value'][z])['name'];
+                            const isDescriptor = getProperty(paramDescriptor[paramName[y]]['value'][z])['descriptor'];
+
+                            result += isName;
+                            result += ':';
+                            result += isDescriptor[isName]['value'];
+                            result += ';';
+                        };
+                    };
+                };
+                result += '\"';
+            };
+        };
+        result += '>';
+    };
+    const containerName = getProperty(object['container'])['name'];
+    const containerDescriptor = getProperty(object['container'])['descriptor'];
+    for (let i = 0; i < containerName['length']; i++) {
+        result += getValidation(containerDescriptor[containerName[i]]['value']) ? containerDescriptor[containerName[i]]['value'] : '';
+    };
+    let isReverse = object['wrap'].reverse();
+    for (let x = 0; x < isReverse['length']; x++) {
+        result += '</';
+        result += isReverse[x]['tag'];
+        result += '>';
+    };
+    return result;
+};
+
+console.log(htmlSetupIII({
+    container : {
+        before : 'before',
+        index : '1',
+        content : 'content',
+        after : 'after',
+        spacer : '',
+    },
+    wrap : [
+        {
+            tag : 'h1',
+            param : {
+                alt : '',
+                class : [
+                    'm-3',
+                    'p-5'
+                ],
+                href : 'dpz.com.br',
+                id : 'id-1',
+                name : 'dpz',
+                src : 'dpz.com.br',
+                style : [
+                    { property : 'value' },
+                    { property : 'value' },
+                    { property : 'value' },
+                    { property : 'value' },
+                ],
+                title : 'dpz',
+            },
+        },
+        {
+            tag : 'h2',
+            param : {
+                alt : '',
+                class : [
+                    'm-2',
+                    'p-4',
+                    'p-9',
+                ],
+                href : 'dpz.com.br',
+                id : 'id-3',
+                name : '',
+                src : '',
+                style : [
+                    { property : 'value' },
+                    { property : 'value' },
+                    { property : 'value' },
+                    { property : 'value' },
+                ],
+                title : '',
+            },
+        }
+    ],
+}))
+
+const htmlSetup = (object) => {
     const getElementStart = (object) => {
         let result = '';
         if (getValidation(object['tag'])) {
@@ -601,16 +725,47 @@ const textSetupIII = (object) => {
         title : object['wrap']['element']['title'],
     }) : '';
     result += elementStart;
-    result += getValidation(object['has']) && getValidation(object['has']['before']) ? object['has']['before'] : '';
-    result += getValidation(object['has']) && getValidation(object['has']['index']) ? object['has']['index'] : '';
-    result += getValidation(object['content']['text']) && getValidation(object['content']['spacer'])
-    ? object['content']['text'].split(object['content']['spacer']).join(object['content']['spacer'] + elementEnd + elementStart)
-    : object['content']['text'];
-    result += getValidation(object['has']) && getValidation(object['has']['after']) ? object['has']['after'] : '';
+    if (getValidation(object['has'])) {
+        if (getValidation(object['has']['index'])) {
+            result += object['has']['index'];
+        } else {
+            result += '';
+        };
+    } else {
+        result += '';
+    };
+    if (getValidation(object['has'])) {
+        if (getValidation(object['has']['before'])) {
+            result += object['has']['before'];
+        } else {
+            result += '';
+        };
+    } else {
+        result += '';
+    };
+    if (getValidation(object['content'])) {
+        if (getValidation(object['content']['text']) && getValidation(object['content']['spacer'])) {
+            result += object['content']['text'].split(object['content']['spacer']).join(object['content']['spacer'] + elementEnd + elementStart);
+        } else {
+            result += object['content']['text'];
+        }
+    } else {
+        result += '';
+    };
+    if (getValidation(object['has'])) {
+        if (getValidation(object['has']['after'])) {
+            result += object['has']['after'];
+        } else {
+            result += '';
+        }
+    } else {
+        result += '';
+    };
     result += elementEnd;
     result += getValidation(object['wrap']) && getValidation(object['wrap']['element']) ? getElementEnd({
         tag : object['wrap']['element']['tag']
     }) : '';
+
     return result;
 };
 
@@ -679,7 +834,7 @@ let bootstrapAccordion = (object) => {
 
                                             // FABIO
 
-                                            result += getValidation(columnImage) ? textSetupIII({
+                                            result += getValidation(columnImage) ? htmlSetup({
                                                 wrap : {
                                                     element : {
                                                         class : [
@@ -690,7 +845,7 @@ let bootstrapAccordion = (object) => {
                                                 },
                                             }) : '';
 
-                                            result += getValidation(object['array'][i]['items'][x]['description']) ? textSetupIII({
+                                            result += getValidation(object['array'][i]['items'][x]['description']) ? htmlSetup({
                                                 element : {
                                                     tag : [ 'h5' ],
                                                 },
@@ -722,7 +877,7 @@ let bootstrapAccordion = (object) => {
                                                             let n = '';
                                                             n += getTypeNumber({ index : x });
                                                             n += getTypeNumber({ index : y });
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['title']) ? textSetupIII({
+                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['title']) ? htmlSetup({
                                                                 element : {
                                                                     class : [
                                                                         'mb-3',
@@ -736,7 +891,7 @@ let bootstrapAccordion = (object) => {
                                                                     index : n,
                                                                 },
                                                             }) : '';
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? textSetupIII({
+                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? htmlSetup({
                                                                 element : {
                                                                     alt : '',
                                                                     class : [
@@ -757,7 +912,7 @@ let bootstrapAccordion = (object) => {
                                                                         n += getTypeNumber({ index : x });
                                                                         n += getTypeNumber({ index : y });
                                                                         n += getTypeNumber({ index : z });
-                                                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z]) ? textSetupIII({
+                                                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z]) ? htmlSetup({
                                                                             element : {
                                                                                 class : [
                                                                                     'mb-3',
@@ -845,9 +1000,7 @@ const getCurrency = (content) => {
     });
 };
 
-const isThis = (string, type) => {
-    return typeof string === type;
-};
+
 
 const getDOCNumber = (array) => {
     let num = '', result = '';
@@ -1159,9 +1312,6 @@ const getFirstUpperCase = (content) => {
     return result;
 };
 
-const getTrim = (content) => {
-    return String(content).trim();
-};
 
 const toClean = (result) => {
     let array = [
