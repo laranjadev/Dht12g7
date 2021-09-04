@@ -34,41 +34,64 @@ const getValidation = (content) => {
 
 const footerQuickMenu = (object) => {
     let result = '';
-    result += '<div id=\"quick-view\">';
-        result += '<div id=\"row\">';
-            result += '<div id=\"col\">';
-                result += '<div id=\"menu\">';
-                    for (let i = 0; i < object['array']['length']; i++) {
-                        let isHREF = '';
-                        isHREF += '/' + object['pathPrefix'];
-                        isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
-                        isHREF += '/' + object['index'];
-                        isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
-                        isHREF = isHREF.toLowerCase();
-                        let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
-                        let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
-                        let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
-                        result += getValidation(isTitle) ? htmlSetup({
-                            container : {
-                                content : getFirstUpperCase(isTitle),
-                            },
-                            wrap : [
-                                {
-                                    tag : {
-                                        name : 'a',
-                                        close : true,
-                                    },
-                                    param : {
-                                        href : isHREF + '\"' + isTarget + isToggle,
-                                    },
-                                },
-                            ],
-                        }) : '';
-                    };
-                result += '</div>';
-            result += '</div>';
-        result += '</div>';
-    result += '</div>';
+    let isContainer = '';
+    for (let i = 0; i < object['array']['length']; i++) {
+        let isHREF = '';
+        isHREF += '/' + object['pathPrefix'];
+        isHREF += '/' + (isThis(object['array'][i]['title'], 'object')
+        ? object['array'][i]['title'][0] : object['array'][i]['title']);
+        isHREF += '/' + object['index'];
+        isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
+        isHREF = isHREF.toLowerCase();
+        let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
+        let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
+        let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
+        const isArray = [
+            {
+                tag : 'a',
+                param : {
+                    href : isHREF + '\"' + isTarget + isToggle,
+                },
+            },
+        ];
+        isContainer += startTagName(isArray);
+        isContainer += getContainer({
+            content : getFirstUpperCase(isTitle),
+        });
+        isContainer += endTagName(isArray);
+    };
+    const isArray = [
+        {
+            tag : 'div',
+            param : {
+                id : 'quick-view',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'row',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'col',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'menu',
+            },
+        },
+    ];
+    result += startTagName(isArray);
+    result += getContainer({
+        content : isContainer,
+    });
+    result += endTagName(isArray);
+
     return result;
 };
 
@@ -77,7 +100,18 @@ const viewListGroup = (object) => {
     let isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
-        result += '<div id=\"' + (x % 2 === 0 ? 'first-item' : 'second-item') + '\">';
+        result += startTagName([ {
+            tag : 'div',
+            param : {
+                class : [
+                    'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
+                    'text-' + (x % 2 === 0 ? 'light' : 'dark'),
+                    'px-3',
+                    'pt-3',
+                    'mb-3',
+                ],
+            },
+        }, ]);
             result += getHeader({
                 index : x,
                 title : object['array'][x]['title'],
@@ -85,142 +119,185 @@ const viewListGroup = (object) => {
                 image : object['array'][x]['image'],
             });
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"body\">';
-                    result += '<div id=\"row\">';
+                result += startTagName([ { tag : 'div', param : { id : 'body', }, }, ]);
+                    result += startTagName([ { tag : 'div', param : { id : 'row', }, }, ]);
                         for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                            result += '<div id=\"col\">';
-                                result += '<div id=\"list-group\">';
-                                    result += '<a href=\"#\">';
-                                        result += getValidation(object['array'][x]['items'][y]['title']) ? htmlSetup({
-                                            container : {
+                            result += startTagName([ { tag : 'div', param : { id : 'col', }, }, ]);
+                                result += startTagName([ { tag : 'div', param : { id : 'list-group', }, }, ]);
+                                    result += startTagName([ { tag : 'a', param : { href : '#', }, }, ]);
+                                        if (getValidation(object['array'][x]['items'][y]['title'])) {
+                                            result += startTagName([ { tag : 'h5' } ]);
+                                            result += getContainer({
                                                 content : object['array'][x]['items'][y]['title'],
-                                            },
-                                            wrap : [
+                                            });
+                                            result += endTagName([ { tag : 'h5' } ]);
+                                        };
+                                        if (getValidation(object['array'][x]['items'][y]['image'])) {
+                                            result += startTagName([
                                                 {
-                                                    tag : {
-                                                        name : 'h5',
-                                                        close : true,
-                                                    },
-                                                },
-                                            ],
-                                        }) : '';
-                                        result += getValidation(object['array'][x]['items'][y]['description']) ? htmlSetup({
-                                            container : {
-                                                content : object['array'][x]['items'][y]['description'],
-                                            },
-                                            wrap : [
-                                                {
-                                                    tag : {
-                                                        name : 'img',
-                                                        close : false,
-                                                    },
+                                                    tag : 'img',
                                                     param : {
                                                         alt : object['array'][x]['items'][y]['title'],
                                                         src : object['array'][x]['items'][y]['image'],
                                                     },
-                                                },
-                                                {
-                                                    tag : {
-                                                        name : 'p',
-                                                        close : true,
-                                                    },
-                                                },
-                                                {
-                                                    tag : {
-                                                        name : 'em',
-                                                        close : true,
-                                                    },
-                                                },
-                                            ],
-                                        }) : '';
+                                                }
+                                            ]);
+                                        };
+                                        if (getValidation(object['array'][x]['items'][y]['description'])) {
+                                            result += startTagName([ { tag : 'p' } ]);
+                                            result += getContainer({
+                                                content : object['array'][x]['items'][y]['description'],
+                                            });
+                                            result += endTagName([ { tag : 'p' } ]);
+                                        };
                                         if (getValidation(object['array'][x]['items'][y]['items'])) {
-                                            result += '<ul>';
+                                            result += startTagName([ { tag : 'ul' } ]);
                                                 for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
-                                                    result += '<li>';
-                                                        result += '<div class=\"row\">';
-                                                            result += getValidation(object['array'][x]['items'][y]['items'][z]['image']) ? htmlSetup({
-                                                                wrap : [
+                                                    result += startTagName([ { tag : 'li', param : { class : [ 'p-3' ], style : { padding : '0' }, }, }, ]);
+                                                        result += startTagName([ { tag : 'div', param : { class : [ 'row' ], }, }, ]);
+                                                            if (getValidation(object['array'][x]['items'][y]['items'][z]['image'])) {
+                                                                result += startTagName([
                                                                     {
-                                                                        tag : {
-                                                                            name : 'div',
-                                                                            close : true,
-                                                                        },
+                                                                        tag : 'div',
                                                                         param : {
                                                                             class : [
-                                                                                'col-4',
-                                                                                'p-3',
+                                                                                'col-6',
+                                                                                'd-flex',
+                                                                                'justify-content-center',
+                                                                            ],
+                                                                        },
+                                                                    },
+                                                                    {
+                                                                        tag : 'span',
+                                                                        param : {
+                                                                            class : [
+                                                                                'align-self-center',
+                                                                                'd-flex',
+
+                                                                                'd-lg-block',
+                                                                                'd-none',
+
+                                                                                'bg-light',
+                                                                                'border-secondary',
+                                                                                'border',
+                                                                                'p-1',
+                                                                                'rounded-circle',
+                                                                                'shadow-sm',
                                                                             ],
                                                                             style : {
-                                                                                'background-image' : object['array'][x]['items'][y]['items'][z]['image'],
-                                                                            },
+                                                                                height : '150px',
+                                                                                width : '150px',
+                                                                            }
+                                                                        },
+                                                                    }
+                                                                ]);
+                                                                result += startTagName([
+                                                                    {
+                                                                        tag : 'img',
+                                                                        param : {
+                                                                            class : [
+                                                                                'img-fluid',
+                                                                                'img-profile',
+                                                                                'rounded-circle',
+                                                                                'mx-auto',
+                                                                                'w-100',
+                                                                                'h-100',
+                                                                            ],
+                                                                            src : object['array'][x]['items'][y]['items'][z]['image'],
                                                                         },
                                                                     },
-                                                                ],
-                                                            }) : '';
-                                                            result += '<div class=\"col-8 p-3\">';
-                                                                let n = '';
-                                                                n += getTypeNumber({ index : y });
-                                                                n += getTypeNumber({ index : z });
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? htmlSetup({
-                                                                    container : {
-                                                                        index : n,
-                                                                        content : object['array'][x]['items'][y]['items'][z]['title'],
+                                                                ]);
+                                                                result += endTagName([ { tag : 'div' }, { tag : 'span' }, ]);
+                                                            };
+                                                            let n = '';
+                                                            n += getTypeNumber({ index : y });
+                                                            n += getTypeNumber({ index : z });
+                                                            let isTitle ='';
+                                                            if (getValidation(object['array'][x]['items'][y]['items'][z]['title'])) {
+                                                                isTitle += startTagName([
+                                                                    {
+                                                                        tag : 'p',
                                                                     },
-                                                                    wrap : [
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'p',
-                                                                                close : true,
-                                                                            },
-                                                                        },
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'b',
-                                                                                close : true,
-                                                                            },
-                                                                        },
-                                                                    ],
-                                                                }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['description']) ? htmlSetup({
-                                                                    container : {
-                                                                        content : object['array'][x]['items'][y]['items'][z]['description'],
+                                                                    {
+                                                                        tag : 'b',
                                                                     },
-                                                                    wrap : [
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'p',
-                                                                                close : true,
-                                                                            },
-                                                                        },
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'em',
-                                                                                close : true,
-                                                                            },
-                                                                        },
-                                                                    ],
-                                                                }) : '';
-                                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['value']) ? htmlSetup({
-                                                                    container : {
-                                                                        content : object['array'][x]['items'][y]['items'][z]['value'],
-                                                                        after : ' km.',
+                                                                ]);
+                                                                isTitle += getContainer({
+                                                                    index : n,
+                                                                    content : object['array'][x]['items'][y]['items'][z]['title'],
+                                                                });
+                                                                isTitle += endTagName([
+                                                                    {
+                                                                        tag : 'p',
                                                                     },
-                                                                    wrap : [
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'p',
-                                                                                close : true,
-                                                                            },
+                                                                    {
+                                                                        tag : 'b',
+                                                                    },
+                                                                ]);
+                                                            };
+                                                            let isDescription ='';
+                                                            if (getValidation(object['array'][x]['items'][y]['items'][z]['description'])) {
+                                                                isDescription += startTagName([
+                                                                    {
+                                                                        tag : 'p',
+                                                                    },
+                                                                    {
+                                                                        tag : 'em',
+                                                                    },
+                                                                ]);
+                                                                isDescription += getContainer({
+                                                                    content : object['array'][x]['items'][y]['items'][z]['description'],
+                                                                });
+                                                                isDescription += endTagName([
+                                                                    {
+                                                                        tag : 'p',
+                                                                    },
+                                                                    {
+                                                                        tag : 'em',
+                                                                    },
+                                                                ]);
+                                                            };
+                                                            let isValue ='';
+                                                            if (getValidation(object['array'][x]['items'][y]['items'][z]['number']['value'])) {
+                                                                isValue += startTagName([
+                                                                    {
+                                                                        tag : 'p',
+                                                                    },
+                                                                    {
+                                                                        tag : 'b',
+                                                                    },
+                                                                ]);
+                                                                isValue += getContainer({
+                                                                    content : object['array'][x]['items'][y]['items'][z]['number']['value'],
+                                                                    after : getValidation(object['array'][x]['items'][y]['items'][z]['number']['type']) ? 
+                                                                    object['array'][x]['items'][y]['items'][z]['number']['type'] + '.' : '',
+                                                                });
+                                                                isValue += endTagName([
+                                                                    {
+                                                                        tag : 'p',
+                                                                    },
+                                                                    {
+                                                                        tag : 'b',
+                                                                    },
+                                                                ]);
+                                                            };
+                                                            if (getValidation(isTitle) || getValidation(isDescription) || getValidation(isValue)) {
+                                                                result += startTagName([
+                                                                    {
+                                                                        tag : 'div',
+                                                                        param : {
+                                                                            class : [
+                                                                                getValidation(object['array'][x]['items'][y]['items'][z]['image']) ? 'col-6' : 'col',
+                                                                                'p-3',
+                                                                            ],
                                                                         },
-                                                                        {
-                                                                            tag : {
-                                                                                name : 'b',
-                                                                                close : true,
-                                                                            },
-                                                                        },
-                                                                    ],
-                                                                }) : '';
-                                                            result += '</div>';
+                                                                    }
+                                                                ]);
+                                                                result += getContainer({
+                                                                    content : isTitle + isDescription + isValue,
+                                                                });
+                                                                result += endTagName([ { tag : 'div' } ]);
+                                                            };
                                                         result += '</div>';
                                                     result += '</li>';
                                                 };
@@ -240,95 +317,130 @@ const viewListGroup = (object) => {
 };
 
 const quickView = (object) => {
+    let isContainer = '';
+    for (let i = 0; i < object['object']['array']['length']; i++) {
+        let isWrap = [
+            {
+                tag : 'a',
+                param : {
+                    href : '#id' + '-' + i,
+                },
+            },
+        ];
+        isContainer += startTagName(isWrap);
+        isContainer += getContainer({
+            content : object['object']['array'][i]['title'],
+        });
+        isContainer += endTagName(isWrap);
+
+    };
     let result = '';
-    result += '<div id=\"quick-view\">';
-        result += '<div id=\"row\">';
-            result += '<div id=\"col\">';
-                result += '<div id=\"menu\">';
-                    for (let i = 0; i < object['object']['array']['length']; i++) {
-                        result += getValidation(object['object']['array'][i]['title']) ? htmlSetup({
-                            container : {
-                                content : object['object']['array'][i]['title'],
-                            },
-                            wrap : [
-                                {
-                                    tag : {
-                                        name : 'a',
-                                        close : true,
-                                    },
-                                    param : {
-                                        href : '#id' + '-' + i,
-                                    },
-                                },
-                            ],
-                        }) : '';
-                    };
-                result += '</div>';
-            result += '</div>';
-        result += '</div>';
-    result += '</div>';
+    let isWrap = [
+        {
+            tag : 'div',
+            param : {
+                id : 'quick-view',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'row',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'col',
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                id : 'menu',
+            },
+        },
+    ];
+    if (isContainer) {
+        result += startTagName(isWrap);
+        result += getContainer({
+            content : isContainer,
+        });
+        result += endTagName(isWrap);
+    };
     return result;
 };
 
-
 const getHeader = (object) => {
     let result = '';
+    let isTitle = '';
+    if (getValidation(object['title'])) {
+        isTitle += startTagName([
+            {
+                tag : 'h1',
+                param : {
+                    id : 'id-' + object['index'],
+                },
+            }
+        ]);
+        isTitle += getContainer({
+            content : object['title'],
+        });
+        isTitle += endTagName([ { tag : 'h1' } ]);
+    };
+    let isDescription = '';
+    if (getValidation(object['description'])) {
+        isDescription += startTagName([
+            {
+                tag : 'p',
+            },
+            {
+                tag : 'em',
+            },
+        ]);
+        isDescription += getContainer({
+            content : object['description'],
+        });
+        isDescription += endTagName([
+            {
+                tag : 'p',
+            },
+            {
+                tag : 'em',
+            },
+        ]);
+    };
     if (getValidation(object['title']) || getValidation(object['description'])) {
-        result += '<div id=\"header\">';
-            result += '<div id=\"row\">';
-                result += getValidation(object['image']) ? htmlSetup({
-                    wrap : [
+        result += startTagName([ { tag : 'div', param : { id : 'header' } } ]);
+            result += startTagName([ { tag : 'div', param : { id : 'row' } } ]);
+                if (getValidation(object['image'])) {
+                    result += startTagName([
                         {
-                            tag : {
-                                name : 'div',
-                                close : true,
-                            },
+                            tag : 'div',
                             param : {
                                 id : 'header-image',
                                 style : {
                                     'background-image' : object['image'],
                                 }
                             },
-                        },
-                    ],
-                }) : '';
-                result += getValidation(object['image']) ? '<div id=\"header-content\">' : '';
-                    result += getValidation(object['title']) ? htmlSetup({
-                        container : {
-                            content : object['title'],
-                        },
-                        wrap : [
-                            {
-                                tag : {
-                                    name : 'h1',
-                                    close : true,
-                                },
-                                param : {
-                                    id : 'id-' + object['index'],
-                                },
+                        }
+                    ]);
+                    result += endTagName([ { tag : 'div' } ]);
+                };
+                if (getValidation(isTitle) || getValidation(isDescription)) {
+                    result += startTagName([
+                        {
+                            tag : 'div',
+                            param : {
+                                id : 'header-content',
                             },
-                        ],
-                    }) : '';
-                    result += getValidation(object['description']) ? htmlSetup({
-                        container : {
-                            content : object['description'],
                         },
-                        wrap : [
-                            {
-                                tag : {
-                                    name : 'p',
-                                    close : true,
-                                },
-                            },
-                            {
-                                tag : {
-                                    name : 'em',
-                                    close : true,
-                                },
-                            },
-                        ],
-                    }) : '';
-                result += getValidation(object['image']) ? '</div>' : '';
+                    ]);
+                    result += getContainer({
+                        content : isTitle + isDescription,
+                    });
+                    result += endTagName([ { tag : 'div' } ]);
+                };
             result += '</div>';
         result += '</div>';
     };
@@ -352,107 +464,110 @@ const bootstrapGallery = (object) => {
                         for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                             if (getValidation(object['array'][x]['items'][y]['image'])) {
                                 result += '<div id=\"col\">';
-                                    result += getValidation(object['array'][x]['items'][y]['image']) ? htmlSetup({
-                                        container : {
-                                            content : object['array'][x]['items'][y]['title'],
-                                        },
-                                        wrap : [
+                                    if (getValidation(object['array'][x]['items'][y]['image'])) {
+                                        result += startTagName([
                                             {
-                                                tag : {
-                                                    name : 'div',
-                                                    close : true,
-                                                },
+                                                tag : 'div',
                                                 param : {
                                                     id : 'image',
                                                 },
                                             },
                                             {
-                                                tag : {
-                                                    name : 'a',
-                                                    close : true,
-                                                },
+                                                tag : 'a',
                                                 param : {
                                                     href : object['array'][x]['items'][y]['image'],
                                                     title : object['array'][x]['items'][y]['title'],
                                                 },
                                             },
                                             {
-                                                tag : {
-                                                    name : 'img',
-                                                    close : false,
-                                                },
+                                                tag : 'img',
                                                 param : {
                                                     alt : object['array'][x]['items'][y]['title'],
                                                     src : object['array'][x]['items'][y]['image'],
                                                 },
                                             },
                                             {
-                                                tag : {
-                                                    name : 'div',
-                                                    close : true,
-                                                },
+                                                tag : 'div',
                                                 param : {
                                                     id : 'caption',
                                                 },
                                             },
-                                        ],
-                                    }) : '';
-                                    result += getValidation(object['array'][x]['items'][y]['title']) ? htmlSetup({
-                                        container : {
+                                        ]);
+                                        result += getContainer({
                                             content : object['array'][x]['items'][y]['title'],
-                                        },
-                                        wrap : [
+                                        });
+                                        result += endTagName([
                                             {
-                                                tag : {
-                                                    name : 'div',
-                                                    close : true,
+                                                tag : 'div',
+                                            },
+                                            {
+                                                tag : 'a',
+                                            },
+                                            {
+                                                tag : 'div',
+                                            },
+                                        ]);
+                                        if (getValidation(object['array'][x]['items'][y]['title'])) {
+                                            result += startTagName([
+                                                {
+                                                    tag : 'div',
+                                                    param : {
+                                                        id : 'title',
+                                                    },
                                                 },
+                                                {
+                                                    tag : 'p',
+                                                },
+                                                {
+                                                    tag : 'b',
+                                                },
+                                            ]);
+                                            result += getContainer({
+                                                content : object['array'][x]['items'][y]['title'],
+                                            });
+                                            result += endTagName([
+                                                {
+                                                    tag : 'div',
+                                                },
+                                                {
+                                                    tag : 'p',
+                                                },
+                                                {
+                                                    tag : 'b',
+                                                },
+                                            ]);
+                                        };
+                                    };
+                                    if (getValidation(object['array'][x]['items'][y]['description'])) {
+                                        result += startTagName([
+                                            {
+                                                tag : 'div',
                                                 param : {
                                                     id : 'title',
                                                 },
                                             },
                                             {
-                                                tag : {
-                                                    name : 'p',
-                                                    close : true,
-                                                },
+                                                tag : 'p',
                                             },
                                             {
-                                                tag : {
-                                                    name : 'b',
-                                                    close : true,
-                                                },
+                                                tag : 'em',
                                             },
-                                        ],
-                                    }) : '';
-                                    result += getValidation(object['array'][x]['items'][y]['description']) ? htmlSetup({
-                                        container : {
+                                        ]);
+                                        result += getContainer({
                                             content : object['array'][x]['items'][y]['description'],
-                                        },
-                                        wrap : [
+                                        });
+                                        result += endTagName([
                                             {
-                                                tag : {
-                                                    name : 'div',
-                                                    close : true,
-                                                },
-                                                param : {
-                                                    id : 'title',
-                                                },
+                                                tag : 'div',
                                             },
                                             {
-                                                tag : {
-                                                    name : 'p',
-                                                    close : true,
-                                                },
+                                                tag : 'p',
                                             },
                                             {
-                                                tag : {
-                                                    name : 'em',
-                                                    close : true,
-                                                },
+                                                tag : 'em',
                                             },
-                                        ],
-                                    }) : '';
+                                        ]);
+                                    };
                                 result += '</div>';
                             };
                         };
@@ -468,153 +583,274 @@ const bootstrapGallery = (object) => {
 const bootstrapCarousel = (object) => {
     let result = '', isID = getValidation(object['id']) ? object['id'] : 'carousel';
     result += '<div id=\"' + isID + '\" class=\"carousel slide\" data-bs-ride=\"carousel\">';
-        result += '<div class=\"carousel-indicators\">';
+        let isContainer = '';
+        for (let i = 0; i < object['array']['length']; i++) {
+            isContainer += startTagName([
+                {
+                    tag : 'button',
+                    param : {
+                        type : 'button',
+                        'data-bs-target' : '#' + isID,
+                        'data-bs-slide-to' : String(i),
+                        class : (!i ? 'active' : ''),
+                        'aria-current' : (!i ? 'true' : ''),
+                        'aria-label' : ('Slide' + ' ' + (i + 1)),
+                    },
+                },
+            ]);
+        };
+        result += startTagName([
+            {
+                tag : 'div',
+                param : {
+                    class : [
+                        'carousel-indicators'
+                    ],
+                },
+            },
+        ]);
+        result += getContainer({
+            content : isContainer,
+        });
+        result += endTagName([
+            {
+                tag : 'div',
+            },
+        ]);
+        result += startTagName([
+            {
+                tag : 'div',
+                param : {
+                    class : [
+                        'carousel-inner',
+                    ],
+                },
+            },
+        ]);
             for (let i = 0; i < object['array']['length']; i++) {
-                result += htmlSetup({
-                    wrap : [
+                result += startTagName([
+                    {
+                        tag : 'div',
+                        param : {
+                            class : [
+                                'carousel-item',
+                                !i ? 'active' : '',
+                            ],
+                        },
+                    },
+                ]);
+                    result += startTagName([
                         {
-                            tag : {
-                                name : 'button',
-                                close : true,
-                            },
+                            tag : 'img',
                             param : {
-                                type : 'button',
-                                'data-bs-target' : '#' + isID,
-                                'data-bs-slide-to' : String(i),
-                                class : (!i ? 'active' : ''),
-                                'aria-current' : (!i ? 'true' : ''),
-                                'aria-label' : ('Slide' + ' ' + (i + 1)),
+                                alt : object['array'][i]['title'],
+                                class : [
+                                    'd-block',
+                                    'w-100',
+                                ],
+                                src : object['array'][i]['image'],
                             },
                         },
-                    ],
-                });
-            }
-        result += '</div>';
-        result += '<div class=\"carousel-inner\">';
-            for (let i = 0; i < object['array']['length']; i++) {
-                result += '<div class=\"carousel-item ' + (!i ? 'active' : '') + '\">';
-                    result += htmlSetup({
-                        wrap : [
-                            {
-                                tag : {
-                                    name : 'img',
-                                    close : false,
-                                },
-                                param : {
-                                    alt : object['array'][i]['title'],
-                                    class : [
-                                        'd-block',
-                                        'w-100',
-                                    ],
-                                    src : object['array'][i]['image'],
-                                },
-                            },
-                        ],
+                    ]);
+                    let isTitle = '';
+                    isTitle += startTagName([
+                        {
+                            tag : 'h3',
+                        },
+                        {
+                            tag : 'em',
+                        },
+                    ]);
+                    isTitle += getContainer({
+                        content : object['array'][i]['title'],
                     });
-                    result += '<div class=\"carousel-caption d-none d-md-block\">';
-                        result += htmlSetup({
-                            container : {
-                                content : object['array'][i]['title'],
+                    isTitle += endTagName([
+                        {
+                            tag : 'h3',
+                        },
+                        {
+                            tag : 'em',
+                        },
+                    ]);
+                    let isDescription = '';
+                    isDescription += startTagName([
+                        {
+                            tag : 'p',
+                        },
+                        {
+                            tag : 'em',
+                        },
+                    ]);
+                    isDescription += getContainer({
+                        content : object['array'][i]['description'],
+                    });
+                    isDescription += endTagName([
+                        {
+                            tag : 'p',
+                        },
+                        {
+                            tag : 'em',
+                        },
+                    ]);
+                    result += startTagName([
+                        {
+                            tag : 'div',
+                            param : {
+                                class : [
+                                    'carousel-caption',
+                                    'd-none',
+                                    'd-md-block',
+                                ],
                             },
-                            wrap : [
-                                {
-                                    tag : {
-                                        name : 'h3',
-                                        close : true,
-                                    },
-                                },
-                                {
-                                    tag : {
-                                        name : 'em',
-                                        close : true,
-                                    },
-                                },
-                            ],
-                        });
-                        result += htmlSetup({
-                            container : {
-                                content : object['array'][i]['description'],
-                            },
-                            wrap : [
-                                {
-                                    tag : {
-                                        name : 'p',
-                                        close : true,
-                                    },
-                                },
-                                {
-                                    tag : {
-                                        name : 'em',
-                                        close : true,
-                                    },
-                                },
-                            ],
-                        });
-                    result += '</div>';
-                result += '</div>';
-            }
-        result += '</div>';
+                        },
+                    ]);
+                    result += getContainer({
+                        content : isTitle + isDescription,
+                    });
+                    result += endTagName([
+                        {
+                            tag : 'div',
+                        },
+                    ]);
+                result += endTagName([
+                    {
+                        tag : 'div',
+                    },
+                ]);
+            };
+        result += endTagName([
+            {
+                tag : 'div',
+            },
+        ]);
         let array = [ 'prev', 'next' ];
         for (let i = 0; i < array['length']; i++) {
-            result += '<button class=\"carousel-control-' + array[i] + '\" type=\"button\" data-bs-target=\"#' + isID + '\" data-bs-slide=\"' + array[i] + '\">';
-                result += '<span class=\"carousel-control-' + array[i] + '-icon\" aria-hidden=\"true\"></span>';
-                result += '<span class=\"visually-hidden\">' + array[i] + '</span>';
-            result += '</button>';
-        }
-    result += '</div>';
+            result += startTagName([
+                {
+                    tag : 'button',
+                    param : {
+                        class : [
+                            'carousel-control-' + array[i],
+                            !i ? 'active' : '',
+                        ],
+                        type : 'button',
+                        'data-bs-target' : '#' + isID,
+                        'data-bs-slide' : array[i],
+                    },
+                },
+            ]);
+                result += startTagName([
+                    {
+                        tag : 'span',
+                        param : {
+                            class : [
+                                'carousel-control-' + array[i] + '-icon',
+                            ],
+                            'aria-hidden' : 'true'
+                        },
+                    },
+                ]);
+                result += endTagName([
+                    {
+                        tag : 'span',
+                    },
+                ]);
+                result += startTagName([
+                    {
+                        tag : 'span',
+                        param : {
+                            class : [
+                                'visually-hidden',
+                            ],
+                        },
+                    },
+                ]);
+                result += endTagName([
+                    {
+                        tag : 'span',
+                    },
+                ]);
+            result += endTagName([
+                {
+                    tag : 'button',
+                },
+            ]);
+        };
+    result += endTagName([
+        {
+            tag : 'div',
+        },
+    ]);
     return result;
 };
 
 const bootstrapNavbar = (object) => {
     let result = '';
-    result += getTagName({ element : object['element'], id : object['id'], position : 'header' });
-        result += htmlSetup({
-            wrap : [
+    result += startTagName([{ tag : 'nav', param : { id : 'navbar', } }]);
+        result += startTagName([
+            {
+                tag : 'a',
+                param : {
+                    'aria-controls' : 'navbarSupportedContent',
+                    'aria-expanded' : 'false',
+                    'aria-label' : [
+                        'Toggle',
+                        'navigation',
+                    ],
+                    class : [
+                        'navbar-toggler',
+                    ],
+                    'data-bs-target' : '#navbarSupportedContent',
+                    'data-bs-toggle' : 'collapse',
+                    'type' : 'button',
+                },
+            },
+            {
+                tag : 'span',
+                param : {
+                    class : [
+                        'navbar-toggler-icon',
+                    ]
+                },
+            },
+        ]);
+        result += endTagName([
+            {
+                tag : 'a',
+            },
+            {
+                tag : 'span',
+            },
+        ]);
+        result += startTagName([
+            {
+                tag : 'div',
+                param : {
+                    class : [
+                        'collapse',
+                        'navbar-collapse',
+                    ],
+                    id : 'navbarSupportedContent'
+                },
+            },
+        ]);
+            result += startTagName([
                 {
-                    tag : {
-                        name : 'a',
-                        close : true,
-                    },
+                    tag : 'ul',
                     param : {
-                        'aria-controls' : 'navbarSupportedContent',
-                        'aria-expanded' : 'false',
-                        'aria-label' : [
-                            'Toggle',
-                            'navigation',
-                        ],
                         class : [
-                            'navbar-toggler',
+                            'navbar-nav',
+                            'me-auto',
+                            'mb-2',
+                            'mb-lg-0',
                         ],
-                        'data-bs-target' : '#navbarSupportedContent',
-                        'data-bs-toggle' : 'collapse',
-                        'type' : 'button',
                     },
                 },
-                {
-                    tag : {
-                        name : 'span',
-                        close : true,
-                    },
-                    param : {
-                        class : [
-                            'navbar-toggler-icon',
-                        ]
-                    },
-                },
-            ],
-        });
-        result += '<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">';
-            result += '<ul class=\"navbar-nav me-auto mb-2 mb-lg-0\">';
-                result += getValidation(object['title']) ? htmlSetup({
-                    container : {
-                        content : getFirstUpperCase(object['title']),
-                    },
-                    wrap : [
+            ]);
+                if (getValidation(object['title'])) {
+                    result += startTagName([
                         {
-                            tag : {
-                                name : 'li',
-                                close : true,
-                            },
+                            tag : 'li',
                             param : {
                                 class : [
                                     'nav-item',
@@ -622,80 +858,123 @@ const bootstrapNavbar = (object) => {
                             },
                         },
                         {
-                            tag : {
-                                name : 'a',
-                                close : true,
-                            },
+                            tag : 'a',
                             param : {
                                 class : [
                                     'nav-link',
                                 ]
                             },
                         },
-                    ],
-                }) : '';
+                    ]);
+                    result += getContainer({
+                        content : object['title'],
+                    });
+                    result += endTagName([
+                        {
+                            tag : 'li',
+                        },
+                        {
+                            tag : 'a',
+                        },
+                    ]);
+                };
                 for (let x = 0; x < object['array']['length']; x++) {
-                    result += '<li class=\"nav-item ' + (getValidation(object['array'][x]['items']) ? ' dropdown' : '') + '\">';
-                        let id = getLowerCase('dropDown' + getRomanNumber(x + 1));
-                        result += htmlSetup({
-                            container : {
-                                content : getFirstUpperCase(object['array'][x]['title']),
+                    result += startTagName([
+                        {
+                            tag : 'li',
+                            param : {
+                                class : [
+                                    'nav-item',
+                                    getValidation(object['array'][x]['items']) ? 'dropdown' : '',
+                                ],
                             },
-                            wrap : [
+                        },
+                    ]);
+                        let id = getLowerCase('dropDown' + getRomanNumber(x + 1));
+                        result += startTagName([
+                            {
+                                tag : 'a',
+                                param : {
+                                    'aria-expanded' : getValidation(object['array'][x]['items']) ? 'false' : '',
+                                    class : getValidation(object['array'][x]['items']) ? [
+                                        'nav-link',
+                                        'dropdown-toggle',
+                                    ] : [
+                                        'nav-link'
+                                    ],
+                                    'data-bs-toggle' : getValidation(object['array'][x]['items']) ? 'dropdown' : '',
+                                    href : getLowerCase(object['array'][x]['path']),
+                                    id : getValidation(object['array'][x]['items']) ? id : '',
+                                    role : getValidation(object['array'][x]['items']) ? 'button' : '',
+                                },
+                            },
+                        ]);
+                        result += getContainer({
+                            content : getFirstUpperCase(object['array'][x]['title']),
+                        });
+                        result += endTagName([
+                            {
+                                tag : 'a',
+                            },
+                        ]);
+                        if (getValidation(object['array'][x]['items'])) {
+                            result += startTagName([
                                 {
-                                    tag : {
-                                        name : 'a',
-                                        close : true,
-                                    },
+                                    tag : 'ul',
                                     param : {
-                                        'aria-expanded' : getValidation(object['array'][x]['items']) ? 'false' : '',
-                                        class : getValidation(object['array'][x]['items']) ? [
-                                            'nav-link',
-                                            'dropdown-toggle',
-                                        ] : [
-                                            'nav-link'
+                                        class : [
+                                            'dropdown-menu',
+                                            'p-3',
                                         ],
-                                        'data-bs-toggle' : getValidation(object['array'][x]['items']) ? 'dropdown' : '',
-                                        href : getLowerCase(object['array'][x]['path']),
-                                        id : getValidation(object['array'][x]['items']) ? id : '',
-                                        role : getValidation(object['array'][x]['items']) ? 'button' : '',
+                                        'aria-labelledby' : id,
                                     },
                                 },
-                            ],
-                        });
-                        if (getValidation(object['array'][x]['items'])) {
-                            result += '<ul class=\"dropdown-menu p-3\" aria-labelledby=\"' + id + '\">';
+                            ]);
                                 for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                                    result += '<li>';
-                                        result += getValidation(object['array'][x]['items'][y]['title']) ? '<h6>' + getFirstUpperCase(object['array'][x]['items'][y]['title']) + ':' + '</h6>' : '';
-                                        result += '<ul>';
+                                    result += startTagName([ { tag : 'li', }, ]);
+                                        if (getValidation(object['array'][x]['items'][y]['title'])) {
+                                            result += startTagName([
+                                                {
+                                                    tag : 'h6',
+                                                },
+                                            ]);
+                                            result += getContainer({
+                                                content : getFirstUpperCase(object['array'][x]['items'][y]['title']),
+                                            });
+                                            result += endTagName([
+                                                {
+                                                    tag : 'h6',
+                                                },
+                                            ]);
+                                        };
+                                        result += startTagName([ { tag : 'ul', }, ]);
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
-                                                result += getValidation(object['array'][x]['items'][y]['items'][z]['title']) ? htmlSetup({
-                                                    container : {
-                                                        content : object['array'][x]['items'][y]['items'][z]['title'],
+                                                result += startTagName([
+                                                    {
+                                                        tag : 'li',
                                                     },
-                                                    wrap : [
-                                                        {
-                                                            tag : {
-                                                                name : 'li',
-                                                                close : true,
-                                                            },
+                                                    {
+                                                        tag : 'a',
+                                                        param : {
+                                                            class : [
+                                                                'dropdown-item',
+                                                            ],
+                                                            href : getValidation(object['array'][x]['items'][y]['items'][z]['path'])
+                                                            ? object['array'][x]['items'][y]['items'][z]['path'] : '#',
                                                         },
-                                                        {
-                                                            tag : {
-                                                                name : 'a',
-                                                                close : true,
-                                                            },
-                                                            param : {
-                                                                class : [
-                                                                    'dropdown-item',
-                                                                ],
-                                                                href : getValidation(object['array'][x]['items'][y]['items'][z]['path'])
-                                                                ? object['array'][x]['items'][y]['items'][z]['path'] : '#',
-                                                            },
-                                                        },
-                                                    ],
-                                                }) : '';
+                                                    },
+                                                ]);
+                                                result += getContainer({
+                                                    content : object['array'][x]['items'][y]['items'][z]['title'],
+                                                });
+                                                result += endTagName([
+                                                    {
+                                                        tag : 'li',
+                                                    },
+                                                    {
+                                                        tag : 'a',
+                                                    },
+                                                ]);
                                             };
                                         result += '</ul>';
                                     result += '</li>';
@@ -707,64 +986,62 @@ const bootstrapNavbar = (object) => {
             result += '</ul>';
         result += '</div>';
         if (isThis(object['key'], 'undefined') || isThis(object['searchAction'], 'undefined')) { } else {
-            result += '<form action=\"' + object['searchAction'] + '\" id=\"search-form\" method=\"GET\">';
-                result += htmlSetup({
-                    wrap : [
-                        {
-                            tag : {
-                                name : 'input',
-                                close : false,
-                            },
-                            param : {
-                                'aria-label' : 'Search',
-                                class : [
-                                    'form-control',
-                                ],
-                                name : 'key',
-                                placeholder : getFirstUpperCase('Search'),
-                                type : 'search',
-                                value : object['key'],
-                            },
-                        },
-                    ],
-                });
-                result += htmlSetup({
-                    container : {
-                        content : getFirstUpperCase('Search'),
+            result += startTagName([
+                {
+                    tag : 'form',
+                    param : {
+                        action : object['searchAction'],
+                        id : 'search-form',
+                        method : 'GET',
                     },
-                    wrap : [
-                        {
-                            tag : {
-                                name : 'button',
-                                close : true,
-                            },
-                            param : {
-                                type : 'submit',
-                            },
+                },
+            ]);
+                result += startTagName([
+                    {
+                        tag : 'input',
+                        param : {
+                            'aria-label' : 'Search',
+                            class : [
+                                'form-control',
+                            ],
+                            name : 'key',
+                            placeholder : getFirstUpperCase('Search'),
+                            type : 'search',
+                            value : object['key'],
                         },
-                    ],
+                    },
+                ]);
+                result += startTagName([
+                    {
+                        tag : 'button',
+                        param : {
+                            type : 'submit',
+                        },
+                    },
+                ]);
+                result += getContainer({
+                    content : getFirstUpperCase('Search'),
                 });
+                result += endTagName([
+                    {
+                        tag : 'button',
+                    },
+                ]);
             result += '</form>';
         };
-    result += getTagName({ element : object['element'], id : object['id'], position : 'footer' });
+    result += endTagName([ { tag : 'nav', param : { id : 'navbar' } } ]);
     return result;
 };
 
 const bootstrapModal = (object) => {
     let result = '';
-    result += '<div class=\"modal fade\" id=\"modal-' + object['array'][object['index']]['id'] + '\">';
-        result += '<div class=\"modal-dialog\">';
-            result += '<div class=\"modal-content\">';
-                result += getValidation(object['title']) ? htmlSetup({
-                    container : {
-                        content : object['title'],
-                    },
-                    wrap : [
+    result += startTagName([ { tag : 'div', param : { class : [ 'modal', 'fade', ], id : 'modal-' + object['array'][object['index']]['id'], }, }, ]);
+        result += startTagName([ { tag : 'div', param : { class : [ 'modal-dialog', ], }, }, ]);
+            result += startTagName([ { tag : 'div', param : { class : [ 'modal-content', ], }, }, ]);
+                if (getValidation(object['title'])) {
+                    result += startTagName([
                         {
-                            tag : {
-                                name : 'div',
-                                close : true,
-                            },
+                            tag : 'div',
                             param : {
                                 class : [
                                     'modal-header',
@@ -772,23 +1049,25 @@ const bootstrapModal = (object) => {
                             },
                         },
                         {
-                            tag : {
-                                name : 'h5',
-                                close : true,
-                            },
+                            tag : 'h5',
                         },
-                    ],
-                }) : '';
-                result += getValidation(object['description']) ? htmlSetup({
-                    container : {
-                        content : object['description'],
-                    },
-                    wrap : [
+                    ]);
+                    result += getContainer({
+                        content : object['title'],
+                    });
+                    result += endTagName([
                         {
-                            tag : {
-                                name : 'div',
-                                close : true,
-                            },
+                            tag : 'div',
+                        },
+                        {
+                            tag : 'h5',
+                        },
+                    ]);
+                };
+                if (getValidation(object['description'])) {
+                    result += startTagName([
+                        {
+                            tag : 'div',
                             param : {
                                 class : [
                                     'modal-body',
@@ -796,73 +1075,90 @@ const bootstrapModal = (object) => {
                             },
                         },
                         {
-                            tag : {
-                                name : 'p',
-                                close : true,
-                            },
+                            tag : 'p',
                         },
                         {
-                            tag : {
-                                name : 'em',
-                                close : true,
-                            },
+                            tag : 'em',
                         },
-                    ],
-                }) : '';
-                result += '<div class=\"modal-footer\">';
+                    ]);
+                    result += getContainer({
+                        content : object['description'],
+                    });
+                    result += endTagName([
+                        {
+                            tag : 'div',
+                        },
+                        {
+                            tag : 'p',
+                        },
+                        {
+                            tag : 'em',
+                        },
+                    ]);
+                };
+                result += startTagName([
+                    {
+                        tag : 'div',
+                        param : {
+                            class : [
+                                'modal-footer',
+                            ],
+                        },
+                    },
+                ]);
                     let currentAction = '';
                     currentAction += '/' + object['prefix'];
                     currentAction += '/' + 'delete';
                     currentAction += '/' + object['array'][object['index']]['id'];
                     currentAction += '?_method=DELETE';
                     currentAction = currentAction.trim().toLowerCase();
-                    result += htmlSetup({
-                        container : {
-                            content : getFirstUpperCase('yes!'),
+                    result += startTagName([
+                        {
+                            tag : 'form',
+                            param : {
+                                action : currentAction,
+                                method : 'POST'
+                            },
                         },
-                        wrap : [
-                            {
-                                tag : {
-                                    name : 'form',
-                                    close : true,
-                                },
-                                param : {
-                                    action : currentAction,
-                                    method : 'POST'
-                                },
+                        {
+                            tag : 'button',
+                            param : {
+                                type : 'submit'
                             },
-                            {
-                                tag : {
-                                    name : 'button',
-                                    close : true,
-                                },
-                                param : {
-                                    type : 'submit'
-                                },
-                            },
-                        ],
-                    });
-                    result += htmlSetup({
-                        container : {
-                            content : getFirstUpperCase('no.'),
                         },
-                        wrap : [
-                            {
-                                tag : {
-                                    name : 'button',
-                                    close : true,
-                                },
-                                param : {
-                                    type : 'button',
-                                    'data-bs-dismiss' : 'modal',
-                                },
-                            },
-                        ],
+                    ]);
+                    result += getContainer({
+                        content : getFirstUpperCase('yes!'),
                     });
-                result += '</div>';
-            result += '</div>';
-        result += '</div>';
-    result += '</div>';   
+                    result += endTagName([
+                        {
+                            tag : 'form',
+                        },
+                        {
+                            tag : 'button',
+                        },
+                    ]);
+                    result += startTagName([
+                        {
+                            tag : 'button',
+                            param : {
+                                type : 'button',
+                                'data-bs-dismiss' : 'modal',
+                            },
+                        },
+                    ]);
+                    result += getContainer({
+                        content : getFirstUpperCase('no.'),
+                    });
+                    result += endTagName([
+                        {
+                            tag : 'button',
+                        },
+                    ]);
+                result += endTagName([ { tag : 'div', }, ]);
+            result += endTagName([ { tag : 'div', }, ]);
+        result += endTagName([ { tag : 'div', }, ]);
+    result += endTagName([ { tag : 'div', }, ]);
     return result;
 };
 
@@ -875,44 +1171,34 @@ const getTypeNumber = (object) => {
     return result;
 };
 
-const getProperty = (object) => {
-    const value = [];
-    for (const prop in Object.getOwnPropertyDescriptors(object))
-        value.push(Object.getOwnPropertyDescriptors(object)[prop]['value']);
-    return Array.isArray(object) ? { value : object } : {
-        prop : Object.getOwnPropertyNames(object),
-        value : value,
-    };
-};
-
-const htmlSetup = (object) => {
+const startTagName = (array) => {
     let result = '';
-    for (let x = 0; x < object['wrap']['length']; x++) {
-        if (getValidation(object['wrap'][x]['tag'])) {
+    for (let x = 0; x < array['length']; x++) {
+        if (getValidation(array[x]['tag'])) {
             result += '<';
-            result += getValidation(object['wrap'][x]['tag']['name'])
-            ? object['wrap'][x]['tag']['name'] : 'div';
-            const paramObject = getValidation(object['wrap'][x]['param'])
-            ? getProperty(object['wrap'][x]['param'])
+            result += getValidation(array[x]['tag'])
+            ? array[x]['tag'] : 'div';
+            const isArray = getValidation(array[x]['param'])
+            ? getProperty(array[x]['param'])
             : undefined;
-            if (getValidation(paramObject)) {
-                for (let y = 0; y < paramObject['prop']['length']; y++) {
-                    if (getValidation(paramObject['value'][y])) {
+            if (getValidation(isArray)) {
+                for (let y = 0; y < isArray['prop']['length']; y++) {
+                    if (getValidation(isArray['value'][y])) {
                         result += ' ';
-                        result += getTrim(paramObject['prop'][y]);
+                        result += getTrim(isArray['prop'][y]);
                         result += '=\"';
-                        if (isThis(paramObject['value'][y], 'string')) {
-                            result += paramObject['value'][y];
-                        } else if (isThis(paramObject['value'][y], 'object')) {
-                            for (let prop in paramObject['value'][y]) {
-                                if (paramObject['value'][y].hasOwnProperty(prop)) {
+                        if (isThis(isArray['value'][y], 'string')) {
+                            result += isArray['value'][y];
+                        } else if (isThis(isArray['value'][y], 'object')) {
+                            for (let prop in isArray['value'][y]) {
+                                if (isArray['value'][y].hasOwnProperty(prop)) {
                                     result += prop == 0 ? '' : ' ';
-                                    result += !Array.isArray(paramObject['value'][y]) ? prop : '';
-                                    result += !Array.isArray(paramObject['value'][y]) ? ':' : '';
+                                    result += !Array.isArray(isArray['value'][y]) ? prop : '';
+                                    result += !Array.isArray(isArray['value'][y]) ? ':' : '';
                                     result += prop === 'background-image'
-                                    ? 'url(' + paramObject['value'][y][prop] + ')'
-                                    : paramObject['value'][y][prop];
-                                    result += !Array.isArray(paramObject['value'][y]) ? ';' : '';
+                                    ? 'url(' + isArray['value'][y][prop] + ')'
+                                    : isArray['value'][y][prop];
+                                    result += !Array.isArray(isArray['value'][y]) ? ';' : '';
                                 };
                             };
                         };
@@ -923,23 +1209,42 @@ const htmlSetup = (object) => {
             result += '>';
         };
     };
-    if (getValidation(object['container'])) {
-        for (let prop in getProperty(object['container'])['value'])
-            result += getProperty(object['container'])['value'][prop];
-    };
-    let isReverse = object['wrap'].reverse();
-    for (let x = 0; x < isReverse['length']; x++) {
-        if (getValidation(isReverse[x]['tag'])) {
-            result += getValidation(isReverse[x]['tag']['close'])
-            ? '</' : '';
-            result += getValidation(isReverse[x]['tag']['close'])
-            ? getValidation(isReverse[x]['tag']['name'])
-            ? isReverse[x]['tag']['name'] : 'div' : '';
-            result += getValidation(isReverse[x]['tag']['close'])
-            ? '>' : '';
+    return result;
+};
+
+const endTagName = (array) => {
+    let result = '';
+    const isArray = (array).reverse();
+    for (let i = 0; i < isArray['length']; i++) {
+        if (getValidation(isArray[i]['tag'])) {
+            result += '</';
+            result += getValidation(isArray[i]['tag'])
+            ? isArray[i]['tag']
+            : 'div';
+            result += '>';
         };
     };
     return result;
+};
+
+const getContainer = (object) => {
+    let result = '';
+    if (getValidation(object)) {
+        for (let prop in getProperty(object)['value']) {
+            result += getProperty(object)['value'][prop];
+        };
+    };
+    return result;
+};
+
+const getProperty = (object) => {
+    const value = [];
+    for (const prop in Object.getOwnPropertyDescriptors(object))
+        value.push(Object.getOwnPropertyDescriptors(object)[prop]['value']);
+    return Array.isArray(object) ? { value : object } : {
+        prop : Object.getOwnPropertyNames(object),
+        value : value,
+    };
 };
 
 let objectCleaner = (content) => {
@@ -981,17 +1286,10 @@ let bootstrapAccordion = (object) => {
                 for (let x = 0; x < object['array'][i]['items']['length']; x++) {
                     let isID = '-' + i + '-' + x;
                     result += '<div class=\"accordion-item\">';
-                        result += getValidation(columnImage) ? htmlSetup({
-                            container : {
-                                index : getTypeNumber({ index : x }),
-                                content : object['array'][i]['items'][x]['title'],
-                            },
-                            wrap : [
+                        if (getValidation(columnImage)) {
+                            result += startTagName([
                                 {
-                                    tag : {
-                                        name : 'h2',
-                                        close : true,
-                                    },
+                                    tag : 'h2',
                                     param : {
                                         class : [
                                             'accordion-header',
@@ -1000,10 +1298,7 @@ let bootstrapAccordion = (object) => {
                                     },
                                 },
                                 {
-                                    tag : {
-                                        name : 'button',
-                                        close : true,
-                                    },
+                                    tag : 'button',
                                     param : {
                                         'aria-controls' : 'collapse' + isID,
                                         'aria-expanded' : 'false',
@@ -1016,73 +1311,93 @@ let bootstrapAccordion = (object) => {
                                         type : 'button',
                                     },
                                 },
-                            ],
-                        }) : '';
-                        result += '<div'
-                        result += ' aria-labelledby=\"heading' + isID + '\"';
-                        result += ' class=\"accordion-collapse collapse\"';
-                        result += ' data-bs-parent=\"#' + accordionID + '\"';
-                        result += ' id=\"collapse' + isID + '\"';
-                        result += '>';
+                            ]);
+                            result += getContainer({
+                                index : getTypeNumber({ index : x }),
+                                content : object['array'][i]['items'][x]['title'],
+                            });
+                            result += endTagName([
+                                {
+                                    tag : 'h2',
+                                },
+                                {
+                                    tag : 'button',
+                                },
+                            ]);
+                        };
+                        result += startTagName([
+                            {
+                                tag : 'div',
+                                param : {
+                                    'aria-labelledby' : 'heading' + isID,
+                                    class : [
+                                        'accordion-collapse',
+                                        'collapse',
+                                    ],
+                                    'data-bs-parent' : '#' + accordionID,
+                                    id : 'collapse' + isID,
+                                },
+                            },
+                        ]);
                             if (getValidation(object['array'][i]['items'][x]['description']) || getValidation(object['array'][i]['items'][x]['items'])) {
                                 result += '<div class=\"accordion-body\">';
                                     if (getValidation(object['array'][i]['items'][x]['description'])) {
                                         result += '<div class=\"row\">';
-                                            result += getValidation(columnImage) ? htmlSetup({
-                                                wrap : [
+                                            if (getValidation(columnImage)) {
+                                                result += startTagName([
                                                     {
-                                                        tag : {
-                                                            name : 'div',
-                                                            close : true,
-                                                        },
+                                                        tag : 'div',
                                                         param : {
                                                             class : [
                                                                 'col-' + columnImage,
                                                             ],
                                                         },
                                                     },
-                                                ],
-                                            }) : '';
-                                            result += getValidation(object['array'][i]['items'][x]['description']) ? htmlSetup({
-                                                container : {
-                                                    content : object['array'][i]['items'][x]['description'],
-                                                    spacer : '.',
-                                                },
-                                                wrap : [
+                                                ]);
+                                                result += endTagName([
                                                     {
-                                                        tag : {
-                                                            name : 'div',
-                                                            close : true,
-                                                        },
+                                                        tag : 'div',
+                                                    },
+                                                ]);
+                                            };
+                                            if (getValidation(object['array'][i]['items'][x]['description'])) {
+                                                result += startTagName([
+                                                    {
+                                                        tag : 'div',
                                                         param : {
                                                             alt : '',
                                                             class : [
                                                                 'col-' + columnText,
                                                                 getValidation(object['array'][i]['items'][x]['items']) ? 'mb-3' : '',
                                                                 'px-3',
-
+    
                                                             ],
                                                         },
                                                     },
                                                     {
-                                                        tag : {
-                                                            name : 'h5',
-                                                            close : true,
-                                                        },
+                                                        tag : 'h5',
                                                     },
-                                                ],
-                                            }) : '';
+                                                ]);
+                                                result += getContainer({
+                                                    content : object['array'][i]['items'][x]['description'],
+                                                });
+                                                result += endTagName([
+                                                    {
+                                                        tag : 'div',
+                                                    },
+                                                    {
+                                                        tag : 'h5',
+                                                    },
+                                                ]);
+                                            };
                                         result += '</div>';
                                     };
                                     if (getValidation(object['array'][i]['items'][x]['items'])) {
                                         result += '<div class=\"row\">';
-                                            result += getValidation(columnImage) ? htmlSetup({
-                                                wrap : [
+                                            if (getValidation(columnImage)) {
+                                                result += startTagName([
                                                     {
-                                                        tag : {
-                                                            name : 'div',
-                                                            close : true,
-                                                        },
+                                                        tag : 'div',
                                                         param : {
                                                             alt : '',
                                                             class : [
@@ -1090,8 +1405,13 @@ let bootstrapAccordion = (object) => {
                                                             ],
                                                         },
                                                     },
-                                                ],
-                                            }) : '';
+                                                ]);
+                                                result += endTagName([
+                                                    {
+                                                        tag : 'div',
+                                                    },
+                                                ]);
+                                            };
                                             result += '<div class=\"col-' + columnText + '\">';
                                                 result += '<ul>';
                                                     for (let y = 0; y < object['array'][i]['items'][x]['items']['length']; y++) {
@@ -1099,17 +1419,10 @@ let bootstrapAccordion = (object) => {
                                                             let n = '';
                                                             n += getTypeNumber({ index : x });
                                                             n += getTypeNumber({ index : y });
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['title']) ? htmlSetup({
-                                                                container : {
-                                                                    index : n,
-                                                                    content : object['array'][i]['items'][x]['items'][y]['title'],
-                                                                },
-                                                                wrap : [
+                                                            if (getValidation(object['array'][i]['items'][x]['items'][y]['title'])) {
+                                                                result += startTagName([
                                                                     {
-                                                                        tag : {
-                                                                            name : 'p',
-                                                                            close : true,
-                                                                        },
+                                                                        tag : 'p',
                                                                         param : {
                                                                             alt : '',
                                                                             class : [
@@ -1117,19 +1430,21 @@ let bootstrapAccordion = (object) => {
                                                                             ],
                                                                         },
                                                                     },
-                                                                ],
-                                                            }) : '';
-                                                            result += getValidation(object['array'][i]['items'][x]['items'][y]['description']) ? htmlSetup({
-                                                                container : {
+                                                                ]);
+                                                                result += getContainer({
                                                                     index : n,
-                                                                    content : object['array'][i]['items'][x]['items'][y]['description'],
-                                                                },
-                                                                wrap : [
+                                                                    content : object['array'][i]['items'][x]['items'][y]['title'],
+                                                                });
+                                                                result += endTagName([
                                                                     {
-                                                                        tag : {
-                                                                            name : 'p',
-                                                                            close : true,
-                                                                        },
+                                                                        tag : 'p',
+                                                                    },
+                                                                ]);
+                                                            };
+                                                            if (getValidation(object['array'][i]['items'][x]['items'][y]['description'])) {
+                                                                result += startTagName([
+                                                                    {
+                                                                        tag : 'p',
                                                                         param : {
                                                                             alt : '',
                                                                             class : [
@@ -1139,37 +1454,35 @@ let bootstrapAccordion = (object) => {
                                                                         },
                                                                     },
                                                                     {
-                                                                        tag : {
-                                                                            name : 'em',
-                                                                            close : true,
-                                                                        },
+                                                                        tag : 'em',
                                                                     },
-                                                                ],
-                                                            }) : '';
+                                                                ]);
+                                                                result += getContainer({
+                                                                    content : object['array'][i]['items'][x]['items'][y]['description'],
+                                                                });
+                                                                result += endTagName([
+                                                                    {
+                                                                        tag : 'p',
+                                                                    },
+                                                                    {
+                                                                        tag : 'em',
+                                                                    },
+                                                                ]);
+                                                            };
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
-                                                                result += '<ul>';
+                                                                result += startTagName([ { tag : 'ul', }, ]);
                                                                     for (let z = 0; z < object['array'][i]['items'][x]['items'][y]['items']['length']; z++) {
                                                                         let n = '';
                                                                         n += getTypeNumber({ index : x });
                                                                         n += getTypeNumber({ index : y });
                                                                         n += getTypeNumber({ index : z });
-                                                                        result += getValidation(object['array'][i]['items'][x]['items'][y]['items'][z]) ? htmlSetup({
-                                                                            container : {
-                                                                                index : n,
-                                                                                content : object['array'][i]['items'][x]['items'][y]['items'][z],
-                                                                            },
-                                                                            wrap : [
+                                                                        if (getValidation(object['array'][i]['items'][x]['items'][y]['items'][z])) {
+                                                                            result += startTagName([
                                                                                 {
-                                                                                    tag : {
-                                                                                        name : 'li',
-                                                                                        close : true,
-                                                                                    },
+                                                                                    tag : 'li',
                                                                                 },
                                                                                 {
-                                                                                    tag : {
-                                                                                        name : 'p',
-                                                                                        close : true,
-                                                                                    },
+                                                                                    tag : 'p',
                                                                                     param : {
                                                                                         alt : '',
                                                                                         class : [
@@ -1179,13 +1492,25 @@ let bootstrapAccordion = (object) => {
                                                                                     },
                                                                                 },
                                                                                 {
-                                                                                    tag : {
-                                                                                        name : 'em',
-                                                                                        close : true,
-                                                                                    },
+                                                                                    tag : 'em',
                                                                                 },
-                                                                            ],
-                                                                        }) : '';
+                                                                            ]);
+                                                                            result += getContainer({
+                                                                                index : n,
+                                                                                content : object['array'][i]['items'][x]['items'][y]['items'][z],
+                                                                            });
+                                                                            result += endTagName([
+                                                                                {
+                                                                                    tag : 'li',
+                                                                                },
+                                                                                {
+                                                                                    tag : 'p',
+                                                                                },
+                                                                                {
+                                                                                    tag : 'em',
+                                                                                },
+                                                                            ]);
+                                                                        };
                                                                     };
                                                                 result += '</ul>';
                                                             };
@@ -1209,19 +1534,6 @@ let bootstrapAccordion = (object) => {
 
 const getLowerCase = (content) => {
     return String(content).trim().toLowerCase();
-};
-
-const getTagName = (object) => {
-    let isElement = getValidation(object['element']) ? getLowerCase(object['element']) : '';
-    let isPosition = getValidation(object['position']) ? getLowerCase(object['position']) : '';
-    let isID = getValidation(object['id']) ? ' id=\"' + getLowerCase(object['id']) + '\"' : '';
-    let result = '';
-    if (isElement && isPosition) {
-        if (isPosition === 'header') { result += '<' + isElement + isID + '>';
-        } else if (isPosition === 'footer') { result += '</' + isElement + '>';
-        } else { result += ''; }
-    } else { result += ''; }
-    return result;
 };
 
 const jsonFileReader = (array) => {
