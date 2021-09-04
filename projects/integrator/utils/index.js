@@ -380,6 +380,10 @@ const getHeader = (object) => {
                 tag : 'h1',
                 param : {
                     id : 'id-' + object['index'],
+                    style : {
+                        margin : '0',
+                        padding : '0',
+                    },
                 },
             }
         ]);
@@ -412,7 +416,7 @@ const getHeader = (object) => {
     };
     if (getValidation(object['title']) || getValidation(object['description'])) {
         result += startTagName([ { tag : 'div', param : { id : 'header' } } ]);
-            result += startTagName([ { tag : 'div', param : { id : 'row' } } ]);
+            result += startTagName([ { tag : 'div', param : { id : 'row', class : [ 'px-3' ], }, }, ]);
                 if (getValidation(object['image'])) {
                     result += startTagName([
                         {
