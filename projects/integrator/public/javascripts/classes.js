@@ -229,62 +229,6 @@ export let galleryClasses = (object) => {
     });
 };
 
-export let quickviewClasses = (object) => {
-    let isClass = '';
-    isClass += 'btn';
-    isClass += getValidation(object['style']) ? '-' + object['style'] : '';
-    isClass += getValidation(object['color']) ? '-' + object['color'] : '-' + 'dark';
-    let position = getValidation(object['position']) ? object['position'] : 'center';
-    addRemoveClasses({
-        elementList : [
-            '#quick-view',
-        ],
-        classeList : [
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#quick-view #row',
-        ],
-        classeList : [
-            'row',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#quick-view #col',
-        ],
-        classeList : [
-            'd-flex',
-            'justify-content-' + position,
-            'mb-3',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#quick-view #menu',
-        ],
-        classeList : [
-            'align-self-' + position,
-            'btn-group',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#quick-view #menu a',
-        ],
-        classeList : [
-            'btn',
-            isClass,
-        ],
-        method : 'add',
-    });
-};
-
 export let navbarClasses = () => {
     addRemoveClasses({
         elementList : [

@@ -35,6 +35,11 @@ const getValidation = (content) => {
         return true;
 };
 
+const btnClasses = [
+    'btn-outline-dark',
+    'btn',
+];
+
 const footerQuickMenu = (object) => {
     let result = '';
     let isContainer = '';
@@ -54,42 +59,19 @@ const footerQuickMenu = (object) => {
                 tag : 'a',
                 param : {
                     href : isHREF + '\"' + isTarget + isToggle,
+                    class : [
+                        ...btnClasses,
+                    ],
                 },
             },
         ]);
-        isContainer += getContainer({
-            content : getFirstUpperCase(isTitle),
-        });
+        isContainer += getContainer({ content : getFirstUpperCase(isTitle), });
         isContainer += endTagName([ { tag : 'a', }, ]);
     };
-    result += startTagName([
-        {
-            tag : 'div',
-            param : {
-                id : 'quick-view',
-            },
-        },
-        {
-            tag : 'div',
-            param : {
-                id : 'row',
-            },
-        },
-        {
-            tag : 'div',
-            param : {
-                id : 'col',
-            },
-        },
-        {
-            tag : 'div',
-            param : {
-                id : 'menu',
-            },
-        },
-    ]);
-    result += getContainer({ content : isContainer, });
-    result += endTagName([ { tag : 'div', }, { tag : 'div', }, { tag : 'div', }, { tag : 'div', }, ]);
+    result += getValidation(isContainer) ? setupQuickView({
+        position : object['position'],
+        container : isContainer,
+    }) : '';
     return result;
 };
 
@@ -171,7 +153,14 @@ const viewListGroup = (object) => {
                 image : object['array'][x]['image'],
             });
             if (getValidation(object['array'][x]['items'])) {
-                result += startTagName([ { tag : 'div', param : { id : 'body', }, }, ]);
+                result += startTagName([
+                    {
+                        tag : 'div',
+                        param : {
+                            id : 'body',
+                        },
+                    },
+                ]);
                     result += startTagName([
                         {
                             tag : 'div',
@@ -374,6 +363,44 @@ const viewListGroup = (object) => {
     return result;
 };
 
+const setupQuickView = (object) => {
+    let result = '';
+    let isPosition = getValidation(object['position'])
+    ? object['position'] : 'center';
+    result += startTagName([
+        {
+            tag : 'div',
+            param : {
+                class : [
+                    'row',
+                ],
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                class : [
+                    'd-flex',
+                    'justify-content-' + isPosition,
+                    'mb-3',
+                ]
+            },
+        },
+        {
+            tag : 'div',
+            param : {
+                class : [
+                    'align-self-' + isPosition,
+                    'btn-group',
+                ],
+            },
+        },
+    ]);
+    result += getContainer({ content : object['container'], });
+    result += endTagName([ { tag : 'div', }, { tag : 'div', }, { tag : 'div', }, ]);
+    return result;
+};
+
 const quickView = (object) => {
     let isContainer = '';
     for (let i = 0; i < object['object']['array']['length']; i++) {
@@ -382,44 +409,19 @@ const quickView = (object) => {
                 tag : 'a',
                 param : {
                     href : '#id' + '-' + i,
+                    class : [
+                        ...btnClasses,
+                    ],
                 },
             },
         ]);
         isContainer += getContainer({ content : object['object']['array'][i]['title'], });
         isContainer += endTagName([ { tag : 'a', }, ]);
-
     };
     let result = '';
-    if (isContainer) {
-        result += startTagName([
-            {
-                tag : 'div',
-                param : {
-                    id : 'quick-view',
-                },
-            },
-            {
-                tag : 'div',
-                param : {
-                    id : 'row',
-                },
-            },
-            {
-                tag : 'div',
-                param : {
-                    id : 'col',
-                },
-            },
-            {
-                tag : 'div',
-                param : {
-                    id : 'menu',
-                },
-            },
-        ]);
-        result += getContainer({ content : isContainer, });
-        result += endTagName([ { tag : 'div', }, { tag : 'div', }, { tag : 'div', }, { tag : 'div', }, ]);
-    };
+    result += getValidation(isContainer) ? setupQuickView({
+        container : isContainer,
+    }) : '';
     return result;
 };
 
@@ -611,7 +613,19 @@ const bootstrapGallery = (object) => {
 
 const bootstrapCarousel = (object) => {
     let result = '', isID = getValidation(object['id']) ? object['id'] : 'carousel';
-    result += '<div id=\"' + isID + '\" class=\"carousel slide\" data-bs-ride=\"carousel\">';
+    result += startTagName([
+        {
+            tag : 'div',
+            param : {
+                id : isID,
+                class : [
+                    'carousel',
+                    'slide',
+                ],
+                'data-bs-ride' : 'carousel',
+            },
+        },
+    ]);
         let isContainer = '';
         for (let i = 0; i < object['array']['length']; i++) {
             isContainer += startTagName([
@@ -816,7 +830,7 @@ const bootstrapNavbar = (object) => {
                             param : {
                                 class : [
                                     'nav-link',
-                                ]
+                                ],
                             },
                         },
                     ]);
