@@ -155,71 +155,7 @@ export let paginationClasses = (object) => {
     });
 };
 
-const imageClasses = [
-    'img-fluid',
-    'img-thumbnail',
-    'rounded',
-    'shadow-sm',
-    'w-100',
-];
-
-export let headerClasses = (object) => {
-    let n = 2;
-    let imgcol = 'col' + '-' + n;
-    let txtcol = 'col' + '-' + (12 - n);
-    addRemoveClasses({
-        elementList : [
-            '#header',
-        ],
-        classeList : [
-            'mb-3',
-            'w-100',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#header>#row',
-        ],
-        classeList : [
-            'row',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#header>#row>#header-image',
-        ],
-        classeList : [
-            'align-items-center',
-            'd-flex',
-            imgcol,
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#header>#row>#header-image>img',
-        ],
-        classeList : [
-            ...imageClasses,
-            'align-self-center',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#header>#row>#header-content',
-        ],
-        classeList : [
-            txtcol,
-        ],
-        method : 'add',
-    });
-};
-
 export let accordionClasses = (object) => {
-    headerClasses();
     addRemoveClasses({
         elementList : [
             'ul',
@@ -234,13 +170,8 @@ export let accordionClasses = (object) => {
         elementList : [
             'li p',
         ],
-        classeList : [
-            // 'mb-3',
-        ],
         method : 'add',
     });
-};
-export let listgroupClasses = (object) => {
 };
 
 export let galleryClasses = (object) => {
@@ -281,15 +212,6 @@ export let galleryClasses = (object) => {
         ],
         classeList : [
             'light-box',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body #col #image a img',
-        ],
-        classeList : [
-            ...imageClasses,
         ],
         method : 'add',
     });

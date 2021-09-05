@@ -148,7 +148,9 @@ const lightBox = (object) => {
                         },
                     },
                 ]);
-                result += getContainer({ content : object['description'], });
+                result += getContainer({
+                    content : object['description'].substr(0, 250) + ' [...].',
+                });
                 result += endTagName([ { tag : 'div', }, ]);
             result += endTagName([ { tag : 'a', }, ]);
         result += endTagName([ { tag : 'div', }, ]);
@@ -442,7 +444,8 @@ const getHeader = (object) => {
             {
                 tag : 'h1',
                 param : {
-                    id : 'id-' + object['index'],
+                    id : getValidation(object['index'])
+                    ? 'id-' + object['index'] : '',
                     style : {
                         margin : '0',
                         padding : '0',
@@ -450,9 +453,7 @@ const getHeader = (object) => {
                 },
             }
         ]);
-        isTitle += getContainer({
-            content : object['title'],
-        });
+        isTitle += getContainer({ content : object['title'], });
         isTitle += endTagName([ { tag : 'h1' } ]);
     };
     let isDescription = '';
@@ -462,14 +463,38 @@ const getHeader = (object) => {
         isDescription += endTagName([ { tag : 'p', }, { tag : 'em', }, ]);
     };
     if (getValidation(object['title']) || getValidation(object['description'])) {
-        result += startTagName([ { tag : 'div', param : { id : 'header' } } ]);
-            result += startTagName([ { tag : 'div', param : { id : 'row', class : [ 'px-3' ], }, }, ]);
+        result += startTagName([
+            {
+                tag : 'div',
+                param : {
+                    class : [
+                        'mb-3',
+                        'w-100',
+                    ]
+                },
+            },
+        ]);
+            result += startTagName([
+                {
+                    tag : 'div',
+                    param : {
+                        class : [
+                            'px-3',
+                            'row',
+                        ],
+                    },
+                },
+            ]);
                 if (getValidation(object['image'])) {
                     result += startTagName([
                         {
                             tag : 'div',
                             param : {
-                                id : 'header-image',
+                                class : [
+                                    'align-items-center',
+                                    'd-flex',
+                                    'col-2',
+                                ],
                                 style : {
                                     'background-image' : object['image'],
                                 }
@@ -483,7 +508,9 @@ const getHeader = (object) => {
                         {
                             tag : 'div',
                             param : {
-                                id : 'header-content',
+                                class : [
+                                    getValidation(object['image']) ? 'col-10' : 'col',
+                                ],
                             },
                         },
                     ]);
@@ -518,9 +545,9 @@ const bootstrapGallery = (object) => {
             },
         ]);
             result += getHeader({
-                index : x,
                 title : object['array'][x]['title'],
                 description : object['array'][x]['description'],
+                index : x,
             });
             if (getValidation(object['array'][x]['items'])) {
                 result += '<div id=\"body\">';

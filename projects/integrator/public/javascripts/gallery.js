@@ -9,19 +9,7 @@ quickviewClasses({
 });
 
 import {
-    headerClasses,
-} from './classes.js';
-
-headerClasses();
-
-import {
     galleryClasses,
 } from './classes.js';
 
 galleryClasses();
-
-window.addEventListener('DOMContentLoaded', () => {
-    new SimpleLightbox({
-        elements : 'a.light-box',
-    });
-});

@@ -122,3 +122,9 @@ addRemoveClasses({
     ],
     method : 'add',
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+    new SimpleLightbox({
+        elements : 'a.light-box',
+    });
+});
