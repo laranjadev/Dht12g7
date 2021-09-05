@@ -163,20 +163,7 @@ const viewListGroup = (object) => {
     let isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
-        result += startTagName([
-            {
-                tag : 'div',
-                param : {
-                    class : [
-                        'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
-                        'text-' + (x % 2 === 0 ? 'light' : 'dark'),
-                        'px-3',
-                        'pt-3',
-                        'mb-3',
-                    ],
-                },
-            },
-        ]);
+        result += getIntercalate({ index : String(x) });
             result += getHeader({
                 index : x,
                 title : object['array'][x]['title'],
@@ -525,35 +512,49 @@ const getHeader = (object) => {
     return result;
 }
 
+const getIntercalate = (object) => {
+    let result = '';
+    result += startTagName([
+        {
+            tag : 'div',
+            param : {
+                class : [
+                    getValidation(object) ?
+                    getValidation(object['index'])
+                    ? Number(object['index']) % 2 === 0 ? 'bg-dark' : 'bg-light'
+                    : 'bg-light'
+                    : 'bg-light',
+                    getValidation(object) ?
+                    getValidation(object['index'])
+                    ? Number(object['index']) % 2 === 0 ? 'text-light' : 'text-dark'
+                    : 'text-dark'
+                    : 'text-dark',
+                    'px-3',
+                    'pt-3',
+                    'mb-3',
+                ],
+            },
+        },
+    ]);
+    return result;
+};
+
 const bootstrapGallery = (object) => {
     let result = '';
     let = isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
-        result += startTagName([
-            {
-                tag : 'div',
-                param : {
-                    class : [
-                        'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
-                        'text-' + (x % 2 === 0 ? 'light' : 'dark'),
-                        'px-3',
-                        'pt-3',
-                        'mb-3',
-                    ],
-                },
-            },
-        ]);
+        result += getIntercalate({ index : String(x) });
             result += getHeader({
                 title : object['array'][x]['title'],
                 description : object['array'][x]['description'],
                 index : x,
             });
             if (getValidation(object['array'][x]['items'])) {
-                result += '<div id=\"body\">';
-                    result += '<div id=\"row\">';
+                result += startTagName([ { tag : 'div', param : { id : 'body', }, }, ]);
+                    result += startTagName([ { tag : 'div', param : { id : 'row', }, }, ]);
                         for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                            result += '<div id=\"col\">';
+                            result += startTagName([ { tag : 'div', param : { id : 'col', }, }, ]);
                                 result += lightBox({
                                     title : object['array'][x]['items'][y]['title'],
                                     description : object['array'][x]['items'][y]['description'],
@@ -1150,26 +1151,11 @@ let bootstrapAccordion = (object) => {
     let columnImage = 2, columnText = 12 - columnImage;
     for (let i = 0; i < object['array']['length']; i++) {
         result += isQuickView;
-        result += startTagName([
-            {
-                tag : 'div',
-                param : {
-                    class : [
-                        // 'bg-' + (i % 2 === 0 ? 'dark' : 'light'),
-                        // 'text-' + (i % 2 === 0 ? 'light' : 'dark'),
-                        'bg-light',
-                        'text-dark',
-                        'px-3',
-                        'pt-3',
-                        'mb-3',
-                    ],
-                },
-            },
-        ]);
+        result += getIntercalate();
             result += getHeader({
-                index : i,
                 title : object['array'][i]['title'],
                 description : object['array'][i]['description'],
+                index : i,
             });
             let accordionID = '';
             accordionID += 'accordion';
