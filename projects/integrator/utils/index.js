@@ -46,7 +46,7 @@ const footerQuickMenu = (object) => {
         let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
         let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
         let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
-        const isArray = [
+        let isArray = [
             {
                 tag : 'a',
                 param : {
@@ -60,7 +60,7 @@ const footerQuickMenu = (object) => {
         });
         isContainer += endTagName(isArray);
     };
-    const isArray = [
+    let isArray = [
         {
             tag : 'div',
             param : {
@@ -100,18 +100,19 @@ const viewListGroup = (object) => {
     let isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
-        result += startTagName([ {
-            tag : 'div',
-            param : {
-                class : [
-                    'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
-                    'text-' + (x % 2 === 0 ? 'light' : 'dark'),
-                    'px-3',
-                    'pt-3',
-                    'mb-3',
-                ],
+            result += startTagName([ {
+                tag : 'div',
+                param : {
+                    class : [
+                        'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
+                        'text-' + (x % 2 === 0 ? 'light' : 'dark'),
+                        'px-3',
+                        'pt-3',
+                        'mb-3',
+                    ],
+                },
             },
-        }, ]);
+        ]);
             result += getHeader({
                 index : x,
                 title : object['array'][x]['title'],
@@ -214,72 +215,30 @@ const viewListGroup = (object) => {
                                                             n += getTypeNumber({ index : z });
                                                             let isTitle ='';
                                                             if (getValidation(object['array'][x]['items'][y]['items'][z]['title'])) {
-                                                                isTitle += startTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'b',
-                                                                    },
-                                                                ]);
+                                                                isTitle += startTagName([ { tag : 'p', }, { tag : 'b', }, ]);
                                                                 isTitle += getContainer({
                                                                     index : n,
                                                                     content : object['array'][x]['items'][y]['items'][z]['title'],
                                                                 });
-                                                                isTitle += endTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'b',
-                                                                    },
-                                                                ]);
+                                                                isTitle += endTagName([ { tag : 'p', }, { tag : 'b', }, ]);
                                                             };
                                                             let isDescription ='';
                                                             if (getValidation(object['array'][x]['items'][y]['items'][z]['description'])) {
-                                                                isDescription += startTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'em',
-                                                                    },
-                                                                ]);
+                                                                isDescription += startTagName([ { tag : 'p' }, { tag : 'em' }, ]);
                                                                 isDescription += getContainer({
                                                                     content : object['array'][x]['items'][y]['items'][z]['description'],
                                                                 });
-                                                                isDescription += endTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'em',
-                                                                    },
-                                                                ]);
+                                                                isDescription += endTagName([ { tag : 'p', }, { tag : 'em', }, ]);
                                                             };
                                                             let isValue ='';
                                                             if (getValidation(object['array'][x]['items'][y]['items'][z]['number']['value'])) {
-                                                                isValue += startTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'b',
-                                                                    },
-                                                                ]);
+                                                                isValue += startTagName([ { tag : 'p', }, { tag : 'b', }, ]);
                                                                 isValue += getContainer({
                                                                     content : object['array'][x]['items'][y]['items'][z]['number']['value'],
                                                                     after : getValidation(object['array'][x]['items'][y]['items'][z]['number']['type']) ? 
                                                                     object['array'][x]['items'][y]['items'][z]['number']['type'] + '.' : '',
                                                                 });
-                                                                isValue += endTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'b',
-                                                                    },
-                                                                ]);
+                                                                isValue += endTagName([ { tag : 'p', }, { tag : 'b', }, ]);
                                                             };
                                                             if (getValidation(isTitle) || getValidation(isDescription) || getValidation(isValue)) {
                                                                 result += startTagName([
@@ -394,25 +353,9 @@ const getHeader = (object) => {
     };
     let isDescription = '';
     if (getValidation(object['description'])) {
-        isDescription += startTagName([
-            {
-                tag : 'p',
-            },
-            {
-                tag : 'em',
-            },
-        ]);
-        isDescription += getContainer({
-            content : object['description'],
-        });
-        isDescription += endTagName([
-            {
-                tag : 'p',
-            },
-            {
-                tag : 'em',
-            },
-        ]);
+        isDescription += startTagName([ { tag : 'p', }, { tag : 'em', }, ]);
+        isDescription += getContainer({ content : object['description'], });
+        isDescription += endTagName([ { tag : 'p', }, { tag : 'em', }, ]);
     };
     if (getValidation(object['title']) || getValidation(object['description'])) {
         result += startTagName([ { tag : 'div', param : { id : 'header' } } ]);
@@ -456,7 +399,19 @@ const bootstrapGallery = (object) => {
     let = isQuickView = quickView({ object : object });
     for (let x = 0; x < object['array']['length']; x++) {
         result += isQuickView;
-        result += '<div id=\"' + (x % 2 === 0 ? 'first-item' : 'second-item') + '\">';
+        result += startTagName([ {
+                tag : 'div',
+                param : {
+                    class : [
+                        'bg-' + (x % 2 === 0 ? 'dark' : 'light'),
+                        'text-' + (x % 2 === 0 ? 'light' : 'dark'),
+                        'px-3',
+                        'pt-3',
+                        'mb-3',
+                    ],
+                },
+            },
+        ]);
             result += getHeader({
                 index : x,
                 title : object['array'][x]['title'],
@@ -500,17 +455,7 @@ const bootstrapGallery = (object) => {
                                         result += getContainer({
                                             content : object['array'][x]['items'][y]['title'],
                                         });
-                                        result += endTagName([
-                                            {
-                                                tag : 'div',
-                                            },
-                                            {
-                                                tag : 'a',
-                                            },
-                                            {
-                                                tag : 'div',
-                                            },
-                                        ]);
+                                        result += endTagName([ { tag : 'div', }, { tag : 'a', }, { tag : 'div', }, ]);
                                         if (getValidation(object['array'][x]['items'][y]['title'])) {
                                             result += startTagName([
                                                 {
@@ -526,20 +471,8 @@ const bootstrapGallery = (object) => {
                                                     tag : 'b',
                                                 },
                                             ]);
-                                            result += getContainer({
-                                                content : object['array'][x]['items'][y]['title'],
-                                            });
-                                            result += endTagName([
-                                                {
-                                                    tag : 'div',
-                                                },
-                                                {
-                                                    tag : 'p',
-                                                },
-                                                {
-                                                    tag : 'b',
-                                                },
-                                            ]);
+                                            result += getContainer({ content : object['array'][x]['items'][y]['title'], });
+                                            result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'b', }, ]);
                                         };
                                     };
                                     if (getValidation(object['array'][x]['items'][y]['description'])) {
@@ -560,17 +493,7 @@ const bootstrapGallery = (object) => {
                                         result += getContainer({
                                             content : object['array'][x]['items'][y]['description'],
                                         });
-                                        result += endTagName([
-                                            {
-                                                tag : 'div',
-                                            },
-                                            {
-                                                tag : 'p',
-                                            },
-                                            {
-                                                tag : 'em',
-                                            },
-                                        ]);
+                                        result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'em', }, ]);
                                     };
                                 result += '</div>';
                             };
@@ -613,14 +536,8 @@ const bootstrapCarousel = (object) => {
                 },
             },
         ]);
-        result += getContainer({
-            content : isContainer,
-        });
-        result += endTagName([
-            {
-                tag : 'div',
-            },
-        ]);
+        result += getContainer({ content : isContainer, });
+        result += endTagName([ { tag : 'div', }, ]);
         result += startTagName([
             {
                 tag : 'div',
@@ -665,37 +582,12 @@ const bootstrapCarousel = (object) => {
                             tag : 'em',
                         },
                     ]);
-                    isTitle += getContainer({
-                        content : object['array'][i]['title'],
-                    });
-                    isTitle += endTagName([
-                        {
-                            tag : 'h3',
-                        },
-                        {
-                            tag : 'em',
-                        },
-                    ]);
+                    isTitle += getContainer({ content : object['array'][i]['title'], });
+                    isTitle += endTagName([ { tag : 'h3', }, { tag : 'em', }, ]);
                     let isDescription = '';
-                    isDescription += startTagName([
-                        {
-                            tag : 'p',
-                        },
-                        {
-                            tag : 'em',
-                        },
-                    ]);
-                    isDescription += getContainer({
-                        content : object['array'][i]['description'],
-                    });
-                    isDescription += endTagName([
-                        {
-                            tag : 'p',
-                        },
-                        {
-                            tag : 'em',
-                        },
-                    ]);
+                    isDescription += startTagName([ { tag : 'p', }, { tag : 'em', }, ]);
+                    isDescription += getContainer({ content : object['array'][i]['description'], });
+                    isDescription += endTagName([ { tag : 'p', }, { tag : 'em', }, ]);
                     result += startTagName([
                         {
                             tag : 'div',
@@ -708,25 +600,11 @@ const bootstrapCarousel = (object) => {
                             },
                         },
                     ]);
-                    result += getContainer({
-                        content : isTitle + isDescription,
-                    });
-                    result += endTagName([
-                        {
-                            tag : 'div',
-                        },
-                    ]);
-                result += endTagName([
-                    {
-                        tag : 'div',
-                    },
-                ]);
+                    result += getContainer({ content : isTitle + isDescription, });
+                    result += endTagName([ { tag : 'div', }, ]);
+                result += endTagName([ { tag : 'div', }, ]);
             };
-        result += endTagName([
-            {
-                tag : 'div',
-            },
-        ]);
+        result += endTagName([ { tag : 'div', }, ]);
         let array = [ 'prev', 'next' ];
         for (let i = 0; i < array['length']; i++) {
             result += startTagName([
@@ -754,11 +632,7 @@ const bootstrapCarousel = (object) => {
                         },
                     },
                 ]);
-                result += endTagName([
-                    {
-                        tag : 'span',
-                    },
-                ]);
+                result += endTagName([ { tag : 'span', }, ]);
                 result += startTagName([
                     {
                         tag : 'span',
@@ -769,22 +643,10 @@ const bootstrapCarousel = (object) => {
                         },
                     },
                 ]);
-                result += endTagName([
-                    {
-                        tag : 'span',
-                    },
-                ]);
-            result += endTagName([
-                {
-                    tag : 'button',
-                },
-            ]);
+                result += endTagName([ { tag : 'span', }, ]);
+            result += endTagName([ { tag : 'button', }, ]);
         };
-    result += endTagName([
-        {
-            tag : 'div',
-        },
-    ]);
+    result += endTagName([ { tag : 'div', }, ]);
     return result;
 };
 
@@ -818,14 +680,7 @@ const bootstrapNavbar = (object) => {
                 },
             },
         ]);
-        result += endTagName([
-            {
-                tag : 'a',
-            },
-            {
-                tag : 'span',
-            },
-        ]);
+        result += endTagName([ { tag : 'a', }, { tag : 'span', }, ]);
         result += startTagName([
             {
                 tag : 'div',
@@ -870,17 +725,8 @@ const bootstrapNavbar = (object) => {
                             },
                         },
                     ]);
-                    result += getContainer({
-                        content : object['title'],
-                    });
-                    result += endTagName([
-                        {
-                            tag : 'li',
-                        },
-                        {
-                            tag : 'a',
-                        },
-                    ]);
+                    result += getContainer({ content : object['title'], });
+                    result += endTagName([ { tag : 'li', }, { tag : 'a', }, ]);
                 };
                 for (let x = 0; x < object['array']['length']; x++) {
                     result += startTagName([
@@ -904,7 +750,7 @@ const bootstrapNavbar = (object) => {
                                         'nav-link',
                                         'dropdown-toggle',
                                     ] : [
-                                        'nav-link'
+                                        'nav-link',
                                     ],
                                     'data-bs-toggle' : getValidation(object['array'][x]['items']) ? 'dropdown' : '',
                                     href : getLowerCase(object['array'][x]['path']),
@@ -913,14 +759,8 @@ const bootstrapNavbar = (object) => {
                                 },
                             },
                         ]);
-                        result += getContainer({
-                            content : getFirstUpperCase(object['array'][x]['title']),
-                        });
-                        result += endTagName([
-                            {
-                                tag : 'a',
-                            },
-                        ]);
+                        result += getContainer({ content : getFirstUpperCase(object['array'][x]['title']), });
+                        result += endTagName([ { tag : 'a', }, ]);
                         if (getValidation(object['array'][x]['items'])) {
                             result += startTagName([
                                 {
@@ -937,19 +777,9 @@ const bootstrapNavbar = (object) => {
                                 for (let y = 0; y < object['array'][x]['items']['length']; y++) {
                                     result += startTagName([ { tag : 'li', }, ]);
                                         if (getValidation(object['array'][x]['items'][y]['title'])) {
-                                            result += startTagName([
-                                                {
-                                                    tag : 'h6',
-                                                },
-                                            ]);
-                                            result += getContainer({
-                                                content : getFirstUpperCase(object['array'][x]['items'][y]['title']),
-                                            });
-                                            result += endTagName([
-                                                {
-                                                    tag : 'h6',
-                                                },
-                                            ]);
+                                            result += startTagName([ { tag : 'h6', }, ]);
+                                            result += getContainer({ content : getFirstUpperCase(object['array'][x]['items'][y]['title']), });
+                                            result += endTagName([ { tag : 'h6', }, ]);
                                         };
                                         result += startTagName([ { tag : 'ul', }, ]);
                                             for (let z = 0; z < object['array'][x]['items'][y]['items']['length']; z++) {
@@ -971,14 +801,7 @@ const bootstrapNavbar = (object) => {
                                                 result += getContainer({
                                                     content : object['array'][x]['items'][y]['items'][z]['title'],
                                                 });
-                                                result += endTagName([
-                                                    {
-                                                        tag : 'li',
-                                                    },
-                                                    {
-                                                        tag : 'a',
-                                                    },
-                                                ]);
+                                                result += endTagName([ { tag : 'li', }, { tag : 'a', }, ]);
                                             };
                                         result += '</ul>';
                                     result += '</li>';
@@ -1026,11 +849,7 @@ const bootstrapNavbar = (object) => {
                 result += getContainer({
                     content : getFirstUpperCase('Search'),
                 });
-                result += endTagName([
-                    {
-                        tag : 'button',
-                    },
-                ]);
+                result += endTagName([ { tag : 'button', }, ]);
             result += '</form>';
         };
     result += endTagName([ { tag : 'nav', param : { id : 'navbar' } } ]);
@@ -1059,14 +878,7 @@ const bootstrapModal = (object) => {
                     result += getContainer({
                         content : object['title'],
                     });
-                    result += endTagName([
-                        {
-                            tag : 'div',
-                        },
-                        {
-                            tag : 'h5',
-                        },
-                    ]);
+                    result += endTagName([ { tag : 'div', }, { tag : 'h5', }, ]);
                 };
                 if (getValidation(object['description'])) {
                     result += startTagName([
@@ -1088,17 +900,7 @@ const bootstrapModal = (object) => {
                     result += getContainer({
                         content : object['description'],
                     });
-                    result += endTagName([
-                        {
-                            tag : 'div',
-                        },
-                        {
-                            tag : 'p',
-                        },
-                        {
-                            tag : 'em',
-                        },
-                    ]);
+                    result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'em', }, ]);
                 };
                 result += startTagName([
                     {
@@ -1131,17 +933,8 @@ const bootstrapModal = (object) => {
                             },
                         },
                     ]);
-                    result += getContainer({
-                        content : getFirstUpperCase('yes!'),
-                    });
-                    result += endTagName([
-                        {
-                            tag : 'form',
-                        },
-                        {
-                            tag : 'button',
-                        },
-                    ]);
+                    result += getContainer({ content : getFirstUpperCase('yes!'), });
+                    result += endTagName([ { tag : 'form', }, { tag : 'button', }, ]);
                     result += startTagName([
                         {
                             tag : 'button',
@@ -1151,14 +944,8 @@ const bootstrapModal = (object) => {
                             },
                         },
                     ]);
-                    result += getContainer({
-                        content : getFirstUpperCase('no.'),
-                    });
-                    result += endTagName([
-                        {
-                            tag : 'button',
-                        },
-                    ]);
+                    result += getContainer({ content : getFirstUpperCase('no.'), });
+                    result += endTagName([ { tag : 'button', }, ]);
                 result += endTagName([ { tag : 'div', }, ]);
             result += endTagName([ { tag : 'div', }, ]);
         result += endTagName([ { tag : 'div', }, ]);
@@ -1280,7 +1067,6 @@ let bootstrapAccordion = (object) => {
                 index : i,
                 title : object['array'][i]['title'],
                 description : object['array'][i]['description'],
-                // columnImage : 2,
             });
             let accordionID = '';
             accordionID += 'accordion';
@@ -1320,14 +1106,7 @@ let bootstrapAccordion = (object) => {
                                 index : getTypeNumber({ index : x }),
                                 content : object['array'][i]['items'][x]['title'],
                             });
-                            result += endTagName([
-                                {
-                                    tag : 'h2',
-                                },
-                                {
-                                    tag : 'button',
-                                },
-                            ]);
+                            result += endTagName([ { tag : 'h2', }, { tag : 'button', }, ]);
                         };
                         result += startTagName([
                             {
@@ -1358,11 +1137,7 @@ let bootstrapAccordion = (object) => {
                                                         },
                                                     },
                                                 ]);
-                                                result += endTagName([
-                                                    {
-                                                        tag : 'div',
-                                                    },
-                                                ]);
+                                                result += endTagName([ { tag : 'div', }, ]);
                                             };
                                             if (getValidation(object['array'][i]['items'][x]['description'])) {
                                                 result += startTagName([
@@ -1382,17 +1157,8 @@ let bootstrapAccordion = (object) => {
                                                         tag : 'h5',
                                                     },
                                                 ]);
-                                                result += getContainer({
-                                                    content : object['array'][i]['items'][x]['description'],
-                                                });
-                                                result += endTagName([
-                                                    {
-                                                        tag : 'div',
-                                                    },
-                                                    {
-                                                        tag : 'h5',
-                                                    },
-                                                ]);
+                                                result += getContainer({ content : object['array'][i]['items'][x]['description'], });
+                                                result += endTagName([ { tag : 'div', }, { tag : 'h5', }, ]);
                                             };
                                         result += '</div>';
                                     };
@@ -1410,11 +1176,7 @@ let bootstrapAccordion = (object) => {
                                                         },
                                                     },
                                                 ]);
-                                                result += endTagName([
-                                                    {
-                                                        tag : 'div',
-                                                    },
-                                                ]);
+                                                result += endTagName([ { tag : 'div', }, ]);
                                             };
                                             result += '<div class=\"col-' + columnText + '\">';
                                                 result += '<ul>';
@@ -1439,11 +1201,7 @@ let bootstrapAccordion = (object) => {
                                                                     index : n,
                                                                     content : object['array'][i]['items'][x]['items'][y]['title'],
                                                                 });
-                                                                result += endTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                ]);
+                                                                result += endTagName([ { tag : 'p', }, ]);
                                                             };
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['description'])) {
                                                                 result += startTagName([
@@ -1461,17 +1219,8 @@ let bootstrapAccordion = (object) => {
                                                                         tag : 'em',
                                                                     },
                                                                 ]);
-                                                                result += getContainer({
-                                                                    content : object['array'][i]['items'][x]['items'][y]['description'],
-                                                                });
-                                                                result += endTagName([
-                                                                    {
-                                                                        tag : 'p',
-                                                                    },
-                                                                    {
-                                                                        tag : 'em',
-                                                                    },
-                                                                ]);
+                                                                result += getContainer({ content : object['array'][i]['items'][x]['items'][y]['description'], });
+                                                                result += endTagName([ { tag : 'p', }, { tag : 'em', }, ]);
                                                             };
                                                             if (getValidation(object['array'][i]['items'][x]['items'][y]['items'])) {
                                                                 result += startTagName([ { tag : 'ul', }, ]);
@@ -1503,17 +1252,7 @@ let bootstrapAccordion = (object) => {
                                                                                 index : n,
                                                                                 content : object['array'][i]['items'][x]['items'][y]['items'][z],
                                                                             });
-                                                                            result += endTagName([
-                                                                                {
-                                                                                    tag : 'li',
-                                                                                },
-                                                                                {
-                                                                                    tag : 'p',
-                                                                                },
-                                                                                {
-                                                                                    tag : 'em',
-                                                                                },
-                                                                            ]);
+                                                                            result += endTagName([ { tag : 'li', }, { tag : 'p', }, { tag : 'em', }, ]);
                                                                         };
                                                                     };
                                                                 result += '</ul>';
@@ -1841,14 +1580,14 @@ const getModelSearchParams = (object) => {
         for (let i = 0; i < object['array']['length']; i++)
             result.push({
                 [object['array'][i]] : {
-                    [Op.like] : `%${ object['key'] }%`,
+                    [ Op.like ] : `%${ object['key'] }%`,
                 },
             });
     }
     return {
         ...result ? {
             where : {
-                [Op.or] : [
+                [ Op.or ] : [
                     ...result,
                 ],
             },
