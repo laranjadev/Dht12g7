@@ -22,6 +22,6 @@ galleryClasses();
 
 window.addEventListener('DOMContentLoaded', () => {
     new SimpleLightbox({
-        elements : 'a.box',
+        elements : 'a.light-box',
     });
 });

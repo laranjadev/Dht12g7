@@ -241,79 +241,6 @@ export let accordionClasses = (object) => {
     });
 };
 export let listgroupClasses = (object) => {
-    addRemoveClasses({
-        elementList : [
-            '#body>#row',
-        ],
-        classeList : [
-            'row',
-            'gx-3',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col',
-        ],
-        classeList : [
-            'col-lg-4',
-            'col-sm-6',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col>#list-group>a',
-        ],
-        classeList : [
-            'list-group-item',
-            'list-group-item-action',
-            'flex-column',
-            'rounded',
-            'shadow-sm',
-            'p-3',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col>#list-group>a>img',
-        ],
-        classeList : [
-            ...imageClasses,
-            'mb-3',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col',
-            '#body>#row>#col>#list-group>a>p',
-        ],
-        classeList : [
-            'mb-3',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col>#list-group>a>ul',
-        ],
-        classeList : [
-            'list-group',
-            'list-group-flush',
-        ],
-        method : 'add',
-    });
-    addRemoveClasses({
-        elementList : [
-            '#body>#row>#col>#list-group>a>ul>li',
-        ],
-        classeList : [
-            'list-group-item',
-        ],
-        method : 'add',
-    });
 };
 
 export let galleryClasses = (object) => {
@@ -353,7 +280,7 @@ export let galleryClasses = (object) => {
             '#body #col #image a',
         ],
         classeList : [
-            'box',
+            'light-box',
         ],
         method : 'add',
     });

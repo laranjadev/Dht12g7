@@ -526,51 +526,80 @@ const bootstrapGallery = (object) => {
                 result += '<div id=\"body\">';
                     result += '<div id=\"row\">';
                         for (let y = 0; y < object['array'][x]['items']['length']; y++) {
-                            result += '<div id=\"col\">';
-                                result += lightBox({
-                                    title : object['array'][x]['items'][y]['title'],
-                                    description : object['array'][x]['items'][y]['description'],
-                                    image : object['array'][x]['items'][y]['image'],
-                                });
-                                if (getValidation(object['array'][x]['items'][y]['title'])) {
-                                    result += startTagName([
-                                        {
-                                            tag : 'div',
-                                            param : {
-                                                id : 'title',
+                            if (getValidation(object['array'][x]['items'][y]['image'])) {
+                                result += '<div id=\"col\">';
+                                    if (getValidation(object['array'][x]['items'][y]['image'])) {
+                                        result += startTagName([
+                                            {
+                                                tag : 'div',
+                                                param : {
+                                                    id : 'image',
+                                                },
                                             },
-                                        },
-                                        {
-                                            tag : 'p',
-                                        },
-                                        {
-                                            tag : 'b',
-                                        },
-                                    ]);
-                                    result += getContainer({ content : object['array'][x]['items'][y]['title'], });
-                                    result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'b', }, ]);
-                                };
-                                if (getValidation(object['array'][x]['items'][y]['description'])) {
-                                    result += startTagName([
-                                        {
-                                            tag : 'div',
-                                            param : {
-                                                id : 'title',
+                                            {
+                                                tag : 'a',
+                                                param : {
+                                                    href : object['array'][x]['items'][y]['image'],
+                                                    title : object['array'][x]['items'][y]['title'],
+                                                },
                                             },
-                                        },
-                                        {
-                                            tag : 'p',
-                                        },
-                                        {
-                                            tag : 'em',
-                                        },
-                                    ]);
-                                    result += getContainer({
-                                        content : object['array'][x]['items'][y]['description'],
-                                    });
-                                    result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'em', }, ]);
-                                };
-                            result += '</div>';
+                                            {
+                                                tag : 'img',
+                                                param : {
+                                                    alt : object['array'][x]['items'][y]['title'],
+                                                    src : object['array'][x]['items'][y]['image'],
+                                                },
+                                            },
+                                            {
+                                                tag : 'div',
+                                                param : {
+                                                    id : 'caption',
+                                                },
+                                            },
+                                        ]);
+                                        result += getContainer({ content : object['array'][x]['items'][y]['title'], });
+                                        result += endTagName([ { tag : 'div', }, { tag : 'a', }, { tag : 'div', }, ]);
+                                        if (getValidation(object['array'][x]['items'][y]['title'])) {
+                                            result += startTagName([
+                                                {
+                                                    tag : 'div',
+                                                    param : {
+                                                        id : 'title',
+                                                    },
+                                                },
+                                                {
+                                                    tag : 'p',
+                                                },
+                                                {
+                                                    tag : 'b',
+                                                },
+                                            ]);
+                                            result += getContainer({ content : object['array'][x]['items'][y]['title'], });
+                                            result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'b', }, ]);
+                                        };
+                                    };
+                                    if (getValidation(object['array'][x]['items'][y]['description'])) {
+                                        result += startTagName([
+                                            {
+                                                tag : 'div',
+                                                param : {
+                                                    id : 'title',
+                                                },
+                                            },
+                                            {
+                                                tag : 'p',
+                                            },
+                                            {
+                                                tag : 'em',
+                                            },
+                                        ]);
+                                        result += getContainer({
+                                            content : object['array'][x]['items'][y]['description'],
+                                        });
+                                        result += endTagName([ { tag : 'div', }, { tag : 'p', }, { tag : 'em', }, ]);
+                                    };
+                                result += '</div>';
+                            };
                         };
                     result += '</div>';
                 result += '</div>';
