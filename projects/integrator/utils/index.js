@@ -497,30 +497,9 @@ const getHeader = (object) => {
     };
     let isDescription = '';
     if (getValidation(object['description'])) {
-        const isTag = [
-            {
-                name : 'p',
-                param : {
-                    class : [
-                        'text-danger',
-                    ],
-                },
-            },
-            {
-                name : 'b',
-            },
-            {
-                name : 'em',
-            },
-        ];
+        const isTag = [ { name : 'p', param : { class : [ 'text-danger', ], }, }, { name : 'b', }, { name : 'em', }, ];
         isDescription += startTagName(isTag);
-        isDescription += getContainer({
-            container : {
-                content : object['description'],
-            },
-            tag : isTag,
-            'entry-point' : '.',
-        });
+        isDescription += getContainer({ container : { content : object['description'], }, tag : isTag, 'entry-point' : '.', });
         isDescription += endTagName(isTag);
     };
     if (getValidation(object['title']) || getValidation(object['description'])) {
@@ -1315,7 +1294,7 @@ let bootstrapAccordion = (object) => {
     for (let i = 0; i < object['array']['length']; i++) {
         result += isQuickView;
         result += getIntercalate();
-            result += ({
+            result += getHeader({
                 title : object['array'][i]['title'],
                 description : object['array'][i]['description'],
                 index : i,
