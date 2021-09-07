@@ -380,25 +380,46 @@ const circleThumbnail = (object) => {
         ]);
         result += startTagName([
             {
-                name : 'img',
+                name : 'div',
                 param : {
                     class : [
-                        'img-fluid',
-                        'img-profile',
-                        'img-thumbnail',
-                        'mx-auto',
                         'rounded-circle',
                         'shadow-sm',
+                        'p-1',
+                        'bg-white',
+                        'border',
+                        'border-secondary',
                     ],
-                    src : object['image'],
                     style : {
                         height : object['width'],
                         width : object['width'],
-                    }
+                    },
                 },
             },
         ]);
-        result += endTagName([ { name : 'div', }, { name : 'a', }, ]);
+        result += startTagName([
+            {
+                name : 'div',
+                param : {
+                    class : [
+                        'rounded-circle',
+                        'h-100',
+                        'w-100',
+                    ],
+                    style : {
+                        'background-attachment' : 'scroll',
+                        'background-image' : object['image'],
+                        'background-position' : 'center',
+                        'background-repeat' : 'no-repeat',
+                        'background-size' : 'cover',
+                    },
+                },
+            },
+        ]);
+        result += endTagName([ { name : 'div', }, ]);
+        result += endTagName([ { name : 'div', }, ]);
+        result += endTagName([ { name : 'div', }, ]);
+        result += endTagName([ { name : 'a', }, ]);
     };
     return result;
 };
@@ -470,8 +491,6 @@ const boxThumbnail = (object) => {
     return result;
 };
 
-// FABIO
-
 const getHeader = (object) => {
     let result = '';
     let isTitle = '';
@@ -493,15 +512,40 @@ const getHeader = (object) => {
                 content : object['title'],
             },
         });
-        isTitle += endTagName([ { name : 'h1' } ]);
+        isTitle += endTagName([
+            {
+                name : 'h1',
+            },
+        ]);
     };
     let isDescription = '';
     if (getValidation(object['description'])) {
-        const isTag = [ { name : 'p', param : { class : [ 'text-danger', ], }, }, { name : 'b', }, { name : 'em', }, ];
+        const isTag = [
+            {
+                name : 'p',
+                param : {
+                    class : [
+                        'text-danger',
+                    ],
+                },
+            },
+            {
+                name : 'b',
+            },
+            {
+                name : 'em',
+            },
+        ];
         isDescription += startTagName(isTag);
-        isDescription += getContainer({ container : { content : object['description'], }, tag : isTag, 'entry-point' : '.', });
+        isDescription += getContainer({
+            container : {
+                content : object['description'],
+            },
+            tag : isTag,
+        });
         isDescription += endTagName(isTag);
     };
+
     if (getValidation(object['title']) || getValidation(object['description'])) {
         result += startTagName([
             {
@@ -554,7 +598,7 @@ const getHeader = (object) => {
         result += '</div>';
     };
     return result;
-}
+};
 
 const getIntercalate = (object) => {
     let result = '';
@@ -1254,16 +1298,17 @@ const getContainer = (object) => {
     if (getValidation(object['container'])) {
         for (const prop in getProperty(object['container'])['value']) {
             if (getProperty(object['container'])['prop'][prop] === 'content') {
-                let isJoin = '';
-                isJoin += getValidation(object['entry-point']) ? object['entry-point'] : '', 
-                isJoin += getValidation(object['tag']) ? endTagName(object['tag']) : '';
-                isJoin += getValidation(object['tag']) ? startTagName(object['tag'].reverse()) : '';
-                result += getValidation(object['entry-point'])
-                ? getProperty(object['container'])['value'][prop].split(object['entry-point']).join(isJoin)
-                : getProperty(object['container'])['value'][prop];
+                if (getValidation(object['entry-point'])) {
+                    let JOIN = '';
+                    JOIN += object['entry-point'];
+                    JOIN += getValidation(object['tag']) ? endTagName(object['tag']) + startTagName(object['tag'].reverse()) : '';
+                    result += getProperty(object['container'])['value'][prop].split(object['entry-point']).join(JOIN);
+                } else {
+                    result += getProperty(object['container'])['value'][prop];
+                }
             } else if (getProperty(object['container'])['prop'][prop] !== 'content') {
                 result += getProperty(object['container'])['value'][prop];
-            }
+            };
         };
     };
     return result;
@@ -1282,7 +1327,7 @@ let objectCleaner = (content) => {
         };
         if (isEmpty(index)) { } else {
             array.push(index);
-        };getHeader
+        };
     };
     return array;
 };
