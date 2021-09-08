@@ -27,6 +27,8 @@ const isEmpty = (object) => {
 const getValidation = (content) => {
     if (!String(content))
         return false;
+    else if (!content)
+        return false;
     else if (isThis(content, 'undefined'))
         return false;
     else if (isThis(content, 'object') && isEmpty(content))
@@ -46,12 +48,11 @@ const footerQuickMenu = (object) => {
     for (let i = 0; i < object['array']['length']; i++) {
         let isHREF = '';
         isHREF += '/' + object['pathPrefix'];
-        isHREF += '/' + (isThis(object['array'][i]['title'], 'object')
-        ? object['array'][i]['title'][0] : object['array'][i]['title']);
+        isHREF += '/' + (isThis(object['array'][i]['title'], 'object') ? object['array'][i]['title'][0] : object['array'][i]['title']);
         isHREF += '/' + object['index'];
         isHREF = getValidation(object['array'][i]['path']) ? isHREF : '#';
         isHREF = isHREF.toLowerCase();
-        let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][x]['title'] : object['array'][i]['title'][1];
+        let isTitle = isThis(object['array'][i]['title'], 'string') ? object['array'][i]['title'] : object['array'][i]['title'][1];
         let isTarget = getValidation(object['array'][i]['target']) ? ' data-bs-toggle=\"modal\"' : '';
         let isToggle = getValidation(object['array'][i]['toggle']) ? ' data-bs-target=\"#modal-' + object['index'] + '\"' : '';
         isContainer += startTagName([
@@ -67,7 +68,6 @@ const footerQuickMenu = (object) => {
         ]);
         isContainer += getContainer({
             container : {
-                index : n,
                 content : getFirstUpperCase(isTitle),
             },
         });
@@ -200,7 +200,7 @@ const viewListGroup = (object) => {
                                                                 title : object['array'][x]['items'][y]['items'][z]['title'],
                                                                 description : '',
                                                                 image : object['array'][x]['items'][y]['items'][z]['image'],
-                                                                width : '150px',
+                                                                diameter : 150,
                                                                 col : 6,
                                                             });
                                                             let n = '';
@@ -362,63 +362,88 @@ const circleThumbnail = (object) => {
                 },
             },
         ]);
-        result += startTagName([
-            {
-                name : 'a',
-                param : {
-                    href : object['image'],
-                    class : [
-                        'align-self-center',
-                        'd-flex',
-                        'd-lg-block',
-                        'd-none',
-                        'light-box',
-                    ],
-                    title : object['title'],
-                },
-            },
-        ]);
-        result += startTagName([
-            {
-                name : 'div',
-                param : {
-                    class : [
-                        'rounded-circle',
-                        'shadow-sm',
-                        'p-1',
-                        'bg-white',
-                        'border',
-                        'border-secondary',
-                    ],
-                    style : {
-                        height : object['width'],
-                        width : object['width'],
+            result += startTagName([
+                {
+                    name : 'a',
+                    param : {
+                        href : object['image'],
+                        class : [
+                            'align-self-center',
+                            'd-flex',
+                            'd-lg-block',
+                            'd-none',
+                            'light-box',
+                        ],
+                        ...getValidation(object['title']) ? { title : object['title'] } : { },
                     },
                 },
-            },
-        ]);
-        result += startTagName([
-            {
-                name : 'div',
-                param : {
-                    class : [
-                        'rounded-circle',
-                        'h-100',
-                        'w-100',
-                    ],
-                    style : {
-                        'background-attachment' : 'scroll',
-                        'background-image' : object['image'],
-                        'background-position' : 'center',
-                        'background-repeat' : 'no-repeat',
-                        'background-size' : 'cover',
+            ]);
+                result += startTagName([
+                    {
+                        name : 'div',
+                        param : {
+                            class : [
+                                'bg-white',
+                                'border-secondary',
+                                'border',
+                                'p-1',
+                                'rounded-circle',
+                                'shadow-sm',
+                            ],
+                            style : {
+                                ...getValidation(object['diameter']) ? { height : object['diameter'] + 'px' } : { height : '150px' },
+                                ...getValidation(object['diameter']) ? { width : object['diameter'] + 'px' } : { width : '150px' },
+                            },
+                        },
                     },
-                },
-            },
-        ]);
-        result += endTagName([ { name : 'div', }, ]);
-        result += endTagName([ { name : 'div', }, ]);
-        result += endTagName([ { name : 'div', }, ]);
+                ]);
+                    result += startTagName([
+                        {
+                            name : 'div',
+                            param : {
+                                class : [
+                                    'h-100',
+                                    'rounded-circle',
+                                    'w-100',
+                                ],
+                                style : {
+                                    'background-attachment' : 'scroll',
+                                    'background-image' : object['image'],
+                                    'background-position' : 'center',
+                                    'background-repeat' : 'no-repeat',
+                                    'background-size' : 'cover',
+                                },
+                            },
+                        },
+                    ]);
+                    result += endTagName([ { name : 'div', }, ]);
+                    result += startTagName([
+                        {
+                            name : 'div',
+                            param : {
+                                id : 'caption',
+                                class : [
+                                    'bg-danger',
+                                    'caption',
+                                    'text-white',
+                                    'rounded-circle',
+                                ],
+                                style : {
+                                    position : 'relative',
+                                    ...getValidation(object['diameter']) ? { top : (- 1 * object['diameter'] + 10) + 'px' } : { top : '-140px' },
+                                    left : '0',
+                                },
+                            },
+                        },
+                    ]);
+                    result += getContainer({
+                        container : {
+                            content : object['title'].substr(0, 'Bienal de São'['length']) + ' [...].',
+                        },
+                    });
+                    result += endTagName([ { name : 'div', }, ]);
+                result += endTagName([ { name : 'div', }, ]);
+            result += endTagName([ { name : 'div', }, ]);
         result += endTagName([ { name : 'a', }, ]);
     };
     return result;
@@ -573,8 +598,10 @@ const getHeader = (object) => {
                     title : object['title'],
                     description : '',
                     image : object['image'],
-                    width : '150px',
+                    diameter : 150,
                     col : 2,
+
+                    
                 });
                 if (getValidation(isTitle) || getValidation(isDescription)) {
                     result += startTagName([

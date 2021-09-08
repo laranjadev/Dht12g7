@@ -1,10 +1,13 @@
-// $size : 42px;
-// @for $i from 1 through 6
-// {
-//     h#{ $i }
-//     {
-//         font-size: $size - ($i - 1) * ($size - $size / 2) / 5;
-//         text-transform: capitalize;
-//         @extend %null-all;
-//     }
-// }
+@import 'null.scss';
+
+$size : 42px;
+
+@for $i from 1 through 6
+{
+    h#{ $i }
+    {
+        font-size: $size - ($i - 1) * ($size - $size / 2) / 5;
+        text-transform: capitalize;
+        @extend %everything;
+    }
+}

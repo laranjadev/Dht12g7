@@ -1,25 +1,11 @@
+@import 'null.scss';
+
 $margin : 1rem;
-
-%null-margin
-{
-    margin: 0;
-}
-
-%null-padding
-{
-    padding: 0;
-}
-
-%null-all
-{
-    @extend %null-margin;
-    @extend %null-padding;
-}
 
 *
 {
     box-sizing: border-box;
-    @extend %null-all;
+    @extend %everything;
 }
 
 body,
@@ -27,19 +13,14 @@ html
 {
     height: 100%;
     width: 100%;
-    @extend %null-all;
 }
 
-
-
-label
-{
-    @extend %null-all;
-}
-
+body,
+html,
+label,
 p
 {
-    @extend %null-all;
+    @extend %everything;
 }
 
 a
@@ -53,9 +34,9 @@ ul
     li
     {
         list-style: none;
-        @extend %null-all;
+        @extend %everything;
     }
-    @extend %null-margin;
+    @extend %margin;
 }
 
 iframe
