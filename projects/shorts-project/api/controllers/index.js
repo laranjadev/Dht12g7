@@ -1,51 +1,56 @@
-const { Op } = require("sequelize");
-const Sequelize = require("sequelize");
+const { Op } = require('sequelize');
 const { Public } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Sequelize = require("sequelize");
+
 // const authConfig = require('../config/auth.json');
+
 const {
-    capitalize,
-    plural,
+    getJSONFile,
 } = require('../utils');
-const emailList = [
-    'gmail',
-    'hotmail',
-    'yahoo'
-];
-const {
-    firstName,
-    lastName
-} = require('../database');
-let addIndex = (index) => {    
-    for (let i = 0; i < firstName[index]['length']; i++) {
-        logList.push({
-            firstName : firstName[index][i],
-            lastName : lastName[Math.floor(Math.random() * lastName['length'])],
-            gender : index,
-        });
+
+let variables = () => {
+    return {
+        ...getJSONFile({ content : 'last-name' }),
+        ...getJSONFile({ content : 'men' }),
+        ...getJSONFile({ content : 'women' }),
     };
 };
-const logList = [
-    ...addIndex('men'),
-    ...addIndex('women'),
-];
-const bulkList = [];
-for (let i = 0; i < logList['length']; i++) {
-    let email = logList[i]['firstName'].substr(0, 1);
-    email += logList[i]['lastName'].substr(0, 1);
-    let password = Math.floor(Math.random() * 999999 + 100000);
-    email += password + '@' + emailList[Math.floor(Math.random() * emailList['length'])] + '.com';
-    bulkList.push({
-        firstName : capitalize(logList[i]['firstName']),
-        lastName : capitalize(logList[i]['lastName']),
-        gender : capitalize(logList[i]['gender']),
-        email : String(email).toLowerCase(),
-        password : bcrypt.hashSync(String(password), 10),
-    });
-};
+
+// let addIndex = (index) => {    
+//     for (let i = 0; i < firstName[index]['length']; i++) {
+//         logList.push({
+//             firstName : firstName[index][i],
+//             lastName : lastName[Math.floor(Math.random() * lastName['length'])],
+//             gender : index,
+//         });
+//     };
+// };
+
+// const logList = [
+//     ...addIndex('men'),
+//     ...addIndex('women'),
+// ];
+
+// const bulkList = [];
+// for (let i = 0; i < logList['length']; i++) {
+//     let email = logList[i]['firstName'].substr(0, 1);
+//     email += logList[i]['lastName'].substr(0, 1);
+//     let password = Math.floor(Math.random() * 999999 + 100000);
+//     email += password + '@' + emailList[Math.floor(Math.random() * emailList['length'])] + '.com';
+//     bulkList.push({
+//         firstName : capitalize(logList[i]['firstName']),
+//         lastName : capitalize(logList[i]['lastName']),
+//         gender : capitalize(logList[i]['gender']),
+//         email : String(email).toLowerCase(),
+//         password : bcrypt.hashSync(String(password), 10),
+//     });
+// };
+
 // [1, 2, 3].map((n) => { return Math.pow(n, 2); });
 // [1, 2, 3].map(n => n ** 2);
+
 const action = {
     // TDD : Test Driven Development.
     index : async (req, res, next) => {

@@ -176,7 +176,7 @@ routes.get('/region/:id?', async (req, res, next) => {
     });
     let number = 0;
     let indexes = [];
-    for (let i = 0; i <= Number(index['length'] - 1); i++) {
+    for (let i = 0; i < index['length']; i++) {
         indexes.push({});
     };
     for (let x = 0; x <= Number(index['length'] - 1); x++) {

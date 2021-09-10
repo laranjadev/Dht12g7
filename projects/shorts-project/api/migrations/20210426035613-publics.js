@@ -1,14 +1,5 @@
 'use strict';
-// class Foo extends Model {
-//   get fullName() {
-//     return this.firstName + ' ' + this.lastName;
-//   }
-//   set fullName(value) {
-//     const name = value.split(' ');
-//     this.setDataValue('firstName', name.slice(0, -1).join(' '));
-//     this.setDataValue('lastName', name.slice(-1).join(' '));
-//   }
-// }
+
 module.exports = {
   up : async (queryInterface, Sequelize) => {
     return await queryInterface.createTable('publics', {
