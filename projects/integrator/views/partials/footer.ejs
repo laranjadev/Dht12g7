@@ -1,7 +1,11 @@
+            </div>
+        </div>
     </div>    
     <footer>
-        <%- '<p id=\"signature\"></p>'; %>
-        <%- '<p id=\"timer\"></p>'; %>
+        <%- startTagName([ { name : 'p', param : { id : 'signature', }, }, ]); %>
+        <%- endTagName([ { name : 'p' }, ]); %>
+        <%- startTagName([ { name : 'p', param : { id : 'timer', }, }, ]); %>
+        <%- endTagName([ { name : 'p' }, ]); %>
     </footer>
     <%- typeof isGJSMFile !== 'undefined' ? isGJSMFile : ''; %>
     <%- typeof isPJSMFile !== 'undefined' ? isPJSMFile : ''; %>

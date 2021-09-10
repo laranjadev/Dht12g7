@@ -2204,9 +2204,14 @@ let views = () => {
         viewListGroup,
     };
 };
-
 const packages = () => {
     return {
+        ...bootstraps(),
+        ...variables(),
+        ...views(),
+        endTagName,
+        footerQuickMenu,
+        getContainer,
         getCurrency,
         getDateFormat,
         getFirstUpperCase,
@@ -2214,11 +2219,8 @@ const packages = () => {
         getValidation,
         isEmpty,
         isThis,
+        startTagName,
         toClean,
-        footerQuickMenu,
-        ...bootstraps(),
-        ...variables(),
-        ...views(),
     };
 };
 

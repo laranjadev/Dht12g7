@@ -8,8 +8,12 @@
     <%- typeof isGCSSFile !== 'undefined' ? isGCSSFile : ''; %>
     <%- typeof isPCSSFile !== 'undefined' ? isPCSSFile : ''; %>
     <%- typeof isPageTitle !== 'undefined' ? '<title>' + getFirstUpperCase(isPageTitle) + '</title>' : ''; %>
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <%- startTagName([ { name : 'link', param : { type : 'image/x-icon', href : 'favicon.ico', }, }, ]); %>
 </head>
 <body>
-    <div id="container">
-        <%- include('./navbar'); %>
+    <%- startTagName([ { name : 'div', param : { id : 'container', }, }, ]); %>
+        <%- startTagName([ { name : 'div', param : { class : [ 'row', ], }, }, ]); %>
+            <%- startTagName([ { name : 'div', param : { class : [ 'col-2', ], }, }, ]); %>
+            <%- endTagName([ { name : 'div', }, ]); %>
+            <%- startTagName([ { name : 'div', param : { class : [ 'col-10', ], }, }, ]); %>
+                <%- include('./navbar'); %>

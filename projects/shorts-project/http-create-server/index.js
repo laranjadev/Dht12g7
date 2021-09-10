@@ -1,8 +1,6 @@
-require('http').createServer((req, res) => {
+require('http').createServer((req, res, next) => {
     console.log('server running...');    
-    res.writeHead(200, {
-        'Content-type' : 'text/plain',
-    });
+    res.writeHead(200, { 'Content-type' : 'text/plain', });
     switch(req['url']) {
         case '/' :
             res.end('Home');
@@ -13,5 +11,5 @@ require('http').createServer((req, res) => {
         default :
             res.end('...');
         break;
-    }
+    };
 }).listen(3333, 'localhost');
