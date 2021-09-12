@@ -3,6 +3,9 @@ CREATE DATABASE integrator;
 
 DROP DATABASE phpmyadmin;
 
+DROP TABLE publics;
+DROP TABLE sequelizemeta;
+
 USE api;
 USE integrator;
 

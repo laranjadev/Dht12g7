@@ -231,20 +231,27 @@ routes.get('/', (req, res, next) => {
 });
 
 // routes.get('/public/create', control.create);
+
 routes.post('/public/store', control.store);
+
 // routes.get('/public/login', control.login);
 // routes.post('/public/authenticate', control.authenticate);
 // routes.get('/public/logout', control.logout);
 // routes.use(require('../middlewares'));
+
 routes.get('/public/', control.index);
 routes.get('/public/all', control.all);
 routes.get('/public/one/:id?', control.one);
+
 // routes.get('/public/edit/:id', control.edit);
+
 routes.put('/public/update/:id', control.update);
 routes.put('/public/disable/:id', control.disable);
 routes.delete('/public/destroy/:id', control.destroy);
+
 // routes.post('/public/authenticated', control.authenticated);
 // routes.get('/public/', control.search);
+
 routes.get('/public/bulk', control.bulk);
 
 module.exports = routes;

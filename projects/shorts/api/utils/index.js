@@ -1,23 +1,82 @@
-let capitalize = (string) => {
-    let html = '';
-    let array = string.split(' ');
-    for (let i = 0; i <= Number(array['length'] - 1); i++) {
-        html += array[i].substr(0, 1).toUpperCase();
-        html += array[i].substr(1, array[i]['length']).toLowerCase();
-        html += i < Number(array['length'] - 1) ? ' ' : '';
-    }
-    return html;
+const getFirstUpperCase = (content) => {
+    let result = '';
+    result += String(content).charAt(0).toUpperCase();
+    result += String(content).slice(1);
+    return result;
 };
-let plural = (string) => {
-    string = (string).trim().toLowerCase();
-    if (String(string).substr(String(string)['length'] - 1, String(string)['length']) === 'y') {
-        string = String(string).substr(0, Number(String(string)['length'] - 1)) + 'ies';
-    } else if (String(string).substr(String(string)['length'] - 1, String(string)['length']) === 's') {
-        string = String(string).substr(0, Number(String(string)['length'])) + 'es';
-    } else { string += 's'; }
-    return string;
+
+const isTheLast = (string, letter) => {
+    return string.substr(string['length'] - 1, string['length']) === letter;
 };
+
+const getPlural = (content) => {
+    if (isTheLast(content, 'y')) content = content.substr(0, content['length'] - 1) + 'ies';
+    else if (isTheLast(content, 's')) content += 'es';
+    else content += 's';
+    return content.trim().toLowerCase();
+};
+
+const getModelPublic = (Sequelize) => {
+    return {
+        id : {
+            allowNull : false,
+            autoIncrement : true,
+            primaryKey : true,
+            type : Sequelize.INTEGER,
+        },
+        'first-name' : {
+            allowNull : false,
+            type : Sequelize.STRING,
+        },
+        'last-name' : {
+            allowNull : false,
+            type : Sequelize.STRING,
+        },
+        email : {
+            allowNull : false,
+            type : Sequelize.STRING,
+            validate : {
+                isEmail : true,
+            },
+        },
+        password : {
+            allowNull : false,
+            defaultValue : '',
+            type : Sequelize.STRING,
+            validate : {
+                len : [ 8, 12 ],
+            },
+        },
+        approved : {
+            allowNull : false,
+            defaultValue : false,
+            type : Sequelize.BOOLEAN,
+        },
+        deleted : {
+            allowNull : false,
+            defaultValue : false,
+            type : Sequelize.BOOLEAN,
+        },
+        disable : {
+            allowNull : false,
+            defaultValue : false,
+            type : Sequelize.BOOLEAN,
+        },
+        createdAt : {
+            allowNull : true,
+            defaultValue: Sequelize.NOW,
+            type : Sequelize.DATE,
+        },
+        updatedAt : {
+            allowNull : true,
+            defaultValue: Sequelize.NOW,
+            type : Sequelize.DATE,
+        },
+    };
+};
+
 module.exports = {
-	capitalize,
-	plural,
+	getPlural,
+    getModelPublic,
+    getFirstUpperCase,
 };

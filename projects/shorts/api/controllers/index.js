@@ -3,54 +3,64 @@ const Sequelize = require("sequelize");
 const { Public } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 // const authConfig = require('../config/auth.json');
-const {
-    capitalize,
-    plural,
-} = require('../utils');
-const emailList = [
-    'gmail',
-    'hotmail',
-    'yahoo'
-];
-const {
-    firstName,
-    lastName
-} = require('../database');
-let addIndex = (index) => {    
-    for (let i = 0; i < firstName[index]['length']; i++) {
-        logList.push({
-            firstName : firstName[index][i],
-            lastName : lastName[Math.floor(Math.random() * lastName['length'])],
-            gender : index,
-        });
-    };
-};
-const logList = [
-    ...addIndex('men'),
-    ...addIndex('women'),
-];
-const bulkList = [];
-for (let i = 0; i < logList['length']; i++) {
-    let email = logList[i]['firstName'].substr(0, 1);
-    email += logList[i]['lastName'].substr(0, 1);
-    let password = Math.floor(Math.random() * 999999 + 100000);
-    email += password + '@' + emailList[Math.floor(Math.random() * emailList['length'])] + '.com';
-    bulkList.push({
-        firstName : capitalize(logList[i]['firstName']),
-        lastName : capitalize(logList[i]['lastName']),
-        gender : capitalize(logList[i]['gender']),
-        email : String(email).toLowerCase(),
-        password : bcrypt.hashSync(String(password), 10),
-    });
-};
+
+// const {
+//     capitalize,
+//     plural,
+// } = require('../utils');
+
+// const emailList = [
+//     'gmail',
+//     'hotmail',
+//     'yahoo'
+// ];
+
+// const {
+//     firstName,
+//     lastName
+// } = require('../database');
+
+// let addIndex = (index) => {    
+//     for (let i = 0; i < firstName[index]['length']; i++) {
+//         logList.push({
+//             firstName : firstName[index][i],
+//             lastName : lastName[Math.floor(Math.random() * lastName['length'])],
+//             gender : index,
+//         });
+//     };
+// };
+
+// const logList = [
+//     ...addIndex('men'),
+//     ...addIndex('women'),
+// ];
+
+// const bulkList = [];
+// for (let i = 0; i < logList['length']; i++) {
+//     let email = logList[i]['firstName'].substr(0, 1);
+//     email += logList[i]['lastName'].substr(0, 1);
+//     let password = Math.floor(Math.random() * 999999 + 100000);
+//     email += password + '@' + emailList[Math.floor(Math.random() * emailList['length'])] + '.com';
+//     bulkList.push({
+//         firstName : capitalize(logList[i]['firstName']),
+//         lastName : capitalize(logList[i]['lastName']),
+//         gender : capitalize(logList[i]['gender']),
+//         email : String(email).toLowerCase(),
+//         password : bcrypt.hashSync(String(password), 10),
+//     });
+// };
+
 // [1, 2, 3].map((n) => { return Math.pow(n, 2); });
 // [1, 2, 3].map(n => n ** 2);
+
 const action = {
-    // TDD : Test Driven Development.
+
     index : async (req, res, next) => {
         return res.redirect('/public/all');
     },
+
     all : async (req, res, next) => {
         const {
             key,
@@ -110,6 +120,7 @@ const action = {
             return res.status(400).json(error);
         });
     },
+
     one : async (req, res, next) => {
         const { id } = req.params;
         if (!id) { return res.redirect('/public/all'); } else {
@@ -121,10 +132,6 @@ const action = {
         };
     },
     
-    // -----
-
-    create : async (req, res, next) => {
-    },
     store : async (req, res, next) => {
         try {
             const index = await Public.create({
@@ -136,10 +143,6 @@ const action = {
         };
     },
     
-    // -----
-
-    edit : async (req, res, next) => {
-    },
     update : async (req, res, next) => {
         // O registro foi encontrado? Sim. Não.
         // O registro foi alterado? Sim. Não.
@@ -169,6 +172,7 @@ const action = {
             return res.status(400).json(error);
         };
     },
+
     disable : async (req, res, next) => {
         try {
             const { id } = req.params;
@@ -187,6 +191,7 @@ const action = {
             return res.status(400).json(error);
         };
     },
+
     destroy : async (req, res, next) => {
         try {
             const { id } = req.params;
@@ -206,10 +211,6 @@ const action = {
         };
     },
 
-    // -----
-
-    login : async (req, res, next) => {
-    },
     authenticate : async (req, res, next) => {
         const {
             email,
@@ -241,6 +242,7 @@ const action = {
             token : token,
         });
     },
+
     authenticated : async (req, res, next) => {
         const index = await Public.findOne({
             where : {
@@ -255,13 +257,7 @@ const action = {
             return res.status(400).json(error);
         });
     },
-    logout : async (req, res, next) => {
-    },
-
-    // -----
-
-    search : async (req, res, next) => {
-    },
+    
     bulk : async (req, res, next) => {
         const index = await Public.bulkCreate(bulkList);
         return res.send(index);
