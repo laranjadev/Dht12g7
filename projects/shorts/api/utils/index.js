@@ -1,3 +1,6 @@
+const fs = require('fs');
+const urlJoin = require('url-join');
+
 const getFirstUpperCase = (content) => {
     let result = '';
     result += String(content).charAt(0).toUpperCase();
@@ -14,6 +17,14 @@ const getPlural = (content) => {
     else if (isTheLast(content, 's')) content += 'es';
     else content += 's';
     return content.trim().toLowerCase();
+};
+
+const isThere = (array) => {
+    return fs.existsSync(urlJoin(array));
+};
+
+const jsonFileReader = (array) => {
+    return isThere(array) ? JSON.parse(fs.readFileSync(urlJoin(array), { encoding : 'utf-8' })) : [];
 };
 
 const getModelPublic = (Sequelize) => {
@@ -79,4 +90,5 @@ module.exports = {
 	getPlural,
     getModelPublic,
     getFirstUpperCase,
+    jsonFileReader,
 };

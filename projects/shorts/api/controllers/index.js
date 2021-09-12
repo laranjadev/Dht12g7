@@ -1,120 +1,61 @@
 const { Op } = require("sequelize");
-const Sequelize = require("sequelize");
 const { Public } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-// const authConfig = require('../config/auth.json');
-
-// const {
-//     capitalize,
-//     plural,
-// } = require('../utils');
-
-// const emailList = [
-//     'gmail',
-//     'hotmail',
-//     'yahoo'
-// ];
-
-// const {
-//     firstName,
-//     lastName
-// } = require('../database');
-
-// let addIndex = (index) => {    
-//     for (let i = 0; i < firstName[index]['length']; i++) {
-//         logList.push({
-//             firstName : firstName[index][i],
-//             lastName : lastName[Math.floor(Math.random() * lastName['length'])],
-//             gender : index,
-//         });
-//     };
-// };
-
-// const logList = [
-//     ...addIndex('men'),
-//     ...addIndex('women'),
-// ];
-
-// const bulkList = [];
-// for (let i = 0; i < logList['length']; i++) {
-//     let email = logList[i]['firstName'].substr(0, 1);
-//     email += logList[i]['lastName'].substr(0, 1);
-//     let password = Math.floor(Math.random() * 999999 + 100000);
-//     email += password + '@' + emailList[Math.floor(Math.random() * emailList['length'])] + '.com';
-//     bulkList.push({
-//         firstName : capitalize(logList[i]['firstName']),
-//         lastName : capitalize(logList[i]['lastName']),
-//         gender : capitalize(logList[i]['gender']),
-//         email : String(email).toLowerCase(),
-//         password : bcrypt.hashSync(String(password), 10),
-//     });
-// };
-
-// [1, 2, 3].map((n) => { return Math.pow(n, 2); });
-// [1, 2, 3].map(n => n ** 2);
-
+const {
+    getFirstUpperCase,
+    jsonFileReader,
+} = require('../utils');
+const first = [
+    ...jsonFileReader([ 'database', 'men.json' ]),
+    ...jsonFileReader([ 'database', 'women.json' ]),
+];
+const last = [ ...jsonFileReader([ 'database', 'last-name.json' ]), ];
+const emails = [ ...jsonFileReader([ 'database', 'email.json' ]), ];
+const public = [];
+for (let i = 0; i < first['length']; i++) {
+    public.push({
+        'first-name' : first[i],
+        'last-name' : last[Math.floor(Math.random() * last['length'])],
+    });
+};
+const bulkList = [];
+for (let i = 0; i < public['length']; i++) {
+    let email = public[i]['first-name'].substr(0, 1);
+    email += public[i]['last-name'].substr(0, 1);
+    let password = Math.floor(Math.random() * 999999 + 100000);
+    email += password;
+    email += '@';
+    email += emails[Math.floor(Math.random() * emails['length'])];
+    email += '.com';
+    bulkList.push({
+        'first-name' : getFirstUpperCase(public[i]['first-name']),
+        'last-name' : getFirstUpperCase(public[i]['last-name']),
+        email : String(email).toLowerCase(),
+        password : bcrypt.hashSync(String(password), 10),
+    });
+};
 const action = {
-
     index : async (req, res, next) => {
         return res.redirect('/public/all');
     },
-
     all : async (req, res, next) => {
-        const {
-            key,
-            disable,
-        } = req.query;
-        // http://localhost:3333/public/all?key=ana&disable=1
-        const items = [
-            'firstName',
-            'lastName',
-            'gender',
-            'email',
-        ];
-        const opList = [];
-        for (let i = 0; i <= Number(items['length'] - 1); i++) {
-            opList.push({
+        const { key, disable, } = req['query'];
+        const items = [ 'first-name', 'last-name' ];
+        // http://localhost:8080/public/all?key=ana&disable=1
+        const list = [];
+        for (let i = 0; i < items['length']; i++)
+            list.push({
                 [items[i]] : {
                     [Op.like] : `%${ key }%`,
                 },
             });
-        };
-        let findParams;
-        if (key) {
-            if (disable) {
-                findParams = {
-                    where : {
-                        [Op.or] : opList,
-                        disable : disable,
-                    },
-                };
-            } else {
-                findParams = {
-                    where : {
-                        [Op.or] : opList,
-                    },
-                };
-            };
-        } else {
-            if (disable) {
-                findParams = {
-                    where : {
-                        disable : disable,
-                    },
-                };
-            } else {
-                findParams = {
-                    where : {
-                    },
-                };
-            };
-        };
-        const {
-            count,
-            rows
-        } = await Public.findAndCountAll(findParams).then(result => {
+        const { count, rows } = await Public.findAndCountAll({
+            where : {
+                ...key ? { [Op.or] : list } : undefined,
+                ...disable ? { disable : disable } : undefined,
+            }
+        }).then(result => {
             return res.status(200).json(result['rows']);
         }).catch(error => {
             return res.status(400).json(error);
@@ -122,7 +63,7 @@ const action = {
     },
 
     one : async (req, res, next) => {
-        const { id } = req.params;
+        const { id } = req['params'];
         if (!id) { return res.redirect('/public/all'); } else {
             const index = await Public.findByPk(id).then(result => {
                 return res.status(200).json(result);
@@ -135,7 +76,7 @@ const action = {
     store : async (req, res, next) => {
         try {
             const index = await Public.create({
-                ...req.body,
+                ...req['body'],
             });
             return res.status(201).json(index);
         } catch (error) {
@@ -144,16 +85,13 @@ const action = {
     },
     
     update : async (req, res, next) => {
-        // O registro foi encontrado? Sim. Não.
-        // O registro foi alterado? Sim. Não.
         try {
-            const { id } = req.params;
+            const { id } = req['params'];
             const {
                 firstName,
                 lastName,
-                gender,
                 email,
-            } = req.body;
+            } = req['body'];
             const index = await Public.findByPk(id);
             if (!index) {
                 return res.status(200).json({
@@ -163,7 +101,6 @@ const action = {
                 index.update({
                     firstName : firstName,
                     lastName : lastName,
-                    gender : gender,
                     email : email,
                 });
                 return res.status(200).json(index);
@@ -175,7 +112,7 @@ const action = {
 
     disable : async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { id } = req['params'];
             const index = await Public.findByPk(id);
             if (!index) {
                 return res.status(200).json({
@@ -212,10 +149,7 @@ const action = {
     },
 
     authenticate : async (req, res, next) => {
-        const {
-            email,
-            password,
-        } = req['body'];
+        const { email, password, } = req['body'];
         const index = await Public.findOne({
             where : {
                 email : email,
