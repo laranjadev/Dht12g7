@@ -52,7 +52,7 @@ const action = {
             });
         const { count, rows } = await Public.findAndCountAll({
             where : {
-                ...key ? { [Op.or] : list } : undefined,
+                ...key ? { [ Op.or ] : list } : undefined,
                 ...disable ? { disable : disable } : undefined,
             }
         }).then(result => {
@@ -61,7 +61,6 @@ const action = {
             return res.status(400).json(error);
         });
     },
-
     one : async (req, res, next) => {
         const { id } = req['params'];
         if (!id) { return res.redirect('/public/all'); } else {
@@ -72,7 +71,6 @@ const action = {
             });
         };
     },
-    
     store : async (req, res, next) => {
         try {
             const index = await Public.create({
@@ -83,7 +81,6 @@ const action = {
             return res.status(400).json(error);
         };
     },
-    
     update : async (req, res, next) => {
         try {
             const { id } = req['params'];
@@ -109,7 +106,6 @@ const action = {
             return res.status(400).json(error);
         };
     },
-
     disable : async (req, res, next) => {
         try {
             const { id } = req['params'];
@@ -128,10 +124,9 @@ const action = {
             return res.status(400).json(error);
         };
     },
-
     destroy : async (req, res, next) => {
         try {
-            const { id } = req.params;
+            const { id } = req['params'];
             const index = await Public.findByPk(id);
             if (!index) {
                 return res.status(200).json({
@@ -147,7 +142,6 @@ const action = {
             return res.status(400).json(error);
         };
     },
-
     authenticate : async (req, res, next) => {
         const { email, password, } = req['body'];
         const index = await Public.findOne({
@@ -176,7 +170,6 @@ const action = {
             token : token,
         });
     },
-
     authenticated : async (req, res, next) => {
         const index = await Public.findOne({
             where : {
@@ -191,7 +184,6 @@ const action = {
             return res.status(400).json(error);
         });
     },
-    
     bulk : async (req, res, next) => {
         const index = await Public.bulkCreate(bulkList);
         return res.send(index);

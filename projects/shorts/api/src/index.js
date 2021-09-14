@@ -1,3 +1,7 @@
+const {
+    jsonFileReader,
+} = require('../utils');
+
 const cors = require('cors');
 const express = require('express');
 
@@ -12,7 +16,8 @@ app.use(express.urlencoded({
 
 app.use(require('../routes'));
 
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
+const PORT = jsonFileReader(['.', 'config', 'index.json'])['development']['port'] || 3333;
 
 require('http').createServer(app).listen(PORT, () => {
     console.log(`Server running on \'${ PORT }\' port [...].`);
