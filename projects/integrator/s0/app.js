@@ -7,6 +7,7 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const path = require('path');
 const session = require('express-session');
+
 require('dotenv').config();
 
 const app = express();
@@ -46,6 +47,7 @@ const {
   package,
   getJSFileModule,
 } = require('./utils');
+
 app.use((req, res, next) => {
   return res.status(404).render('message', {
     pageMessage : 'this page is not found!',

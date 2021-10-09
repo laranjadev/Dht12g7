@@ -6,20 +6,14 @@ const {
     getPageTitle,
 } = require('../utils');
 const Action = {};
-const index = jsonFileReader([ 'database', 'json', 'index-page-names.json' ]);
+const index = jsonFileReader([ 'database', 'json', 'page-names.json' ]);
 index.push('index');
 index.forEach((value) => {
     Action[value] = (req, res, next) => {
         return res.render(value, {
-            ...getPageTitle({
-                prefix : value
-            }),
-            ...getPCSSFile({
-                content : value
-            }),
-            ...getPJSMFile({
-                content : value
-            }),
+            ...getPageTitle({ prefix : value }),
+            ...getPCSSFile({ content : value }),
+            ...getPJSMFile({ content : value }),
             ...packages(),
         });
     };

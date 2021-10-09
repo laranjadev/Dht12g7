@@ -1,6 +1,5 @@
 const {
     isTheLast,
-    isThere,
 } = require('../utils');
 const getFormElements = (object) => {
     const result = [];

@@ -70,7 +70,7 @@ const search = [
 ];
 
 const indexes = [];
-const index = require('../database/option')['indexPageNames'];
+const index = require('../database/option')['pageNames'];
 for (let i = 0; i < index['length']; i++)
     indexes.push(index[i]['option'] ? index[i]['option'] : 'index');
 

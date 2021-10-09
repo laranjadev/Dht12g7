@@ -24,7 +24,7 @@ const objectsListNames = [
     'status',
     'uf',
     'input-type',
-    'index-page-names'
+    'page-names',
 ];
 const objectsFilePath = [
     'database',

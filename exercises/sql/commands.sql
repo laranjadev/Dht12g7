@@ -5,6 +5,7 @@ DROP DATABASE phpmyadmin;
 
 DROP TABLE publics;
 DROP TABLE sequelizemeta;
+DROP TABLE orders;
 
 USE api;
 USE integrator;
