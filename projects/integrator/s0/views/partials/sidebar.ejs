@@ -1,0 +1,51 @@
+<div class="navigation">
+    <%
+        array = [
+            {
+                title : 'Home',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'User',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'Messages',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'Settings',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'Help',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'Password',
+                icon : '',
+                href : '#',
+            },
+            {
+                title : 'Exit',
+                icon : '',
+                href : '#',
+            },
+        ];
+    %>
+    <ul>
+        <% for (let i = 0; i < array['length']; i++) { %>
+            <li class="sidebar-list">
+                <a href=<%- array[i]['href']; %>>
+                    <span class="sidebar-icon"><%- array[i]['icon']; %></span>
+                    <span class="sidebar-list"><%- array[i]['title']; %></span>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+</div>

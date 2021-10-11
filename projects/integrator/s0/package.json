@@ -34,7 +34,7 @@
     "url-join": "^4.0.1"
   },
   "devDependencies": {
-    "sass": "^1.38.0",
+    "sass": "^1.42.1",
     "sequelize-cli": "^6.2.0"
   },
   "main": "app.js",
