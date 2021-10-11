@@ -1,11 +1,74 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <title><%= title %></title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS v5.0.2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="navigation">
+      <%
+        array = [
+          {
+            title : 'Home',
+            icon : '<ion-icon name=\"home\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'User',
+            icon : '<ion-icon name=\"people\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'Messages',
+            icon : '<ion-icon name=\"document\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'Settings',
+            icon : '<ion-icon name=\"settings\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'Help',
+            icon : '<ion-icon name=\"help\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'Password',
+            icon : '<ion-icon name=\"keypad\"></ion-icon>',
+            href : '#',
+          },
+          {
+            title : 'Exit',
+            icon : '<ion-icon name=\"exit\"></ion-icon>',
+            href : '#',
+          },
+        ];
+      %>
+      <ul>
+          <% for (let i = 0; i < array['length']; i++) { %>
+              <li class="list <%- !i ? 'active' : '' %>">
+                  <a href=<%- array[i]['href']; %>>
+                      <span class="icon"><%- array[i]['icon']; %></span>
+                      <span class="title"><%- array[i]['title']; %></span>
+                  </a>
+              </li>
+          <% } %>
+      </ul>
+    </div>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <!--  -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <script src="javascripts/index.js"></script>
+    <!--  -->
   </body>
 </html>
