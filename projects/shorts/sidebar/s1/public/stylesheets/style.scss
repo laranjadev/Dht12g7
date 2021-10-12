@@ -1,31 +1,39 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     min-height: 100vh;
     background-color: #2d2d2d;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+$selectColor : #099c22;
+$borderColor : #424242;
+$backgroundColor : #ccc;
+%a
+{
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 100%;
+}
 .navigation:hover {
     width: 300px;
 }
 .navigation {
     position: relative;
-    height: 500px;
-    background-color: #ccc;
-    width: 70px;
-    box-shadow: 10px 0 0 #77f68c;
-    border-left: 10px solid #424242;
+    height: 100%;
+    background-color: $backgroundColor;
+    width: 90px;
+    box-shadow: 10px 0 0 $selectColor;
+    border-left: 10px solid $borderColor;
     overflow-x: hidden;
     transition: 0.5s;
     ul {
@@ -33,45 +41,36 @@ body {
         top: 0;
         left: 0;
         width: 100%;
-        padding-left: 5px;
-        padding-top: 40px;
-        li.active{
-            background-color: #099c22;
+        padding-left: 10px;
+        padding-top: 30px;
+        li.active {
+            background-color: $selectColor;
             a::before {
-                content: '';
-                position: absolute;
-                top: -30px;
-                right: 0;
-                width: 30px;
-                height: 30px;
-                background-color: transparent;
-                border-radius: 50%;
-                box-shadow: 15px 15px 0 #099c22;
+                @extend %a;
+                top: -1 * 30px;
+                box-shadow: 15px 15px 0 $selectColor;
             }
             a::after {
-                content: '';
-                position: absolute;
-                bottom: -30px;
-                right: 0;
-                width: 30px;
-                height: 30px;
-                background-color: transparent;
-                border-radius: 50%;
-                box-shadow: 15px -15px 0 #099c22;
+                @extend %a;
+                bottom: -1 * 30px;
+                box-shadow: 15px -1 * 15px 0 $selectColor;
+            }
+            a {
+                color: white;
             }
         }
         li {
             position: relative;
             list-style: none;
             width: 100%;
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
             a {
                 position: relative;
                 display: flex;
                 width: 100%;
                 text-decoration: none;
-                color: white;
+                color: $selectColor;
                 .icon {
                     position: relative;
                     display: block;
@@ -79,16 +78,17 @@ body {
                     height: 60px;
                     text-align: center;
                     line-height: 70px;
+                    margin-right: 10px;
                     ion-icon {
                         position: relative;
-                        font-size: 1.5rem;
+                        width: 20px;
+                        height: 20px;
                         z-index: 1;
                     }
                 }
                 .title {
                     position: relative;
                     display: block;
-                    padding-left: 10px;
                     height: 60px;
                     line-height: 60px;
                     white-space: nowrap;
@@ -96,7 +96,4 @@ body {
             }
         }
     }
-}
-a {
-    color: #00B7FF;
 }
