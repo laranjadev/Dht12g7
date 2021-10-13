@@ -1,51 +1,58 @@
-<div class="navigation">
-    <%
-        array = [
-            {
-                title : 'Home',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'User',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'Messages',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'Settings',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'Help',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'Password',
-                icon : '',
-                href : '#',
-            },
-            {
-                title : 'Exit',
-                icon : '',
-                href : '#',
-            },
-        ];
-    %>
-    <ul>
-        <% for (let i = 0; i < array['length']; i++) { %>
-            <li class="sidebar-list">
-                <a href=<%- array[i]['href']; %>>
-                    <span class="sidebar-icon"><%- array[i]['icon']; %></span>
-                    <span class="sidebar-list"><%- array[i]['title']; %></span>
-                </a>
-            </li>
-        <% } %>
-    </ul>
+<%
+    array = [
+        {
+            href : '#',
+            title : 'Home',
+            icon : 'home',
+        },
+        {
+            href : '#',
+            title : 'User',
+            icon : 'people',
+        },
+        {
+            href : '#',
+            title : 'Messages',
+            icon : 'document',
+        },
+        {
+            href : '#',
+            title : 'Settings',
+            icon : 'settings',
+        },
+        {
+            href : '#',
+            title : 'Help',
+            icon : 'help',
+        },
+        {
+            href : '#',
+            title : 'Password',
+            icon : 'keypad',
+        },
+        {
+            href : '#',
+            title : 'Exit',
+            icon : 'exit',
+        },
+    ];
+%>
+<!--  -->
+<div id="sidebar-navigation" class="bg-white p-3 rounded shadow-sm">
+    <div id="sidebar-content" class="rounded-1 shadow-sm bg-dark text-dark w-100 h-100">
+        <ul>
+            <% for (let i = 0; i < array['length']; i++) { %>
+                <li id="sidebar-list" class="<%- !i ? 'active' : '' %>">
+                    <a href=<%- array[i]['href']; %>>
+                        <span id="sidebar-icon">
+                            <%- '<ion-icon name=\"' + array[i]['icon'] + '\"></ion-icon>'; %>
+                        </span>
+                        <span id="sidebar-title">
+                            <%- array[i]['title']; %>
+                        </span>
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </div>
 </div>

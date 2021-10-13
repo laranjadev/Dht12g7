@@ -128,3 +128,12 @@ window.addEventListener('DOMContentLoaded', () => {
         elements : 'a.light-box',
     });
 });
+
+window.document.querySelectorAll('#sidebar-list').forEach((item) => {
+    item.addEventListener('click', function () {
+        window.document.querySelectorAll('#sidebar-list').forEach((item) => {
+            item.classList.remove('active');
+        });
+        this.classList.add('active');
+    });
+});

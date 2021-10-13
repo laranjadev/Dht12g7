@@ -11,50 +11,29 @@ body {
     background-color: #2d2d2d;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-$selectColor : #099c22;
+$selectColor : red;
 $borderColor : #424242;
 $backgroundColor : #ccc;
-%a
-{
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    border-radius: 100%;
-}
-.navigation:hover {
+#navigation:hover {
     width: 300px;
 }
-.navigation {
+#navigation {
     position: relative;
     height: 100%;
-    background-color: $backgroundColor;
     width: 90px;
-    box-shadow: 10px 0 0 $selectColor;
-    border-left: 10px solid $borderColor;
     overflow-x: hidden;
     transition: 0.5s;
+    #content {
+        overflow-x: hidden;
+    }
     ul {
         position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        padding-left: 10px;
-        padding-top: 30px;
+        padding: 0;
+        margin: 0;
         li.active {
             background-color: $selectColor;
-            a::before {
-                @extend %a;
-                top: -1 * 30px;
-                box-shadow: 15px 15px 0 $selectColor;
-            }
-            a::after {
-                @extend %a;
-                bottom: -1 * 30px;
-                box-shadow: 15px -1 * 15px 0 $selectColor;
-            }
+            transition: 0.5s;
             a {
                 color: white;
             }
@@ -62,23 +41,21 @@ $backgroundColor : #ccc;
         li {
             position: relative;
             list-style: none;
-            width: 100%;
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
+            width: calc(100% - 2rem);
             a {
                 position: relative;
                 display: flex;
-                width: 100%;
+                width: calc(100% - 20px);
                 text-decoration: none;
                 color: $selectColor;
-                .icon {
+                #icon {
                     position: relative;
                     display: block;
                     min-width: 60px;
                     height: 60px;
                     text-align: center;
                     line-height: 70px;
-                    margin-right: 10px;
+                    margin-right: 1rem;
                     ion-icon {
                         position: relative;
                         width: 20px;
@@ -86,7 +63,7 @@ $backgroundColor : #ccc;
                         z-index: 1;
                     }
                 }
-                .title {
+                #title {
                     position: relative;
                     display: block;
                     height: 60px;
