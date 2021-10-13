@@ -51,6 +51,18 @@ addRemoveClasses({
     ],
     classeList : [
         'bg-light',
+        'w-100',
+        'h-100',
+    ],
+    method : 'add',
+});
+
+addRemoveClasses({
+    elementList : [
+        'body',
+    ],
+    classeList : [
+        'd-flex',
     ],
     method : 'add',
 });
@@ -60,7 +72,8 @@ addRemoveClasses({
         '#container',
     ],
     classeList : [
-        'container',
+        // 'container',
+        'mx-3',
         'mb-3',
     ],
     method : 'add',

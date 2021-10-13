@@ -11,13 +11,6 @@
     <%- startTagName([ { name : 'link', param : { type : 'image/x-icon', href : 'favicon.ico', }, }, ]); %>
 </head>
 <body>
-    <% sidebarValue =  3; contentValue = (12 - sidebarValue); %>
+    <%- include('./sidebar'); %>
     <%- startTagName([ { name : 'div', param : { id : 'container', }, }, ]); %>
-        <%- startTagName([ { name : 'div', param : { class : [ 'row', ], }, }, ]); %>
-        <% if (!sidebarValue) { } else { %> 
-            <%- startTagName([ { name : 'div', param : { class : [ ('col-' + sidebarValue), ], }, }, ]); %>
-            <%- include('./sidebar'); %>
-            <%- endTagName([ { name : 'div', }, ]); %>
-        <% } %>
-            <%- startTagName([ { name : 'div', param : { class : [ ('col-' + contentValue), ], }, }, ]); %>
-                <%- include('./navbar'); %>
+        <%- include('./navbar'); %>
